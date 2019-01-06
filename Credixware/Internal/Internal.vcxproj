@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{07A30043-FFEB-44D0-BBD6-E4BD6BAFF42A}</ProjectGuid>
     <RootNamespace>Internal</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -91,6 +91,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;DEBUG_DLL;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -99,6 +100,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;DEBUG_DLL;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -109,6 +111,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -123,6 +126,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -130,6 +134,48 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Hacks\ESP.h" />
+    <ClInclude Include="Hacks\Hacks.h" />
+    <ClInclude Include="Hacks\Menu.h" />
+    <ClInclude Include="Headers\Common.h" />
+    <ClInclude Include="Headers\Hooks.h" />
+    <ClInclude Include="Headers\Interfaces.h" />
+    <ClInclude Include="Headers\Utils.h" />
+    <ClInclude Include="Hooks\CreateMove.h" />
+    <ClInclude Include="Hooks\PaintTraverse.h" />
+    <ClInclude Include="SDK\basetypes.h" />
+    <ClInclude Include="SDK\Color.h" />
+    <ClInclude Include="SDK\ConVar.h" />
+    <ClInclude Include="SDK\CUserCmd.h" />
+    <ClInclude Include="SDK\C_BaseEntity.h" />
+    <ClInclude Include="SDK\C_BasePlayer.h" />
+    <ClInclude Include="SDK\IAppSystem.h" />
+    <ClInclude Include="SDK\IClientEntity.h" />
+    <ClInclude Include="SDK\IClientEntityList.h" />
+    <ClInclude Include="SDK\IClientNetworkable.h" />
+    <ClInclude Include="SDK\IClientPanel.h" />
+    <ClInclude Include="SDK\IClientRenderable.h" />
+    <ClInclude Include="SDK\IClientThinkable.h" />
+    <ClInclude Include="SDK\IHTML.h" />
+    <ClInclude Include="SDK\IImage.h" />
+    <ClInclude Include="SDK\ImageFormat.h" />
+    <ClInclude Include="SDK\IMaterial.h" />
+    <ClInclude Include="SDK\IMaterialSystem.h" />
+    <ClInclude Include="SDK\Interface.h" />
+    <ClInclude Include="SDK\IPanel.h" />
+    <ClInclude Include="SDK\ISurface.h" />
+    <ClInclude Include="SDK\IVEngineClient.h" />
+    <ClInclude Include="SDK\math\mathlib.h" />
+    <ClInclude Include="SDK\math\utlvector.h" />
+    <ClInclude Include="SDK\math\vector.h" />
+    <ClInclude Include="SDK\math\vector2d.h" />
+    <ClInclude Include="SDK\math\vector4d.h" />
+    <ClInclude Include="SDK\math\vmatrix.h" />
+    <ClInclude Include="SDK\math\vplane.h" />
+    <ClInclude Include="SDK\SDK.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
