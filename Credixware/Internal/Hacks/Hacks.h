@@ -12,4 +12,16 @@ namespace Hacks {
 	}
 }
 
+namespace Settings {
+	namespace Misc {
+		bool bThirdperson = true;
+		float ThirdpersonDistance = 5.0f;
+		short ThirdpersonOffKey = VK_MENU;
+	}
+}
+
+float ViewangleX;
+float ViewangleY;
+float ViewangleZ;
+
 #endif

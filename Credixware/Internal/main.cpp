@@ -17,6 +17,12 @@ int main() {
 			FreeLibraryAndExitThread(MyModule, 0);
 			return 0;
 		}
+		/*if (g_pEngineClient->IsInGame()) {
+			g_pEngineClient->ClientCmd_Unrestricted("say TESTING UNTRUSTED by using thirdperson. If you are seeing this message VAC/VACnet probably hasn't banned me. It's sad :\\");
+			Sleep(250);
+			g_pEngineClient->ClientCmd_Unrestricted("say Anyways, there's not much we can do. Have fun playing with cheaters for approximately the next 2 years ;) -CredixYt");
+			Sleep(5000);
+		}*/
 	}
 	return 0;
 }

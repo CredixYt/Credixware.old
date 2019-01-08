@@ -10,7 +10,9 @@ CreateMove_t oCreateMove;
 unsigned int* oCreateMoveFunc;
 
 bool __fastcall hkCreateMove(void* ecx, void* edx, float sampleTime, CUserCmd* UserCmd) {
-	printf("%.2f	%.2f\n", UserCmd->forwardmove, UserCmd->sidemove);
+	ViewangleX = UserCmd->viewangles.x;
+	ViewangleY = UserCmd->viewangles.y;
+	ViewangleZ = UserCmd->viewangles.z;
 	oCreateMove(ecx, sampleTime, UserCmd);
 	return true;
 }

@@ -138,5 +138,26 @@
     <ClInclude Include="Hooks\CreateMove.h">
       <Filter>Hooks</Filter>
     </ClInclude>
+    <ClInclude Include="Hooks\FrameStageNotify.h">
+      <Filter>Hooks</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\CInput.h">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\IInput.h">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Hooks\OverrideView.h">
+      <Filter>Hooks</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\CViewSetup.h">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\IVModelRender.h">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Hooks\DrawModelExecute.h">
+      <Filter>Hooks</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

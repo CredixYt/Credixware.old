@@ -5,8 +5,10 @@
 #include "basetypes.h"
 #include "C_BaseEntity.h"
 #include "C_BasePlayer.h"
+#include "CInput.h"
 #include "Color.h"
 #include "ConVar.h"
+#include "CViewSetup.h"
 #include "CUserCmd.h"
 #include "IAppSystem.h"
 #include "IClientEntity.h"
@@ -17,6 +19,7 @@
 #include "IClientThinkable.h"
 #include "IHTML.h"
 #include "IImage.h"
+#include "IInput.h"
 #include "ImageFormat.h"
 #include "IMaterial.h"
 #include "IMaterialSystem.h"
@@ -24,5 +27,6 @@
 #include "IPanel.h"
 #include "ISurface.h"
 #include "IVEngineClient.h"
+#include "IVModelRender.h"
 
 #endif

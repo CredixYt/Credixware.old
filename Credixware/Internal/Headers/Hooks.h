@@ -5,6 +5,9 @@
 #include "Common.h"
 #include "../Hooks/PaintTraverse.h"
 #include "../Hooks/CreateMove.h"
+#include "../Hooks/FrameStageNotify.h"
+#include "../Hooks/OverrideView.h"
+#include "../Hooks/DrawModelExecute.h"
 
 namespace Hooks {
 	template <class T>
@@ -34,11 +37,17 @@ namespace Hooks {
 	void Init() {
 		oPaintTraverse = Hook<PaintTraverse_t>(g_pPanel, 41, &hkPaintTraverse);
 		oCreateMove = Hook<CreateMove_t>(g_pClientMode, 24, &hkCreateMove);
+		oOverrideView = Hook<OverrideView_t>(g_pClientMode, 18, &hkOverrideView);
+		oFrameStageNotify = Hook<FrameStageNotify_t>(g_pClient, 37, &hkFrameStageNotify);
+		oDrawModelExecute = Hook<DrawModelExecute_t>(g_pModelRender, 21, &hkDrawModelExecute);
 	}
 
 	void Reset() {
 		Unhook(g_pPanel, 41, oPaintTraverse);
 		Unhook(g_pClientMode, 24, oCreateMove);
+		Unhook(g_pClientMode, 18, oOverrideView);
+		Unhook(g_pClient, 37, oFrameStageNotify);
+		Unhook(g_pModelRender, 21, oDrawModelExecute);
 	}
 }
 

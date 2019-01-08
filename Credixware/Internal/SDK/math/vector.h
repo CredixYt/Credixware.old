@@ -84,7 +84,7 @@ public:
 	void	CopyToArray(float* rgfl) const;
 	void	MulAdd(const Vector& a, const Vector& b, float scalar);
 	vec_t	Dot(const Vector& vOther) const;
-	Vector& operator=(const Vector &vOther);
+	Vector& operator=(const Vector &vOther) const;
 	vec_t	Length2D(void) const;
 	vec_t	Length2DSqr(void) const;
 	operator VectorByValue &() { return *((VectorByValue *)(this)); }
@@ -155,5 +155,20 @@ public:
 	QAngleByValue(vec_t X, vec_t Y, vec_t Z) : QAngle(X, Y, Z) {}
 	QAngleByValue(const QAngleByValue& vOther) { *this = vOther; }
 };
+
+Vector CalculateCameraOffset(Vector viewangle, int multiplier = 1) {
+	float x, y, z;
+	x = 360.0f + viewangle.x;
+	while (x > 360.0f) {
+		x -= 360.0f;
+	}
+	y = 360.0f + viewangle.y;
+	while (y > 360.0f) {
+		y -= 360.0f;
+	}
+	z = 30.0f;
+	z *= multiplier;
+	return Vector(x, y, z);
+}
 
 #endif

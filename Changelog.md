@@ -1,3 +1,9 @@
+## Changelog v1.2:
+- _[Internal]_ Hooked functions DrawModelExecute, FrameStageNotify and OverrideView
+- _[Internal]_ Hacks: Added Thirdperson
+- _[Internal]_ SDK: Added CInput, CUserCmd, CViewSetup, IVModelRender
+- _[Internal]_ Interfaces: Added IVModelRender
+
 ## Changelog v1.1:
 - _[Internal]_ Hooked functions CreateMove and PaintTraverse
 - _[Internal]_ Hacks: Added Menu and ESP

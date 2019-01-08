@@ -4,6 +4,7 @@
 #define IIMAGE_H
 
 #include "basetypes.h"
+#include "Color.h"
 
 typedef unsigned long HTexture;
 typedef uint32 RTime32;

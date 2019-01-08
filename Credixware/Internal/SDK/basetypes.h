@@ -22,5 +22,30 @@ typedef int64_t int64;
 typedef unsigned char byte;
 
 #define CHECK_VALID( _v)	(_v).IsValid()
+#define DECLARE_POINTER_HANDLE(name) struct name##__ { int unused; }; typedef struct name##__ *name
+#define FORWARD_DECLARE_HANDLE(name) typedef struct name##__ *name
+
+/*enum ClientFrameStage
+{
+	FRAME_UNDEFINED = -1,
+	FRAME_START,
+	FRAME_NET_UPDATE_START,
+	FRAME_NET_UPDATE_POSTDATAUPDATE_START,
+	FRAME_NET_UPDATE_POSTDATAUPDATE_END,
+	FRAME_NET_UPDATE_END,
+	FRAME_RENDER_START,
+	FRAME_RENDER_END
+};*/
+
+enum ClientFrameStage_t : int {
+	FRAME_UNDEFINED = -1,
+	FRAME_START,
+	FRAME_NET_UPDATE_START,
+	FRAME_NET_UPDATE_POSTDATAUPDATE_START,
+	FRAME_NET_UPDATE_POSTDATAUPDATE_END,
+	FRAME_NET_UPDATE_END,
+	FRAME_RENDER_START,
+	FRAME_RENDER_END
+};
 
 #endif

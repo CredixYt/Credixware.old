@@ -10,6 +10,8 @@ IPanel* g_pPanel;
 ISurface* g_pSurface;
 IClientEntityList* g_pClientEntityList;
 IVEngineClient* g_pEngineClient;
+CInput* g_pInput;
+IVModelRender* g_pModelRender;
 void* g_pClient;
 void* g_pClientMode;
 
@@ -19,8 +21,10 @@ namespace Interfaces {
 		g_pSurface = Utils::CaptureInterface<ISurface>("vguimatsurface.dll", "VGUI_Surface031");
 		g_pClientEntityList = Utils::CaptureInterface<IClientEntityList>("client_panorama.dll", "VClientEntityList003");
 		g_pEngineClient = Utils::CaptureInterface<IVEngineClient>("engine.dll", "VEngineClient014");
+		g_pModelRender = Utils::CaptureInterface<IVModelRender>("engine.dll", "VEngineModel016");
 		g_pClient = Utils::CaptureInterface<void>("client_panorama.dll", "VClient018");
 		g_pClientMode = **(DWORD***)((*(uintptr_t**)g_pClient)[10] + 0x5);
+		//g_pInput = *(CInput**)((*(DWORD**)g_pClient)[16] + 0x1);
 	}
 }
 

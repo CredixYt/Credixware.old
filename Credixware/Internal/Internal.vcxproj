@@ -145,11 +145,16 @@
     <ClInclude Include="Headers\Interfaces.h" />
     <ClInclude Include="Headers\Utils.h" />
     <ClInclude Include="Hooks\CreateMove.h" />
+    <ClInclude Include="Hooks\DrawModelExecute.h" />
+    <ClInclude Include="Hooks\FrameStageNotify.h" />
+    <ClInclude Include="Hooks\OverrideView.h" />
     <ClInclude Include="Hooks\PaintTraverse.h" />
     <ClInclude Include="SDK\basetypes.h" />
+    <ClInclude Include="SDK\CInput.h" />
     <ClInclude Include="SDK\Color.h" />
     <ClInclude Include="SDK\ConVar.h" />
     <ClInclude Include="SDK\CUserCmd.h" />
+    <ClInclude Include="SDK\CViewSetup.h" />
     <ClInclude Include="SDK\C_BaseEntity.h" />
     <ClInclude Include="SDK\C_BasePlayer.h" />
     <ClInclude Include="SDK\IAppSystem.h" />
@@ -161,6 +166,7 @@
     <ClInclude Include="SDK\IClientThinkable.h" />
     <ClInclude Include="SDK\IHTML.h" />
     <ClInclude Include="SDK\IImage.h" />
+    <ClInclude Include="SDK\IInput.h" />
     <ClInclude Include="SDK\ImageFormat.h" />
     <ClInclude Include="SDK\IMaterial.h" />
     <ClInclude Include="SDK\IMaterialSystem.h" />
@@ -168,6 +174,7 @@
     <ClInclude Include="SDK\IPanel.h" />
     <ClInclude Include="SDK\ISurface.h" />
     <ClInclude Include="SDK\IVEngineClient.h" />
+    <ClInclude Include="SDK\IVModelRender.h" />
     <ClInclude Include="SDK\math\mathlib.h" />
     <ClInclude Include="SDK\math\utlvector.h" />
     <ClInclude Include="SDK\math\vector.h" />
