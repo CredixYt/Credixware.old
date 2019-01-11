@@ -24,10 +24,10 @@ namespace Utils {
 		return (Fn) *(*(const void ***)v + i);
 	}
 
-	void CreateConsole() {
+	void CreateConsole(const char* consoleTitle) {
 #ifdef DEBUG_DLL
 		AllocConsole();
-		SetConsoleTitle("Credixware");
+		SetConsoleTitle((LPCSTR)consoleTitle);
 		// Requires _CRT_SECURE_NO_WARNINGS
 		freopen("CONOUT$", "w", stdout);
 		freopen("CONIN$", "r", stdin);

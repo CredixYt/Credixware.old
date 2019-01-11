@@ -3,6 +3,7 @@
 
 #include "math/mathlib.h"
 #include "basetypes.h"
+#include "C_BaseCombatWeapon.h"
 #include "C_BaseEntity.h"
 #include "C_BasePlayer.h"
 #include "CInput.h"

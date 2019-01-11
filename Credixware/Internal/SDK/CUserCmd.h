@@ -98,6 +98,7 @@ public:
 	int		command_number;
 	int		tick_count;
 	QAngle	viewangles;
+	Vector	aimdirection;
 	float	forwardmove;
 	float	sidemove;
 	float	upmove;

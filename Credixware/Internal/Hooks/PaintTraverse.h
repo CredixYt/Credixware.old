@@ -1,4 +1,4 @@
-// Created by Credix - Licence: https://creativecommons.org/licenses/by-nc-sa/4.0/ û
+// Created by Credix - Licence: https://creativecommons.org/licenses/by-nc-sa/4.0/
 #ifndef PAINTTRAVERSE_H
 #define PAINTTRAVERSE_H
 

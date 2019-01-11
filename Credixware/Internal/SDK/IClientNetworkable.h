@@ -9,16 +9,16 @@ class bf_read;
 class bf_write;
 class IClientUnknown;
 
-enum DataUpdateType_t
-{
-	DATA_UPDATE_CREATED = 0,
-	DATA_UPDATE_DATATABLE_CHANGED,
-};
-
 enum ShouldTransmitState_t
 {
 	SHOULDTRANSMIT_START = 0,
 	SHOULDTRANSMIT_END
+};
+
+enum DataUpdateType_t
+{
+	DATA_UPDATE_CREATED = 0,
+	DATA_UPDATE_DATATABLE_CHANGED,
 };
 
 class IClientNetworkable

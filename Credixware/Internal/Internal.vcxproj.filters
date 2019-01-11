@@ -159,5 +159,23 @@
     <ClInclude Include="Hooks\DrawModelExecute.h">
       <Filter>Hooks</Filter>
     </ClInclude>
+    <ClInclude Include="Hacks\Thirdperson.h">
+      <Filter>Hacks</Filter>
+    </ClInclude>
+    <ClInclude Include="Hacks\Settings.h">
+      <Filter>Hacks</Filter>
+    </ClInclude>
+    <ClInclude Include="Hacks\Skinchanger.h">
+      <Filter>Hacks</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\C_BaseCombatWeapon.h">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Hacks\SilentAim.h">
+      <Filter>Hacks</Filter>
+    </ClInclude>
+    <ClInclude Include="Hacks\Nightmode.h">
+      <Filter>Hacks</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

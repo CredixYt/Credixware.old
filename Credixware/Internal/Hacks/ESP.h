@@ -3,6 +3,7 @@
 #define ESP_H
 
 #include "../Headers/Interfaces.h"
+#include "../Hacks/Settings.h"
 
 namespace ESP {
 	void Init() {

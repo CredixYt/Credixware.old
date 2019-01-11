@@ -10,20 +10,7 @@ OverrideView_t oOverrideView;
 unsigned int* oOverrideViewFunc;
 
 void __fastcall hkOverrideView(void* ecx, void* edx, CViewSetup* setup) {
-	if (g_pEngineClient->IsInGame()) {
-		if (g_pInput) {
-			if (Settings::Misc::bThirdperson && !GetAsyncKeyState(Settings::Misc::ThirdpersonOffKey)) {
-				g_pInput->m_fCameraInThirdPerson = true;
-				Vector vec = CalculateCameraOffset(g_pInput->m_angPreviousViewAngles, Settings::Misc::ThirdpersonDistance);
-				g_pInput->m_vecCameraOffset.x = vec.x;
-				g_pInput->m_vecCameraOffset.y = vec.y;
-				g_pInput->m_vecCameraOffset.z = vec.z;
-			}
-			else {
-				g_pInput->m_fCameraInThirdPerson = false;
-			}
-		}
-	}
+	Thirdperson::Update(setup);
 	oOverrideView(ecx, setup);
 }
 

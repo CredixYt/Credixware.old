@@ -18,6 +18,20 @@ inline vec_t BitsToFloat(unsigned long i)
 
 #define VEC_T_NAN FLOAT32_NAN
 
+#ifndef M_PI
+#define M_PI		3.14159265358979323846
+#endif
+
+#define M_PI_F		((float)(M_PI))
+
+#ifndef RAD2DEG
+	#define RAD2DEG( x  )  ( (float)(x) * (float)(180.f / M_PI_F) )
+#endif
+
+#ifndef DEG2RAD
+	#define DEG2RAD( x  )  ( (float)(x) * (float)(M_PI_F / 180.f) )
+#endif
+
 struct matrix3x4_t
 {
 	matrix3x4_t() {}

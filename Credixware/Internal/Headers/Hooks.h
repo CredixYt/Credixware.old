@@ -1,4 +1,4 @@
-// Created by Credix - Licence: https://creativecommons.org/licenses/by-nc-sa/4.0/ û
+// Created by Credix - Licence: https://creativecommons.org/licenses/by-nc-sa/4.0/
 #ifndef HOOKS_H
 #define HOOKS_H
 

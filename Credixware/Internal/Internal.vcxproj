@@ -140,6 +140,11 @@
     <ClInclude Include="Hacks\ESP.h" />
     <ClInclude Include="Hacks\Hacks.h" />
     <ClInclude Include="Hacks\Menu.h" />
+    <ClInclude Include="Hacks\Nightmode.h" />
+    <ClInclude Include="Hacks\Settings.h" />
+    <ClInclude Include="Hacks\SilentAim.h" />
+    <ClInclude Include="Hacks\Skinchanger.h" />
+    <ClInclude Include="Hacks\Thirdperson.h" />
     <ClInclude Include="Headers\Common.h" />
     <ClInclude Include="Headers\Hooks.h" />
     <ClInclude Include="Headers\Interfaces.h" />
@@ -155,6 +160,7 @@
     <ClInclude Include="SDK\ConVar.h" />
     <ClInclude Include="SDK\CUserCmd.h" />
     <ClInclude Include="SDK\CViewSetup.h" />
+    <ClInclude Include="SDK\C_BaseCombatWeapon.h" />
     <ClInclude Include="SDK\C_BaseEntity.h" />
     <ClInclude Include="SDK\C_BasePlayer.h" />
     <ClInclude Include="SDK\IAppSystem.h" />

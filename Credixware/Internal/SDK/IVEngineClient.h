@@ -7,6 +7,7 @@
 #include "IMaterialSystem.h"
 #include "Color.h"
 #include "math/mathlib.h"
+#include "../Headers/Utils.h"
 
 struct model_t;
 struct player_info_t;

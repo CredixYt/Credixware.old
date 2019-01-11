@@ -84,7 +84,12 @@ public:
 	void	CopyToArray(float* rgfl) const;
 	void	MulAdd(const Vector& a, const Vector& b, float scalar);
 	vec_t	Dot(const Vector& vOther) const;
-	Vector& operator=(const Vector &vOther) const;
+	Vector& operator=(const Vector& src) {
+		x = src.x;
+		y = src.y;
+		z = src.z;
+		return (Vector&)src;
+	}
 	vec_t	Length2D(void) const;
 	vec_t	Length2DSqr(void) const;
 	operator VectorByValue &() { return *((VectorByValue *)(this)); }
@@ -120,11 +125,23 @@ class QAngle
 {
 public:
 	vec_t x, y, z;
-	QAngle(void);
-	QAngle(vec_t X, vec_t Y, vec_t Z);
+	QAngle(void) {
+		x = 0.0f;
+		y = 0.0f;
+		z = 0.0f;
+	}
+	QAngle(vec_t X, vec_t Y, vec_t Z) {
+		x = X;
+		y = Y;
+		z = Z;
+	}
 	operator QAngleByValue &() { return *((QAngleByValue *)(this)); }
 	operator const QAngleByValue &() const { return *((const QAngleByValue *)(this)); }
-	void Init(vec_t ix = 0.0f, vec_t iy = 0.0f, vec_t iz = 0.0f);
+	void Init(vec_t ix = 0.0f, vec_t iy = 0.0f, vec_t iz = 0.0f) {
+		x = ix;
+		y = iy;
+		z = iz;
+	}
 	void Random(vec_t minVal, vec_t maxVal);
 	bool IsValid() const;
 	void Invalidate();
@@ -140,7 +157,12 @@ public:
 	QAngle&	operator/=(float s);
 	vec_t	Length() const;
 	vec_t	LengthSqr() const;
-	QAngle& operator=(const QAngle& src);
+	QAngle& operator=(const QAngle& src) {
+		x = src.x;
+		y = src.y;
+		z = src.z;
+		return (QAngle&)src;
+	}
 	QAngle	operator-(void) const;
 	QAngle	operator+(const QAngle& v) const;
 	QAngle	operator-(const QAngle& v) const;

@@ -3,6 +3,7 @@
 #define MENU_H
 
 #include "../Headers/Interfaces.h"
+#include "../Hacks/Settings.h"
 
 HFont font;
 
@@ -14,17 +15,14 @@ namespace Menu {
 	}
 	void Draw() {
 		if (Utils::GetKey(VK_INSERT)) {
-			printf("Down!\n");
 			bOpen = !bOpen;
 		}
 		if (bOpen) {
-			g_pSurface->DrawSetTextFont(font);
-			g_pSurface->DrawSetTextColor(255, 255, 255, 255);
-			g_pSurface->DrawSetTextPos(5, 5);
-			g_pSurface->DrawPrintText(L"Credixware | January 2019", wcslen(L"Credixware | January 2019"));
-			g_pSurface->DrawSetColor(255, 0, 0, 255);
-			g_pSurface->DrawFilledRect(0, 0, 400, 300);
 		}
+		g_pSurface->DrawSetTextFont(font);
+		g_pSurface->DrawSetTextColor(255, 255, 255, 255);
+		g_pSurface->DrawSetTextPos(5, 5);
+		g_pSurface->DrawPrintText(L"Credixware | January 2019", wcslen(L"Credixware | January 2019"));
 	}
 };
 
