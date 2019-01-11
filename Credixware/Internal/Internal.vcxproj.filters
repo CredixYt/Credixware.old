@@ -177,5 +177,8 @@
     <ClInclude Include="Hacks\Nightmode.h">
       <Filter>Hacks</Filter>
     </ClInclude>
+    <ClInclude Include="Headers\MenuWrapper.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

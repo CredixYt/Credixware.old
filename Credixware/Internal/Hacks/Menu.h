@@ -4,6 +4,7 @@
 
 #include "../Headers/Interfaces.h"
 #include "../Hacks/Settings.h"
+#include "../Headers/MenuWrapper.h"
 
 HFont font;
 

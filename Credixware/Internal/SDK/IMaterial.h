@@ -64,37 +64,46 @@ enum MaterialPropertyTypes_t
 class IMaterial
 {
 public:
-	virtual const char *	GetName() const = 0;
-	virtual const char *	GetTextureGroupName() const = 0;
-	virtual PreviewImageRetVal_t GetPreviewImageProperties(int *width, int *height, ImageFormat *imageFormat, bool* isTranslucent) const = 0;
-	virtual PreviewImageRetVal_t GetPreviewImage(unsigned char *data, int width, int height, ImageFormat imageFormat) const = 0;
-	virtual int				GetMappingWidth() = 0;
-	virtual int				GetMappingHeight() = 0;
-	virtual int				GetNumAnimationFrames() = 0;
-	virtual bool			InMaterialPage(void) = 0;
-	virtual	void			GetMaterialOffset(float *pOffset) = 0;
-	virtual void			GetMaterialScale(float *pScale) = 0;
-	virtual IMaterial		*GetMaterialPage(void) = 0;
-	virtual IMaterialVar *	FindVar(const char *varName, bool *found, bool complain = true) = 0;
-	virtual void			IncrementReferenceCount(void) = 0;
-	virtual void			DecrementReferenceCount(void) = 0;
-	inline void AddRef() { IncrementReferenceCount(); }
-	inline void Release() { DecrementReferenceCount(); }
-	virtual int 			GetEnumerationID(void) const = 0;
-	virtual void			GetLowResColorSample(float s, float t, float *color) const = 0;
-	virtual void			RecomputeStateSnapshots() = 0;
-	virtual bool			IsTranslucent() = 0;
-	virtual bool			IsAlphaTested() = 0;
-	virtual bool			IsVertexLit() = 0;
-	virtual VertexFormat_t	GetVertexFormat() const = 0;
-	virtual bool			HasProxy(void) const = 0;
-	virtual bool			UsesEnvCubemap(void) = 0;
-	virtual bool			NeedsTangentSpace(void) = 0;
-	virtual bool			NeedsPowerOfTwoFrameBufferTexture(bool bCheckSpecificToThisFrame = true) = 0;
-	virtual bool			NeedsFullFrameBufferTexture(bool bCheckSpecificToThisFrame = true) = 0;
-	virtual bool			NeedsSoftwareSkinning(void) = 0;
-	virtual void			AlphaModulate(float alpha) = 0;
-	virtual void			ColorModulate(float r, float g, float b) = 0;
+	const char *	GetName() {
+		typedef const char *(__thiscall* Fn)(void*);
+		return Utils::GetVFunc<Fn>(this, 0)(this);
+	}
+	const char *			GetTextureGroupName() {
+		typedef const char *(__thiscall* Fn)(void*);
+		return Utils::GetVFunc<Fn>(this, 1)(this);
+	}
+	virtual PreviewImageRetVal_t GetPreviewImageProperties(int *width, int *height, ImageFormat *imageFormat, bool* isTranslucent) const = 0; // 2
+	virtual PreviewImageRetVal_t GetPreviewImage(unsigned char *data, int width, int height, ImageFormat imageFormat) const = 0; // 3
+	virtual int				GetMappingWidth() = 0; // 4
+	virtual int				GetMappingHeight() = 0; // 5
+	virtual int				GetNumAnimationFrames() = 0; // 6
+	virtual bool			InMaterialPage(void) = 0; // 7
+	virtual	void			GetMaterialOffset(float *pOffset) = 0; // 8
+	virtual void			GetMaterialScale(float *pScale) = 0; // 9
+	virtual IMaterial		*GetMaterialPage(void) = 0; // 10
+	virtual IMaterialVar *	FindVar(const char *varName, bool *found, bool complain = true) = 0; // 11
+	virtual void			IncrementReferenceCount(void) = 0; // 12
+	virtual void			DecrementReferenceCount(void) = 0; // 13
+	inline void AddRef() { IncrementReferenceCount(); } // 14
+	inline void Release() { DecrementReferenceCount(); } // 15
+	virtual int 			GetEnumerationID(void) const = 0; // 16
+	virtual void			GetLowResColorSample(float s, float t, float *color) const = 0; // 17
+	virtual void			RecomputeStateSnapshots() = 0; // 18
+	virtual bool			IsTranslucent() = 0; // 19
+	virtual bool			IsAlphaTested() = 0; // 20
+	virtual bool			IsVertexLit() = 0; // 21
+	virtual VertexFormat_t	GetVertexFormat() const = 0; // 22
+	virtual bool			HasProxy(void) const = 0; // 23
+	virtual bool			UsesEnvCubemap(void) = 0; // 24
+	virtual bool			NeedsTangentSpace(void) = 0; // 25
+	virtual bool			NeedsPowerOfTwoFrameBufferTexture(bool bCheckSpecificToThisFrame = true) = 0; // 26
+	virtual bool			NeedsFullFrameBufferTexture(bool bCheckSpecificToThisFrame = true) = 0; // 27
+	virtual bool			NeedsSoftwareSkinning(void) = 0; // 28
+	virtual void			AlphaModulate(float alpha);
+	void					ColorModulate(float r, float g, float b) {
+		typedef void(__thiscall* Fn)(void*, float, float, float);
+		return Utils::GetVFunc<Fn>(this, 28)(this, r, g, b);
+	}
 	virtual void			SetMaterialVarFlag(MaterialVarFlags_t flag, bool on) = 0;
 	virtual bool			GetMaterialVarFlag(MaterialVarFlags_t flag) const = 0;
 	virtual void			GetReflectivity(Vector& reflect) = 0;

@@ -1,3 +1,7 @@
+## Changelog v1.4:
+- _[Internal]_ Hacks: Added Nightmode
+- _[Internal]_ Fixed: IMaterial
+
 ## Changelog v1.3:
 - _[Internal]_ Removed placeholder code and placeholder menu
 - _[Internal]_ Hacks: Added Settings, Thirdperson and AntiAim (no desync or fakeangles)

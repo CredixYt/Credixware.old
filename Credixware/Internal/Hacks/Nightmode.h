@@ -6,16 +6,18 @@
 #include "../Hacks/Settings.h"
 
 namespace Nightmode {
-	void Init() {
-		// TODO: Finish InvalidMaterial and GetMaterial crash
-		/*for (auto i = g_pMaterialSystem->FirstMaterial(); i != g_pMaterialSystem->InvalidMaterial(); i = g_pMaterialSystem->NextMaterial(i)) {
-			printf("%i\n", i);
-		}*/
-		/*for (auto i = g_pMaterialSystem->FirstMaterial(); i > 100; i = g_pMaterialSystem->NextMaterial(i)) {
-			printf("Before!\n");
+	void Perform() {
+		for (MaterialHandle_t i = g_pMaterialSystem->FirstMaterial(); i < g_pMaterialSystem->GetNumMaterials(); i = g_pMaterialSystem->NextMaterial(i)) {
 			IMaterial* mat = g_pMaterialSystem->GetMaterial(i);
-			printf("Worked!\n");
-		}*/
+			if (mat) {
+				const char* name = mat->GetTextureGroupName();
+				std::string GroupName = name;
+				std::cout << GroupName << "\n";
+				if (GroupName.find("World") || GroupName.find("StaticProp")) {
+					mat->ColorModulate(0.2, 0.2, 0.2);
+				}
+			}
+		}
 	}
 }
 

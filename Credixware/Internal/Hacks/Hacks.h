@@ -13,7 +13,6 @@ namespace Hacks {
 	void Init() {
 		Menu::Init();
 		ESP::Init();
-		Nightmode::Init();
 	}
 }
 

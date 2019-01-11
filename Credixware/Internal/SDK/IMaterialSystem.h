@@ -1,4 +1,4 @@
-// Author: Valve Corporation
+	// Author: Valve Corporation
 // Licence: https://github.com/ValveSoftware/source-sdk-2013/blob/master/LICENSE
 #ifndef IMATERIALSYSTEM_H
 #define IMATERIALSYSTEM_H
@@ -199,24 +199,26 @@ public:
 	virtual IMaterial *			CreateMaterial(const char *pMaterialName, KeyValues *pVMTKeyValues) = 0;
 	virtual IMaterial *			FindMaterial(char const* pMaterialName, const char *pTextureGroupName, bool complain = true, const char *pComplainPrefix = NULL) = 0;
 	virtual bool				IsMaterialLoaded(char const* pMaterialName) = 0;
-	virtual MaterialHandle_t	FirstMaterial() {
+	MaterialHandle_t	FirstMaterial() {
 		typedef MaterialHandle_t(__thiscall* Fn)(void*);
 		return Utils::GetVFunc<Fn>(this, 86)(this);
 	}
-	virtual MaterialHandle_t	NextMaterial(MaterialHandle_t h) {
+	MaterialHandle_t	NextMaterial(MaterialHandle_t h) {
 		typedef MaterialHandle_t(__thiscall* Fn)(void*, MaterialHandle_t);
 		return Utils::GetVFunc<Fn>(this, 87)(this, h);
 	}
-	/*virtual MaterialHandle_t	InvalidMaterial() {
+	MaterialHandle_t	InvalidMaterial() {
 		typedef MaterialHandle_t(__thiscall* Fn)(void*);
 		return Utils::GetVFunc<Fn>(this, 88)(this);
-	}*/
-	virtual MaterialHandle_t	InvalidMaterial() = 0;
-	virtual IMaterial*			GetMaterial(MaterialHandle_t h) {
+	}
+	IMaterial*			GetMaterial(MaterialHandle_t h) {
 		typedef IMaterial*(__thiscall* Fn)(void*, MaterialHandle_t);
 		return Utils::GetVFunc<Fn>(this, 89)(this, h);
 	}
-	virtual int					GetNumMaterials() const = 0;
+	int			GetNumMaterials() {
+		typedef int(__thiscall* Fn)(void*);
+		return Utils::GetVFunc<Fn>(this, 90)(this);
+	}
 	virtual void				SetAsyncTextureLoadCache(void* hFileCache) = 0;
 	virtual ITexture *			FindTexture(char const* pTextureName, const char *pTextureGroupName, bool complain = true, int nAdditionalCreationFlags = 0) = 0;
 	virtual bool				IsTextureLoaded(char const* pTextureName) const = 0;
