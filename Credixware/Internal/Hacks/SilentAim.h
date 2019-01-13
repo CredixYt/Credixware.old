@@ -12,12 +12,10 @@ namespace SilentAim {
 				/*for (int i = 0; i < g_pClientEntityList->GetHighestEntityIndex(); i++) {
 					IClientEntity* Entity = g_pClientEntityList->GetClientEntity(i);
 					if (Entity) {
-						matrix3x4_t MatrixArray[128];
-						Vector BoneLocation;
-						Entity->SetupBones(&MatrixArray[0], 128, 0x00000100, 0.0f);
-						matrix3x4_t HitboxMatrix = MatrixArray[8];
-						BoneLocation = Vector(HitboxMatrix[0][3], HitboxMatrix[1][3], HitboxMatrix[2][3]);
-						printf("%f		%f		%f\n", BoneLocation.x, BoneLocation.y, BoneLocation.z);
+						matrix3x4_t BoneMatrix[128];
+						Entity->SetupBones(BoneMatrix, 128, 0x00000100, 0.0f);
+						Vector HeadVector = Vector(BoneMatrix[8][0][3], BoneMatrix[8][1][3], BoneMatrix[8][2][3]);
+						//printf("%i: %.1f	%.1f	%.1f\n", i, HeadVector.x, HeadVector.y, HeadVector.z);
 					}
 				}*/
 			}

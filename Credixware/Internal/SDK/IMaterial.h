@@ -6,6 +6,10 @@
 #include "ImageFormat.h"
 #include "basetypes.h"
 
+#include <fstream>
+#include <sstream>
+#include <ostream>
+
 class IMaterialVar;
 
 typedef uint64 VertexFormat_t;
@@ -99,12 +103,18 @@ public:
 	virtual bool			NeedsPowerOfTwoFrameBufferTexture(bool bCheckSpecificToThisFrame = true) = 0; // 26
 	virtual bool			NeedsFullFrameBufferTexture(bool bCheckSpecificToThisFrame = true) = 0; // 27
 	virtual bool			NeedsSoftwareSkinning(void) = 0; // 28
-	virtual void			AlphaModulate(float alpha);
+	void					AlphaModulate(float alpha) {
+		typedef void(__thiscall* Fn)(void*, float);
+		return Utils::GetVFunc<Fn>(this, 27)(this, alpha);
+	}
 	void					ColorModulate(float r, float g, float b) {
 		typedef void(__thiscall* Fn)(void*, float, float, float);
 		return Utils::GetVFunc<Fn>(this, 28)(this, r, g, b);
 	}
-	virtual void			SetMaterialVarFlag(MaterialVarFlags_t flag, bool on) = 0;
+	void					SetMaterialVarFlag(MaterialVarFlags_t flag, bool on) {
+		typedef void(__thiscall* Fn)(void*, MaterialVarFlags_t, bool);
+		return Utils::GetVFunc<Fn>(this, 29)(this, flag, on);
+	}
 	virtual bool			GetMaterialVarFlag(MaterialVarFlags_t flag) const = 0;
 	virtual void			GetReflectivity(Vector& reflect) = 0;
 	virtual bool			GetPropertyFlag(MaterialPropertyTypes_t type) = 0;
@@ -133,5 +143,6 @@ public:
 	virtual bool			WasReloadedFromWhitelist() = 0;
 	virtual bool			IsPrecached() const = 0;
 };
+
 
 #endif

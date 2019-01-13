@@ -9,10 +9,20 @@ class Vector2D
 {
 public:
 	vec_t x, y;
-	Vector2D(void);
-	Vector2D(vec_t X, vec_t Y);
-	Vector2D(const float *pFloat);
-	void Init(vec_t ix = 0.0f, vec_t iy = 0.0f);
+	Vector2D(void) {
+	}
+	Vector2D(vec_t X, vec_t Y) {
+		x = X;
+		y = Y;
+	}
+	Vector2D(const float *pFloat) {
+		x = *pFloat;
+		y = *pFloat;
+	}
+	void Init(vec_t ix = 0.0f, vec_t iy = 0.0f) {
+		x = ix;
+		y = iy;
+	}
 	bool IsValid() const;
 	vec_t operator[](int i) const;
 	vec_t& operator[](int i);

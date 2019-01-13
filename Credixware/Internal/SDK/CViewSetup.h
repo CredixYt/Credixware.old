@@ -14,50 +14,35 @@ enum StereoEye_t
 class CViewSetup
 {
 public:
-	CViewSetup()
-	{
-		m_flAspectRatio = 0.0f;
-		m_bRenderToSubrectOfLargerScreen = false;
-		m_bDoBloomAndToneMapping = true;
-		m_bOrtho = false;
-		m_bOffCenter = false;
-		m_bCacheFullSceneState = false;
-		m_bViewToProjectionOverride = false;
-		m_eStereoEye = STEREO_EYE_MONO;
-	}
-	int			x;
-	int			m_nUnscaledX;
-	int			y;
-	int			m_nUnscaledY;
-	int			width;
-	int			m_nUnscaledWidth;
-	int			height;
-	StereoEye_t m_eStereoEye;
-	int			m_nUnscaledHeight;
-	bool		m_bOrtho;
-	float		m_OrthoLeft;
-	float		m_OrthoTop;
-	float		m_OrthoRight;
-	float		m_OrthoBottom;
-	float		fov;
-	float		fovViewmodel;
-	Vector		origin;
-	QAngle		angles;
-	float		zNear;
-	float		zFar;
-	float		zNearViewmodel;
-	float		zFarViewmodel;
-	bool		m_bRenderToSubrectOfLargerScreen;
-	float		m_flAspectRatio;
-	bool		m_bOffCenter;
-	float		m_flOffCenterTop;
-	float		m_flOffCenterBottom;
-	float		m_flOffCenterLeft;
-	float		m_flOffCenterRight;
-	bool		m_bDoBloomAndToneMapping;
-	bool		m_bCacheFullSceneState;
-	bool        m_bViewToProjectionOverride;
-	VMatrix     m_ViewToProjection;
+	char _0x0000[16];
+	__int32 x;
+	__int32 x_old;
+	__int32 y;
+	__int32 y_old;
+	__int32 width;
+	__int32    width_old;
+	__int32 height;
+	__int32    height_old;
+	char _0x0030[128];
+	float fov;
+	float fovViewmodel;
+	Vector origin;
+	Vector angles;
+	float zNear;
+	float zFar;
+	float zNearViewmodel;
+	float zFarViewmodel;
+	float m_flAspectRatio;
+	float m_flNearBlurDepth;
+	float m_flNearFocusDepth;
+	float m_flFarFocusDepth;
+	float m_flFarBlurDepth;
+	float m_flNearBlurRadius;
+	float m_flFarBlurRadius;
+	float m_nDoFQuality;
+	__int32 m_nMotionBlurMode;
+	char _0x0104[68];
+	__int32 m_EdgeBlur;
 };
 
 

@@ -35,19 +35,20 @@ enum
 
 struct ModelRenderInfo_t
 {
-	Vector origin;
-	QAngle angles;
-	IClientRenderable *pRenderable;
-	const model_t *pModel;
-	const matrix3x4_t *pModelToWorld;
-	const matrix3x4_t *pLightingOffset;
-	const Vector *pLightingOrigin;
-	int flags;
-	int entity_index;
-	int skin;
-	int body;
-	int hitboxset;
-	ModelInstanceHandle_t instance;
+	Vector                  origin;
+	QAngle                  angles;
+	char					pad0[0x04]; // fix
+	IClientRenderable*      pRenderable;
+	const model_t*          pModel;
+	const matrix3x4_t*      pModelToWorld;
+	const matrix3x4_t*      pLightingOffset;
+	const Vector*           pLightingOrigin;
+	int                     flags;
+	int                     entity_index;
+	int                     skin;
+	int                     body;
+	int                     hitboxset;
+	ModelInstanceHandle_t   instance;
 
 	ModelRenderInfo_t()
 	{
@@ -129,7 +130,10 @@ class IVModelRender
 {
 public:
 	virtual int		DrawModel(int flags, IClientRenderable *pRenderable, ModelInstanceHandle_t instance, int entity_index, const model_t *model, Vector const& origin, QAngle const& angles, int skin, int body, int hitboxset, const matrix3x4_t *modelToWorld = NULL, const matrix3x4_t *pLightingOffset = NULL) = 0;
-	virtual void	ForcedMaterialOverride(IMaterial *newMaterial, OverrideType_t nOverrideType = OVERRIDE_NORMAL) = 0;
+	void	ForcedMaterialOverride(IMaterial *newMaterial, OverrideType_t nOverrideType = OVERRIDE_NORMAL, int unknown = 0) {
+		typedef void(__thiscall* Fn)(void*, IMaterial*, OverrideType_t, int);
+		Utils::GetVFunc<Fn>(this, 1)(this, newMaterial, nOverrideType, unknown);
+	}
 	virtual void	SetViewTarget(const CStudioHdr *pStudioHdr, int nBodyIndex, const Vector& target) = 0;
 	virtual ModelInstanceHandle_t CreateInstance(IClientRenderable *pRenderable, LightCacheHandle_t *pCache = NULL) = 0;
 	virtual void DestroyInstance(ModelInstanceHandle_t handle) = 0;

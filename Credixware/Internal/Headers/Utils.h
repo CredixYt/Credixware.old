@@ -44,6 +44,12 @@ namespace Utils {
 	}
 
 	bool GetKey(int vKey) {
+		bool bReturn = (bPreviousKey[vKey] && !GetAsyncKeyState(vKey));
+		bPreviousKey[vKey] = GetAsyncKeyState(vKey);
+		return bReturn;
+	}
+
+	bool GetKeyDown(int vKey) {
 		bool bReturn = (!bPreviousKey[vKey] && GetAsyncKeyState(vKey));
 		bPreviousKey[vKey] = GetAsyncKeyState(vKey);
 		return bReturn;

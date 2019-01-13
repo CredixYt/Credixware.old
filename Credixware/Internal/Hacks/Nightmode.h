@@ -10,14 +10,32 @@ namespace Nightmode {
 		for (MaterialHandle_t i = g_pMaterialSystem->FirstMaterial(); i < g_pMaterialSystem->GetNumMaterials(); i = g_pMaterialSystem->NextMaterial(i)) {
 			IMaterial* mat = g_pMaterialSystem->GetMaterial(i);
 			if (mat) {
-				const char* name = mat->GetTextureGroupName();
-				std::string GroupName = name;
-				std::cout << GroupName << "\n";
-				if (GroupName.find("World") || GroupName.find("StaticProp")) {
-					mat->ColorModulate(0.2, 0.2, 0.2);
+				const char* groupName = mat->GetTextureGroupName();
+				std::string GroupName = groupName;
+
+				if ((GroupName.find("World") || GroupName.find("Model") || GroupName.find("StaticProp"))) {
+					mat->ColorModulate(0.25f, 0.25f, 0.5f);
 				}
 			}
 		}
+		Chams::Init();
+		Menu::Init();
+	}
+
+	void Reset() {
+		for (MaterialHandle_t i = g_pMaterialSystem->FirstMaterial(); i < g_pMaterialSystem->GetNumMaterials(); i = g_pMaterialSystem->NextMaterial(i)) {
+			IMaterial* mat = g_pMaterialSystem->GetMaterial(i);
+			if (mat) {
+				const char* groupName = mat->GetTextureGroupName();
+				std::string GroupName = groupName;
+
+				if ((GroupName.find("World") || GroupName.find("Model") || GroupName.find("StaticProp"))) {
+					mat->ColorModulate(1.0f, 1.0f, 1.0f);
+				}
+			}
+		}
+		Chams::Init();
+		Menu::Init();
 	}
 }
 

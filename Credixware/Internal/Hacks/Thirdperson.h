@@ -7,9 +7,12 @@
 
 namespace Thirdperson {
 	void Update(CViewSetup* setup) {
+		if (Utils::GetKey(Settings::Misc::ThirdpersonToggleKey)) {
+			Settings::Misc::bThirdperson = !Settings::Misc::bThirdperson;
+		}
 		if (g_pEngineClient->IsInGame()) {
 			if (g_pInput) {
-				if (Settings::Misc::bThirdperson && !GetAsyncKeyState(Settings::Misc::ThirdpersonOffKey)) {
+				if (Settings::Misc::bThirdperson) {
 					g_pInput->m_fCameraInThirdPerson = true;
 					Vector vec = CalculateCameraOffset(Vector(oldViewAngles.x, oldViewAngles.y, oldViewAngles.z), Settings::Misc::ThirdpersonDistance);
 					g_pInput->m_vecCameraOffset.x = vec.x;
@@ -21,6 +24,11 @@ namespace Thirdperson {
 				}
 			}
 		}
+	}
+
+	void Reset() {
+		Settings::Misc::bThirdperson = false;
+		Update(nullptr);
 	}
 }
 

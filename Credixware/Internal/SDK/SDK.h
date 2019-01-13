@@ -7,6 +7,7 @@
 #include "C_BaseEntity.h"
 #include "C_BasePlayer.h"
 #include "CInput.h"
+#include "ClientClass.h"
 #include "Color.h"
 #include "ConVar.h"
 #include "CViewSetup.h"
@@ -28,6 +29,8 @@
 #include "IPanel.h"
 #include "ISurface.h"
 #include "IVEngineClient.h"
+#include "IVModelInfo.h"
 #include "IVModelRender.h"
+#include "KeyValues.h"
 
 #endif

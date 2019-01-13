@@ -180,5 +180,20 @@
     <ClInclude Include="Headers\MenuWrapper.h">
       <Filter>Headers</Filter>
     </ClInclude>
+    <ClInclude Include="SDK\IVModelInfo.h">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\ClientClass.h">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Hacks\Bunnyhop.h">
+      <Filter>Hacks</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\KeyValues.h">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Hacks\Chams.h">
+      <Filter>Hacks</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

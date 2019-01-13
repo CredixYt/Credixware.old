@@ -4,19 +4,17 @@
 #include "Headers/Interfaces.h"
 #include "Headers/Hooks.h"
 
-HMODULE MyModule;
-
 int main() {
 	Utils::CreateConsole("Credixware-Debug");
 	Interfaces::Init();
 	Hooks::Init();
 	Hacks::Init();
 	while (true) {
-		if (GetAsyncKeyState(VK_DELETE)) {
+		if(exitButton->GetValue()) {
 			Hooks::Reset();
+			Hacks::Reset();
 			Utils::CloseConsole();
 			FreeLibraryAndExitThread(MyModule, 0);
-			return 0;
 		}
 		if (Utils::GetKey(VK_F12)) {
 			Nightmode::Perform();

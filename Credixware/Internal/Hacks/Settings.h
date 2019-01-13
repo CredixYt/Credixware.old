@@ -18,15 +18,62 @@ enum SilentAimType_t {
 
 namespace Settings {
 	namespace Misc {
+		/* THIRDPERSON */
 		bool bThirdperson = true;
 		float ThirdpersonDistance = 5.0f;
-		short ThirdpersonOffKey = VK_MENU;
+		short ThirdpersonToggleKey = VK_MENU;
+
+		/* BUNNYHOP & AUTOSTRAFE */
+		bool bBunnyhop = true;
+		short BunnyhopKey = VK_SPACE;
 	}
 	namespace Rage {
 		bool bAntiaim = true;
-		AntiAimType_t antiAimType = ANTIAIM_SLOW_SPIN;
+		AntiAimType_t antiAimType = ANTIAIM_NONE;
 		bool bSilentAim = true;
 		SilentAimType_t silentAimType = SILENTAIM_CLOSEST_TO_CROSSHAIR;
+	}
+
+	namespace Visuals {
+		bool bChams = true;
+		bool bChamsOnlyEnemies = false;
+		bool bChamsHandChams = true;
+
+		/*               WARNING: RANT                  */
+		/*                                              */
+		/*    I just can't seem to understand why       */
+		/*    these motherf*ckers can't make it so      */
+		/*  that if you input a color code bigger than  */
+		/*  1.0f it divides by 255 and if it's less     */
+		/*  than 1.0f it doesn't. Because now I have    */
+		/*   to write this ugly ass code to divide      */
+		/*  my color codes by 255, so I can use the     */
+		/*  standard color codes everyone else uses!    */
+		/*              Thank you Valve!                */
+		/*                                              */
+		/*                  RANT END                    */
+
+		float enemyBehindWallR =	193.0f / 255;
+		float enemyBehindWallG =	30.0f  / 255;
+		float enemyBehindWallB =	54.0f  / 255;
+		float enemyIgnoreZR =		0.0f   / 255;
+		float enemyIgnoreZG =		179.0f / 255;
+		float enemyIgnoreZB =		235.0f / 255;
+
+		float allyBehindWallR =		193.0f / 255;
+		float allyBehindWallG =		30.0f  / 255;
+		float allyBehindWallB =		54.0f  / 255;
+		float allyIgnoreZR =		0.0f   / 255;
+		float allyIgnoreZG =		179.0f / 255;
+		float allyIgnoreZB =		235.0f / 255;
+
+		float handChamsR = 235.0f / 255;
+		float handChamsG = 254.0f / 255;
+		float handChamsB = 3.0f  / 255;
+
+		/*float handChamsR = 116.0f / 255;
+		float handChamsG = 111.0f / 255;
+		float handChamsB = 210.0f / 255;*/
 	}
 }
 

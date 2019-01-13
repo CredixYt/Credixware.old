@@ -81,7 +81,10 @@ public:
 		typedef bool(__thiscall* Fn)(void*);
 		return Utils::GetVFunc<Fn>(this, 26)(this);
 	}
-	virtual bool				IsConnected(void) = 0;
+	bool						IsConnected(void) {
+		typedef bool(__thiscall* Fn)(void*);
+		return Utils::GetVFunc<Fn>(this, 27)(this);
+	}
 	virtual bool				IsDrawingLoadingImage(void) = 0;
 	virtual void				Con_NPrintf(int pos, const char *fmt, ...) = 0;
 	virtual void				Con_NXPrintf(const struct con_nprint_s *info, const char *fmt, ...) = 0;
@@ -94,7 +97,10 @@ public:
 		typedef const VMatrix&(__thiscall* Fn)(void*);
 		return Utils::GetVFunc<Fn>(this, 37)(this);
 	}
-	virtual const VMatrix& 		WorldToViewMatrix() = 0;
+	const VMatrix& WorldToViewMatrix() {
+		typedef const VMatrix&(__thiscall* Fn)(void*);
+		return Utils::GetVFunc<Fn>(this, 38)(this);
+	}
 	virtual int					GameLumpVersion(int lumpId) const = 0;
 	virtual int					GameLumpSize(int lumpId) const = 0;
 	virtual bool				LoadGameLump(int lumpId, void* pBuffer, int size) = 0;

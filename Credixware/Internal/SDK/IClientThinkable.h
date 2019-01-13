@@ -56,7 +56,10 @@ public:
 	virtual class IClientNetworkable*	GetClientNetworkable() = 0;
 	virtual class IClientRenderable*	GetClientRenderable() = 0;
 	virtual class IClientEntity*		GetIClientEntity() = 0;
-	virtual C_BaseEntity*		GetBaseEntity() = 0;
+	virtual C_BaseEntity*		GetBaseEntity() {
+		typedef C_BaseEntity*(__thiscall* Fn)(void*);
+		return Utils::GetVFunc<Fn>(this, 4)(this);
+	}
 	virtual IClientThinkable*	GetClientThinkable() = 0;
 };
 

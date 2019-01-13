@@ -248,10 +248,13 @@ public:
 	virtual void CalculateMouseVisible() = 0;
 	virtual bool NeedKBInput() = 0;
 	virtual bool HasCursorPosFunctions() = 0;
-	virtual void SurfaceGetCursorPos(int &x, int &y) = 0;
+	void SurfaceGetCursorPos(int &x, int &y) {
+		typedef void(__thiscall* Fn)(void*, int&, int&);
+		Utils::GetVFunc<Fn>(this, 100)(this, x, y);
+	}
 	void GetTextSize(int &x, int &y) {
 		typedef bool(__thiscall* Fn)(void*, int, int);
-		Utils::GetVFunc<Fn>(this, 100)(this, x, y);
+		Utils::GetVFunc<Fn>(this, 79)(this, x, y);
 	}
 	virtual void SurfaceSetCursorPos(int x, int y) = 0;
 	virtual void DrawTexturedLine(const Vertex_t &a, const Vertex_t &b) = 0;

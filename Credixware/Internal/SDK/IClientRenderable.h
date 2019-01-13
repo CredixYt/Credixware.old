@@ -46,7 +46,9 @@ public:
 	virtual int		GetFxBlend(void) = 0;
 	virtual void	GetColorModulation(float* color) = 0;
 	virtual bool	LODTest() = 0;
-	virtual bool	SetupBones(matrix3x4_t *pBoneToWorldOut, int nMaxBones, int boneMask, float currentTime) {
+	bool			SetupBones(matrix3x4_t *pBoneToWorldOut, int nMaxBones, int boneMask, float currentTime) {
+		typedef bool(__thiscall* Fn)(void*, matrix3x4_t*, int, int, float);
+		return Utils::GetVFunc<Fn>(this, 13)(this, pBoneToWorldOut, nMaxBones, boneMask, currentTime);
 	}
 	virtual void	SetupWeights(const matrix3x4_t *pBoneToWorld, int nFlexWeightCount, float *pFlexWeights, float *pFlexDelayedWeights) = 0;
 	virtual void	DoAnimationEvents(void) = 0;

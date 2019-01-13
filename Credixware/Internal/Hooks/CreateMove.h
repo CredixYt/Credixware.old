@@ -38,6 +38,7 @@ void CorrectMovement(QAngle vOldAngles, CUserCmd* pCmd, float fOldForward, float
 
 bool __fastcall hkCreateMove(void* ecx, void* edx, float sampleTime, CUserCmd* UserCmd) {
 	oldViewAngles = UserCmd->viewangles;
+	Bunnyhop::Tick(UserCmd);
 	if (Settings::Rage::antiAimType != ANTIAIM_NONE && Settings::Rage::bAntiaim && !GetAsyncKeyState(VK_LBUTTON)) {
 		UserCmd->viewangles.x = antiAimX;
 		UserCmd->viewangles.y = antiAimY;

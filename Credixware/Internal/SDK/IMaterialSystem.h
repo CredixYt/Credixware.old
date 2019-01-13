@@ -197,7 +197,10 @@ public:
 	virtual void				ReloadTextures() = 0;
 	virtual void				ReloadMaterials(const char *pSubString = NULL) = 0;
 	virtual IMaterial *			CreateMaterial(const char *pMaterialName, KeyValues *pVMTKeyValues) = 0;
-	virtual IMaterial *			FindMaterial(char const* pMaterialName, const char *pTextureGroupName, bool complain = true, const char *pComplainPrefix = NULL) = 0;
+	IMaterial *					FindMaterial(char const* pMaterialName, const char *pTextureGroupName, bool complain = true, const char *pComplainPrefix = NULL) {
+		typedef IMaterial*(__thiscall* Fn)(void*, char const*, const char*, bool, const char*);
+		return Utils::GetVFunc<Fn>(this, 84)(this, pMaterialName, pTextureGroupName, complain, pComplainPrefix);
+	}
 	virtual bool				IsMaterialLoaded(char const* pMaterialName) = 0;
 	MaterialHandle_t	FirstMaterial() {
 		typedef MaterialHandle_t(__thiscall* Fn)(void*);

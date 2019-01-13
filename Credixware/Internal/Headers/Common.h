@@ -9,6 +9,7 @@
 // Standard
 #include <cstdint>
 #include <stdio.h>
+#include <thread>
 
 // Types
 #include <float.h>

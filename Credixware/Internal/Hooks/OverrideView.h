@@ -11,6 +11,9 @@ unsigned int* oOverrideViewFunc;
 
 void __fastcall hkOverrideView(void* ecx, void* edx, CViewSetup* setup) {
 	Thirdperson::Update(setup);
+	// FOV Changer
+	// NOTE: Really buggy when scoped in
+	//setup->fov = 100.0f;
 	oOverrideView(ecx, setup);
 }
 
