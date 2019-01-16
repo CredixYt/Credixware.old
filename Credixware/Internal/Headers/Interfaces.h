@@ -18,6 +18,7 @@ IVModelInfo* g_pModelInfo;
 IMaterialSystem* g_pMaterialSystem;
 void* g_pClient;
 void* g_pClientMode;
+void* g_pGameEventManager;
 
 namespace Interfaces {
 	void Init() {
@@ -27,6 +28,7 @@ namespace Interfaces {
 		g_pEngineClient = Utils::CaptureInterface<IVEngineClient>("engine.dll", "VEngineClient014");
 		g_pModelRender = Utils::CaptureInterface<IVModelRender>("engine.dll", "VEngineModel016");
 		g_pModelInfo = Utils::CaptureInterface<IVModelInfo>("engine.dll", "VModelInfoClient004");
+		g_pGameEventManager = Utils::CaptureInterface<void>("engine.dll", "GAMEEVENTSMANAGER002");
 		g_pMaterialSystem = Utils::CaptureInterface<IMaterialSystem>("materialsystem.dll", "VMaterialSystem080");
 		g_pClient = Utils::CaptureInterface<void>("client_panorama.dll", "VClient018");
 		g_pClientMode = **(DWORD***)((*(uintptr_t**)g_pClient)[10] + 0x5);

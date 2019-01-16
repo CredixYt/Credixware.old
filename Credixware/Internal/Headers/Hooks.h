@@ -3,11 +3,13 @@
 #define HOOKS_H
 
 #include "Common.h"
-#include "../Hooks/PaintTraverse.h"
 #include "../Hooks/CreateMove.h"
+#include "../Hooks/DrawModelExecute.h"
+#include "../Hooks/FireEvent.h"
+#include "../Hooks/FireEventClientSide.h"
 #include "../Hooks/FrameStageNotify.h"
 #include "../Hooks/OverrideView.h"
-#include "../Hooks/DrawModelExecute.h"
+#include "../Hooks/PaintTraverse.h"
 
 namespace Hooks {
 	template <class T>
@@ -40,6 +42,8 @@ namespace Hooks {
 		oOverrideView = Hook<OverrideView_t>(g_pClientMode, 18, &hkOverrideView);
 		oFrameStageNotify = Hook<FrameStageNotify_t>(g_pClient, 37, &hkFrameStageNotify);
 		oDrawModelExecute = Hook<DrawModelExecute_t>(g_pModelRender, 21, &hkDrawModelExecute);
+		oFireEventClientSide = Hook<FireEventClientSide_t>(g_pGameEventManager, 9, &hkFireEventClientSide);
+		oFireEvent = Hook<FireEvent_t>(g_pGameEventManager, 8, &hkFireEvent);
 	}
 
 	void Reset() {
@@ -48,6 +52,8 @@ namespace Hooks {
 		Unhook(g_pClientMode, 18, oOverrideView);
 		Unhook(g_pClient, 37, oFrameStageNotify);
 		Unhook(g_pModelRender, 21, oDrawModelExecute);
+		Unhook(g_pGameEventManager, 9, oFireEventClientSide);
+		Unhook(g_pGameEventManager, 8, oFireEvent);
 	}
 }
 

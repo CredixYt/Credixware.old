@@ -25,7 +25,10 @@ class IVModelInfo
 public:
 	virtual							~IVModelInfo(void) { }
 	virtual const model_t			*GetModel(int modelindex) = 0;
-	virtual int						GetModelIndex(const char *name) const = 0;
+	int								GetModelIndex(const char *name) {
+		typedef int(__thiscall* Fn)(void*, const char*);
+		return Utils::GetVFunc<Fn>(this, 2)(this, name);
+	}
 	const char						*GetModelName(const model_t *model) {
 		typedef const char*(__thiscall* Fn)(void*, const model_t*);
 		return Utils::GetVFunc<Fn>(this, 3)(this, model);

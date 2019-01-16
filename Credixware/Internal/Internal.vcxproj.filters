@@ -195,5 +195,20 @@
     <ClInclude Include="Hacks\Chams.h">
       <Filter>Hacks</Filter>
     </ClInclude>
+    <ClInclude Include="SDK\C_BaseViewModel.h">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Hooks\FireEventClientSide.h">
+      <Filter>Hooks</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\IGameEvent.h">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Hooks\FireEvent.h">
+      <Filter>Hooks</Filter>
+    </ClInclude>
+    <ClInclude Include="Hacks\Events.h">
+      <Filter>Hacks</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

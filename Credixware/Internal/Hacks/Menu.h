@@ -18,7 +18,7 @@ namespace Menu {
 		font = g_pSurface->_CreateFont();
 		g_pSurface->SetFontGlyphSet(font, FONT_FAMILY_NAME, FONT_SIZE, FONT_WEIGHT, 0, 0, FONT_FLAGS);
 		fontSmall = g_pSurface->_CreateFont();
-		g_pSurface->SetFontGlyphSet(fontSmall, FONT_FAMILY_NAME, FONT_SIZE - 4, FONT_WEIGHT, 0, 0, FONT_FLAGS);
+		g_pSurface->SetFontGlyphSet(fontSmall, FONT_FAMILY_NAME, FONT_SIZE - 2, FONT_WEIGHT, 0, 0, FONT_FLAGS);
 		fontBig = g_pSurface->_CreateFont();
 		g_pSurface->SetFontGlyphSet(fontBig, FONT_FAMILY_NAME, FONT_SIZE + 4, FONT_WEIGHT, 0, 0, FONT_FLAGS);
 
@@ -159,6 +159,7 @@ namespace Menu {
 			GetStringSize(wide, tall, MENU_TITLE_TEXT);
 			DrawString(MENU_X + 5, MENU_Y + MENU_TITLE_BAR_HEIGHT / 2 - tall / 2, MENU_TITLE_TEXT);
 		}
+
 		DrawString(5, 5, WATERMARK_TEXT);
 
 		prev_cursor_x = cursor_x;

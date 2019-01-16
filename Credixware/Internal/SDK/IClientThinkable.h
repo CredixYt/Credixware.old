@@ -3,8 +3,6 @@
 #ifndef ICLIENTTHINKABLE_H
 #define ICLIENTTHINKABLE_H
 
-
-
 class ICollideable;
 
 class CClientThinkHandlePtr;

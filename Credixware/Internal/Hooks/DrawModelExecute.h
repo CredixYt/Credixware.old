@@ -21,11 +21,16 @@ void __fastcall hkDrawModelExecute(void* ecx, void* edx, void* thisptr, const Dr
 				const char* entityType = EntityClass->GetName();
 				std::string EntityType = entityType;
 				if (EntityType == "CCSPlayer" && pInfo.entity_index != g_pEngineClient->GetLocalPlayer() && Settings::Visuals::bChams) {
+					//printf("%i	|	%i\n", pInfo.entity_index, g_pEngineClient->GetLocalPlayer());
 					if (Chams::enemyBehindWall && Chams::enemyIgnoreZ) {
 						g_pModelRender->ForcedMaterialOverride(Chams::enemyIgnoreZ);
 						oDrawModelExecute(ecx, thisptr, state, pInfo, pCustomBoneToWorld);
 						g_pModelRender->ForcedMaterialOverride(Chams::enemyBehindWall);
 					}
+				}
+				else if (pInfo.entity_index == g_pEngineClient->GetLocalPlayer()) {
+					//printf("%i	|	%i\n", pInfo.entity_index, g_pEngineClient->GetLocalPlayer());
+					g_pModelRender->ForcedMaterialOverride(NULL);
 				}
 				if (Settings::Visuals::bChamsHandChams) {
 					if (EntityType == "CPredictedViewModel") {

@@ -1,3 +1,9 @@
+## Changelog v1.6:
+- _[Internal]_ Hacks:Added Bunnyhop and Skinchanger
+- _[Internal]_ Hooked functions FireEventClientSide, FireEvent
+- _[Internal]_ SDK: Added IGameEvent
+- _[Internal]_ Utils: Added RGB2HSV and HSV2RGB
+
 ## Changelog v1.5:
 - Today's update is quite big. A lot of things had been added. Enjoy!
 - _[Internal]_ Hacks: Added Chams, proper Menu

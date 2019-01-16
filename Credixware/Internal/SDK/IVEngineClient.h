@@ -10,7 +10,30 @@
 #include "../Headers/Utils.h"
 
 struct model_t;
-struct player_info_t;
+class player_info_t {
+public:
+	__int64 __unk0;
+public:
+	union {
+		__int64 steam_id64;
+		struct {
+			int xuid_low;
+			int xuid_high;
+		};
+	};
+public:
+	char player_name[128];
+	int user_id;
+	char guid[32 + 1];
+	char __pad0[0x3];
+	uint32_t friends_id;
+	char friends_name[128];
+	bool fake_player;
+	bool is_hltv;
+	uint32_t custom_files[4];
+	uint8_t files_downloaded;
+};
+
 struct client_textmessage_t;
 struct AudioState_t;
 struct OcclusionParams_t;
@@ -56,7 +79,10 @@ public:
 		return Utils::GetVFunc<Fn>(this, 12)(this);
 	}
 	virtual const model_t		*LoadModel(const char *pName, bool bProp = false) = 0;
-	virtual float				Time(void) = 0;
+	float						Time() {
+		typedef float(__thiscall* Fn)(void*);
+		return Utils::GetVFunc<Fn>(this, 14)(this);
+	};
 	virtual float				GetLastTimeStamp(void) = 0;
 	virtual CSentence			*GetSentence(CAudioSource *pAudioSource) = 0;
 	virtual float				GetSentenceLength(CAudioSource *pAudioSource) = 0;

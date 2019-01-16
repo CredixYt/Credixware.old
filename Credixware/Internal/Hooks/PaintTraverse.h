@@ -13,6 +13,7 @@ void __fastcall hkPaintTraverse(void* ecx, void* edx, VPANEL vguiPanel, bool bFo
 	const char* panelName = g_pPanel->GetName(vguiPanel);
 	if (!strcmp(panelName, "MatSystemTopPanel")) {
 		ESP::Draw();
+		Events::Draw();
 		Menu::Draw();
 	}
 	oPaintTraverse(ecx, vguiPanel, bForceRepaint, bAllowForce);

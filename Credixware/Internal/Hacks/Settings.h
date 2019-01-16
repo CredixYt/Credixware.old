@@ -34,7 +34,8 @@ namespace Settings {
 		SilentAimType_t silentAimType = SILENTAIM_CLOSEST_TO_CROSSHAIR;
 	}
 
-	namespace Visuals {
+	namespace Visuals{
+
 		bool bChams = true;
 		bool bChamsOnlyEnemies = false;
 		bool bChamsHandChams = true;
