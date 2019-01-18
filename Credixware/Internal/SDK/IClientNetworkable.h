@@ -35,8 +35,14 @@ public:
 	virtual void			OnDataChanged(DataUpdateType_t updateType) = 0;				// 5
 	virtual void			PreDataUpdate(DataUpdateType_t updateType) = 0;				// 6
 	virtual void			PostDataUpdate(DataUpdateType_t updateType) = 0;			// 7
-	virtual bool			IsDormant(void) = 0;										// 8
-	virtual int				entindex(void) = 0;
+	bool					IsDormant() {
+		typedef bool(__thiscall* Fn)(void*);
+		return Utils::GetVFunc<Fn>(this, 9)(this);
+	}
+	int						entindex() {
+		typedef int(__thiscall* Fn)(void*);
+		return Utils::GetVFunc<Fn>(this, 10)(this);
+	}
 	virtual void			ReceiveMessage(int classID, bf_read &msg) = 0;
 	virtual void*			GetDataTableBasePtr() = 0;
 	virtual void			SetDestroyedOnRecreateEntities(void) = 0;

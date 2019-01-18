@@ -16,6 +16,7 @@ namespace Hacks {
 	void Init() {
 		Menu::Init();
 		ESP::Init();
+		Skinchanger::Init();
 		/* NOTE: Chams needs to be initalized last, because it will halt until we are in game */
 		Chams::Init();
 	}

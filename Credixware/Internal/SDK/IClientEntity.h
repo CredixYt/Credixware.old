@@ -18,10 +18,6 @@ class IClientEntity : public IClientUnknown, public IClientRenderable, public IC
 {
 public:
 	virtual void			Release(void) = 0;
-	/*const Vector&	GetAbsOrigin() {
-		typedef const Vector(__thiscall* Fn)(void*);
-		return Utils::GetVFunc<Fn>(this, 1)(this);
-	}*/
 	virtual const Vector&	GetAbsOrigin() = 0;
 	virtual const QAngle&	GetAbsAngles(void) const = 0;
 	virtual CMouthInfo		*GetMouth(void) = 0;

@@ -71,12 +71,12 @@ void DrawOutlineBox(int x, int y, int w, int h, int color_input[]) {
 
 void DrawLine(int x, int y, int x2, int y2) {
 	g_pSurface->DrawSetColor(color_dark[0], color_dark[1], color_dark[2], color_dark[3]);
-	g_pSurface->DrawOutlinedRect(x, y, x2, y2);
+	g_pSurface->DrawLine(x, y, x2, y2);
 }
 
 void DrawLine(int x, int y, int x2, int y2, int color_input[]) {
 	g_pSurface->DrawSetColor(color_input[0], color_input[1], color_input[2], color_input[3]);
-	g_pSurface->DrawOutlinedRect(x, y, x2, y2);
+	g_pSurface->DrawLine(x, y, x2, y2);
 }
 
 void DrawString(int x, int y, const char* text) {

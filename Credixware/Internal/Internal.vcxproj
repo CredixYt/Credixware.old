@@ -93,6 +93,7 @@
     <ClInclude Include="Headers\Hooks.h" />
     <ClInclude Include="Headers\Interfaces.h" />
     <ClInclude Include="Headers\MenuWrapper.h" />
+    <ClInclude Include="Headers\Offsets.h" />
     <ClInclude Include="Headers\Utils.h" />
     <ClInclude Include="Hooks\CreateMove.h" />
     <ClInclude Include="Hooks\DrawModelExecute.h" />

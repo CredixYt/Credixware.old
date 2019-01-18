@@ -39,8 +39,11 @@ public:
 	virtual bool					UsesFullFrameBufferTexture() = 0;
 	virtual ClientShadowHandle_t	GetShadowHandle() const = 0;
 	virtual ClientRenderHandle_t&	RenderHandle() = 0;
-	virtual const model_t*			GetModel() const = 0;
-	virtual int						DrawModel(int flags) = 0;
+	const model_t*					GetModel() {
+		typedef const model_t*(__thiscall* Fn)(void*);
+		return Utils::GetVFunc<Fn>(this, 6)(this);
+	};
+	virtual int		DrawModel(int flags) = 0;
 	virtual int		GetBody() = 0;
 	virtual void	ComputeFxBlend() = 0;
 	virtual int		GetFxBlend(void) = 0;

@@ -41,7 +41,7 @@ namespace Interfaces {
 }
 
 Vector2D WorldToScreen(Vector point3D) {
-	VMatrix viewMatrix = g_pEngineClient->WorldToViewMatrix();
+	VMatrix viewMatrix = g_pEngineClient->WorldToScreenMatrix();
 	int width, height;
 	g_pEngineClient->GetScreenSize(width, height);
 	float returnx = 1.0f;

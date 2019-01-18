@@ -53,7 +53,11 @@ public:
 	void	CopyToArray(float* rgfl) const;
 	void	MulAdd(const Vector2D& a, const Vector2D& b, float scalar);
 	vec_t	Dot(const Vector2D& vOther) const;
-	Vector2D& operator=(const Vector2D &vOther);
+	Vector2D& operator=(const Vector2D &vOther) {
+		x = vOther.x;
+		y = vOther.y;
+		return (Vector2D&)vOther;
+	}
 #ifndef VECTOR_NO_SLOW_OPERATIONS
 	Vector2D(const Vector2D &vOther);
 	Vector2D	operator-(void) const;

@@ -1,5 +1,10 @@
+## Changelog v1.7:
+- _[Internal]_ Fixed: DrawLine (ISurface)
+- _[Internal]_ Hacks: Added ESP
+- _[Internal]_ Headers: Added Offsets
+
 ## Changelog v1.6:
-- _[Internal]_ Hacks:Added Bunnyhop and Skinchanger
+- _[Internal]_ Hacks: Added Bunnyhop and Skinchanger
 - _[Internal]_ Hooked functions FireEventClientSide, FireEvent
 - _[Internal]_ SDK: Added IGameEvent
 - _[Internal]_ Utils: Added RGB2HSV and HSV2RGB

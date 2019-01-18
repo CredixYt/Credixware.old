@@ -210,5 +210,8 @@
     <ClInclude Include="Hacks\Events.h">
       <Filter>Hacks</Filter>
     </ClInclude>
+    <ClInclude Include="Headers\Offsets.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

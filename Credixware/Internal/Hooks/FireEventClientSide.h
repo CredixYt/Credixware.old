@@ -18,28 +18,26 @@ bool __fastcall hkFireEventClientSide(void* ecx, void* edx, IGameEvent* pEvent) 
 		return oFireEventClientSide(ecx, pEvent);
 	}
 
-	player_info_t localPlayer;
-
-	if (!g_pEngineClient->GetPlayerInfo(g_pEngineClient->GetLocalPlayer(), &localPlayer)) {
-		return oFireEventClientSide(ecx, pEvent);
-	}
-
-	/*if (_strcmpi(pEvent->GetName(), "player_hurt")) {
-		int attacker = pEvent->GetInt("attacker");
-		if (attacker == localPlayer.user_id) {
-			PlaySoundA("csgo\\sound\\hitsound.wav", NULL, SND_ASYNC);
-		}
-	}*/
+	//printf("%s\n", pEvent->GetName());
 
 	if (_strcmpi(pEvent->GetName(), "item_equip") == 0) {
 		int weaponType = pEvent->GetInt("weptype");
 		int userID = pEvent->GetInt("userid");
-		if (weaponType == WEAPONTYPE_KNIFE && userID == localPlayer.user_id) {
+		if (weaponType == WEAPONTYPE_KNIFE && userID == iLocalID) {
 			bKnifeEquipped = true;
 		}
 		else {
 			bKnifeEquipped = false;
 		}
+	}
+
+	if (_strcmpi(pEvent->GetName(), "player_spawn") == 0) {
+		player_info_t localPlayer;
+
+		if (g_pEngineClient->GetPlayerInfo(g_pEngineClient->GetLocalPlayer(), &localPlayer)) {
+			iLocalID = localPlayer.user_id;
+		}
+		
 	}
 	return oFireEventClientSide(ecx, pEvent);
 }

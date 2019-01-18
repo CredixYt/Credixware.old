@@ -104,7 +104,7 @@ public:
 	}
 	void DrawLine(int x0, int y0, int x1, int y1) {
 		typedef void(__thiscall* Fn)(void*, int, int, int, int);
-		Utils::GetVFunc<Fn>(this, 19)(this, x0, y0, x1, y0);
+		Utils::GetVFunc<Fn>(this, 19)(this, x0, y0, x1, y1);
 	}
 	virtual void DrawPolyLine(int *px, int *py, int numPoints) = 0;
 	void DrawSetTextFont(HFont font) {

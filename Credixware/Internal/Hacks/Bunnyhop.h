@@ -3,6 +3,7 @@
 #define BUNNYHOP_H
 
 #include "../Headers/Interfaces.h"
+#include "../Headers/Offsets.h"
 #include "../Hacks/Settings.h"
 
 namespace Bunnyhop {
@@ -22,7 +23,7 @@ namespace Bunnyhop {
 			return;
 		}
 
-		int fFlags = *reinterpret_cast<int*>((DWORD)LocalEntity->GetBaseEntity() + 0x104);
+		int fFlags = *reinterpret_cast<int*>((DWORD)LocalEntity->GetBaseEntity() + Offsets::m_fFlags);
 		if (fFlags & FL_ONGROUND) {
 			pCmd->buttons |= IN_JUMP;
 		}
