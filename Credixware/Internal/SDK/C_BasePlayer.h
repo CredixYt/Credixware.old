@@ -38,6 +38,21 @@
 #define	FL_INWATER				(1 << 10)
 #define FL_HIDEHUD_SCOPE		(1 << 11)
 
+/*class CPlayerState
+{
+public:
+	virtual ~CPlayerState() {}
+	bool		deadflag;
+	QAngle		v_angle;
+	string_t	netname;
+	int			fixangle;
+	QAngle		anglechange;
+	bool		hltv;
+	bool		replay;
+	int			frags;
+	int			deaths;
+};
+
 class C_BasePlayer
 {
 public:
@@ -64,7 +79,25 @@ public:
 		typedef C_BaseViewModel*(__thiscall* Fn)(void*, int, bool);
 		return Utils::GetVFunc<Fn>(this, 14)(this, viewmodelindex, bObserverOK);
 	}
-};
-
+public:
+	CPlayerState			pl;
+	int						m_iFOV;
+	int						m_iFOVStart;
+	float					m_flFOVTime;
+	int						m_iDefaultFOV;
+	EHANDLE					m_hZoomOwner;
+	bool					m_fOnTarget;
+	char					m_szAnimExtension[32];
+	int						m_afButtonLast;
+	int						m_afButtonPressed;
+	int						m_afButtonReleased;
+	int						m_nButtons;
+	CUserCmd				*m_pCurrentCommand;
+	EHANDLE					m_hConstraintEntity;
+	Vector					m_vecConstraintCenter;
+	float					m_flConstraintRadius;
+	float					m_flConstraintWidth;
+	float					m_flConstraintSpeedFactor;
+};*/
 
 #endif

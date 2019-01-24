@@ -19,20 +19,20 @@ public:
 	virtual IClientNetworkable*	GetClientNetworkableFromHandle(CBaseHandle hEnt) = 0;
 	virtual IClientUnknown*		GetClientUnknownFromHandle(CBaseHandle hEnt) = 0;
 	virtual IClientEntity*		GetClientEntity(int entnum) = 0;
-	/*virtual IClientEntity*		GetClientEntity(int entnum) {
+	/*IClientEntity*					GetClientEntity(int entnum) {
 		typedef IClientEntity*(__thiscall* Fn)(void*, int);
 		return Utils::GetVFunc<Fn>(this, 3)(this, entnum);
 	}*/
-	virtual IClientEntity*		GetClientEntityFromHandle(CBaseHandle hEnt) {
+	IClientEntity*				GetClientEntityFromHandle(CBaseHandle hEnt) {
 		typedef IClientEntity*(__thiscall* Fn)(void*, CBaseHandle);
 		return Utils::GetVFunc<Fn>(this, 4)(this, hEnt);
 	}
 	virtual int					NumberOfEntities(bool bIncludeNonNetworkable) = 0;
-	/*virtual int					GetHighestEntityIndex() {
+	int							GetHighestEntityIndex() {
 		typedef int(__thiscall* Fn)(void*);
 		return Utils::GetVFunc<Fn>(this, 6)(this);
-	}*/
-	virtual int					GetHighestEntityIndex(void) = 0;
+	}
+	//virtual int					GetHighestEntityIndex(void) = 0;
 	virtual void				SetMaxEntities(int maxents) = 0;
 	virtual int					GetMaxEntities() = 0;
 };

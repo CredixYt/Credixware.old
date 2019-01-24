@@ -21,4 +21,11 @@ public:
 	}
 };
 
+Vector GetBone(C_BaseEntity* BaseEntity, int index) {
+	matrix3x4_t bonesMatrix[128];
+	BaseEntity->SetupBones(bonesMatrix, 128, 0, 0.0f);
+	matrix3x4_t boneMatrix = bonesMatrix[index];
+	return Vector(boneMatrix[0][3], boneMatrix[1][3], boneMatrix[2][3]);
+}
+
 #endif

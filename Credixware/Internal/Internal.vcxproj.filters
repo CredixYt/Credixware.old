@@ -213,5 +213,8 @@
     <ClInclude Include="Headers\Offsets.h">
       <Filter>Headers</Filter>
     </ClInclude>
+    <ClInclude Include="Hacks\AntiAim.h">
+      <Filter>Hacks</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

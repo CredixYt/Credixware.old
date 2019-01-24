@@ -3,6 +3,8 @@
 #ifndef CONVAR_H
 #define CONVAR_H
 
+#include "IAppSystem.h"
+
 class IConVar;
 typedef void(*FnChangeCallback_t)(IConVar *var, const char *pOldValue, float flOldValue);
 
@@ -59,9 +61,34 @@ protected:
 class IConVar
 {
 public:
-	virtual void SetValue(const char *pValue) = 0;
-	virtual void SetValue(float flValue) = 0;
-	virtual void SetValue(int nValue) = 0;
+	const char* GetString()
+	{
+		typedef const char*(__thiscall* Fn)(void*);
+		return Utils::GetVFunc<Fn>(this, 11)(this);
+	}
+	float GetFloat()
+	{
+		typedef float(__thiscall* Fn)(void*);
+		return Utils::GetVFunc<Fn>(this, 12)(this);
+	}
+	int GetInt()
+	{
+		typedef int(__thiscall* Fn)(void*);
+		return Utils::GetVFunc<Fn>(this, 13)(this);
+	}
+
+	void SetValue(const char *pValue) {
+		typedef void(__thiscall* Fn)(void*, const char*);
+		return Utils::GetVFunc<Fn>(this, 15)(this, pValue);
+	}
+	void SetValue(float flValue) {
+		typedef void(__thiscall* Fn)(void*, float);
+		return Utils::GetVFunc<Fn>(this, 16)(this, flValue);
+	}
+	void SetValue(int nValue) {
+		typedef void(__thiscall* Fn)(void*, int);
+		return Utils::GetVFunc<Fn>(this, 19)(this, nValue);
+	}
 	virtual const char *GetName(void) const = 0;
 	virtual bool IsFlagSet(int nFlag) const = 0;
 };
@@ -91,7 +118,10 @@ public:
 	inline char const*			GetString(void) const;
 	virtual void				SetValue(const char *value);
 	virtual void				SetValue(float value);
-	virtual void				SetValue(int value);
+	void						SetValue(int value) {
+		typedef void(__thiscall* Fn)(void*, int);
+		return Utils::GetVFunc<Fn>(this, 16)(this, value);
+	}
 	void						Revert(void);
 	bool						GetMin(float& minVal) const;
 	bool						GetMax(float& maxVal) const;
@@ -118,6 +148,77 @@ private:
 	bool						m_bHasMax;
 	float						m_fMaxVal;
 	FnChangeCallback_t			m_fnChangeCallback;
+};
+
+class IConsoleDisplayFunc;
+class ICvarQuery;
+
+class ICvar : public IAppSystem
+{
+public:
+	virtual CVarDLLIdentifier_t AllocateDLLIdentifier() = 0;						// 0
+	virtual void			RegisterConCommand(ConCommandBase *pCommandBase) = 0;	// 1
+	virtual void			UnregisterConCommand(ConCommandBase *pCommandBase) = 0;	// 2
+	virtual void			UnregisterConCommands(CVarDLLIdentifier_t id) = 0;		// 3
+	virtual const char*		GetCommandLineValue(const char *pVariableName) = 0;		// 4
+	virtual ConCommandBase *FindCommandBase(const char *name) = 0;					// 5
+	virtual const ConCommandBase *FindCommandBase(const char *name) const = 0;		// 6
+	ConVar*					FindVar(const char *var_name) {
+		typedef ConVar*(__thiscall* Fn)(void*, const char*);
+		return Utils::GetVFunc<Fn>(this, 16)(this, var_name);
+	}
+	virtual const ConVar	*FindVar(const char *var_name) const = 0;				// 8
+	virtual ConCommand		*FindCommand(const char *name) = 0;
+	virtual const ConCommand *FindCommand(const char *name) const = 0;
+	virtual ConCommandBase	*GetCommands(void) = 0;
+	virtual const ConCommandBase *GetCommands(void) const = 0;
+	virtual void			InstallGlobalChangeCallback(FnChangeCallback_t callback) = 0;
+	virtual void			RemoveGlobalChangeCallback(FnChangeCallback_t callback) = 0;
+	virtual void			CallGlobalChangeCallbacks(ConVar *var, const char *pOldString, float flOldValue) = 0;
+
+	// Install a console printer
+	virtual void			InstallConsoleDisplayFunc(IConsoleDisplayFunc* pDisplayFunc) = 0;
+	virtual void			RemoveConsoleDisplayFunc(IConsoleDisplayFunc* pDisplayFunc) = 0;
+	virtual void			ConsoleColorPrintf(const Color& clr, const char *pFormat, ...) const = 0;
+	virtual void			ConsolePrintf(const char *pFormat, ...) const = 0;
+	virtual void			ConsoleDPrintf(const char *pFormat, ...) const = 0;
+	virtual void			RevertFlaggedConVars(int nFlag) = 0;
+	virtual void			InstallCVarQuery(ICvarQuery *pQuery) = 0;
+	virtual bool			IsMaterialThreadSetAllowed() const = 0;
+	virtual void			QueueMaterialThreadSetValue(ConVar *pConVar, const char *pValue) = 0;
+	virtual void			QueueMaterialThreadSetValue(ConVar *pConVar, int nValue) = 0;
+	virtual void			QueueMaterialThreadSetValue(ConVar *pConVar, float flValue) = 0;
+	virtual bool			HasQueuedMaterialThreadConVarSets() const = 0;
+	virtual int				ProcessQueuedMaterialThreadConVarSets() = 0;
+
+protected:	class ICVarIteratorInternal;
+public:
+	class Iterator
+	{
+	public:
+		inline Iterator(ICvar *icvar);
+		inline ~Iterator(void);
+		inline void		SetFirst(void);
+		inline void		Next(void);
+		inline bool		IsValid(void);
+		inline ConCommandBase *Get(void);
+	private:
+		ICVarIteratorInternal *m_pIter;
+	};
+
+protected:
+	class ICVarIteratorInternal
+	{
+	public:
+		virtual ~ICVarIteratorInternal() {}
+		virtual void		SetFirst(void) = 0;
+		virtual void		Next(void) = 0;
+		virtual	bool		IsValid(void) = 0;
+		virtual ConCommandBase *Get(void) = 0;
+	};
+
+	virtual ICVarIteratorInternal	*FactoryInternalIterator(void) = 0;
+	friend class Iterator;
 };
 
 #endif

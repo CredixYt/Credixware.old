@@ -41,7 +41,7 @@ public:
 	virtual ClientRenderHandle_t&	RenderHandle() = 0;
 	const model_t*					GetModel() {
 		typedef const model_t*(__thiscall* Fn)(void*);
-		return Utils::GetVFunc<Fn>(this, 6)(this);
+		return Utils::GetVFunc<Fn>(this, 8)(this);
 	};
 	virtual int		DrawModel(int flags) = 0;
 	virtual int		GetBody() = 0;

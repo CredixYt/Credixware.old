@@ -10,6 +10,11 @@ typedef IClientNetworkable*	(*CreateEventFn)();
 
 class RecvTable;
 
+enum ClientClassType_t {
+	CCSPLAYER = 38,
+	CPREDICTEDVIEWMODEL = 136
+};
+
 class ClientClass
 {
 public:

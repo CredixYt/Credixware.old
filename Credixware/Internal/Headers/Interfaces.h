@@ -16,6 +16,7 @@ CInput* g_pInput;
 IVModelRender* g_pModelRender;
 IVModelInfo* g_pModelInfo;
 IMaterialSystem* g_pMaterialSystem;
+ICvar* g_pCvar;
 void* g_pClient;
 void* g_pClientMode;
 void* g_pGameEventManager;
@@ -23,6 +24,7 @@ void* g_pGameEventManager;
 namespace Interfaces {
 	void Init() {
 		g_pPanel = Utils::CaptureInterface<IPanel>("vgui2.dll", "VGUI_Panel009");
+		g_pCvar = Utils::CaptureInterface<ICvar>("vstdlib.dll", "VEngineCvar007");
 		g_pSurface = Utils::CaptureInterface<ISurface>("vguimatsurface.dll", "VGUI_Surface031");
 		g_pClientEntityList = Utils::CaptureInterface<IClientEntityList>("client_panorama.dll", "VClientEntityList003");
 		g_pEngineClient = Utils::CaptureInterface<IVEngineClient>("engine.dll", "VEngineClient014");
@@ -101,6 +103,17 @@ IMaterial* CreateMaterial(bool bIgnorez, bool bFlat, const char* pType) {
 		return createdMaterial;
 	}
 	return nullptr;
+}
+
+void DeleteMaterials() {
+	for (int i = 0; i <= matCount; i++) {
+		char matName[128] = { 0 };
+		sprintf(matName, "credixware_custom_%i", i);
+		const char* materialName = matName;
+		char fileName[128] = { 0 };
+		sprintf(fileName, "csgo\\materials\\%s.vmt", materialName);
+		remove(fileName);
+	}
 }
 
 #endif

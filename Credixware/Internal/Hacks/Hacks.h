@@ -2,6 +2,7 @@
 #ifndef HACKS_H
 #define HACKS_H
 
+#include "AntiAim.h"
 #include "Bunnyhop.h"
 #include "Chams.h"
 #include "ESP.h"
@@ -24,6 +25,7 @@ namespace Hacks {
 	void Reset() {
 		Nightmode::Reset();
 		Thirdperson::Reset();
+		DeleteMaterials();
 	}
 }
 

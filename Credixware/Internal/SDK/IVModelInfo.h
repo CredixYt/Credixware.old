@@ -47,7 +47,10 @@ public:
 	virtual bool					IsTranslucent(model_t const* model) const = 0;
 	virtual bool					IsTranslucentTwoPass(const model_t *model) const = 0;
 	virtual void					RecomputeTranslucency(const model_t *model, int nSkin, int nBody, void *pClientRenderable, float fInstanceAlphaModulate = 1.0f) = 0;
-	virtual int						GetModelMaterialCount(const model_t* model) const = 0;
+	int								GetModelMaterialCount(const model_t *model) {
+		typedef int(__thiscall* Fn)(void*, const model_t*);
+		return Utils::GetVFunc<Fn>(this, 15)(this, model);
+	}
 	virtual void					GetModelMaterials(const model_t *model, int count, IMaterial** ppMaterial) = 0;
 	virtual bool					IsModelVertexLit(const model_t *model) const = 0;
 	virtual const char				*GetModelKeyValueText(const model_t *model) = 0;

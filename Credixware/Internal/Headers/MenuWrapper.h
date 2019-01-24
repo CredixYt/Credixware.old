@@ -3,6 +3,8 @@
 #define MENUWRAPPER_H
 
 #include "Interfaces.h"
+#include <vector>
+#include <string>
 
 int FONT_WEIGHT = 400;
 int FONT_SIZE = 14;
@@ -23,6 +25,7 @@ int color_light[4] = { 52, 73, 94, 255 };
 int color_dark[4] = { 44, 62, 80, 255 };
 int color_black[4] = { 0, 0, 0, 255 };
 int color_white[4] = { 255, 255, 255, 255 };
+int color_green[4] = { 0, 255, 0, 255 };
 int color_crosshair[4] = { 255, 0, 0, 255 };
 
 HFont font;
@@ -631,9 +634,173 @@ private:
 	bool bHoldingDown = false;
 };
 
+class GUIDropdown {
+public:
+	GUIDropdown(int X, int Y, int W, int H, int* iValue) {
+		x = X;
+		y = Y;
+		w = W;
+		h = H;
+		color[0] = 0;
+		color[1] = 0;
+		color[2] = 0;
+		color[3] = 255;
+		pValue = iValue;
+	}
+	GUIDropdown(int X, int Y, int W, int H, float R, float G, float B, int* iValue) {
+		x = X;
+		y = Y;
+		w = W;
+		h = H;
+		color[0] = R;
+		color[1] = G;
+		color[2] = B;
+		color[3] = 255;
+		pValue = iValue;
+	}
+	GUIDropdown(int X, int Y, int W, int H, int COLOR[4], int* iValue) {
+		x = X;
+		y = Y;
+		w = W;
+		h = H;
+		color[0] = COLOR[0];
+		color[1] = COLOR[1];
+		color[2] = COLOR[2];
+		color[3] = COLOR[3];
+		pValue = iValue;
+	}
+	bool _IsInBounds(int x, int y, int x2, int y2) {
+		if (cursor_x > x && cursor_x < x2 && cursor_y > y && cursor_y < y2) {
+			return true;
+		}
+		return false;
+	}
+	void Draw() {
+		int wide, tall;
+		int val = *pValue;
+		if (!bOpen && !IsInBounds(x, y, x+w, y+h)) {
+			DrawBox(x, y, w, h, color_primary);
+			if (texts.size() > 0) {
+				GetStringSize(wide, tall, texts.at(val).c_str());
+				DrawString(x + 5, y + (h / 2) - (tall / 2), texts.at(val).c_str());
+			}
+			else {
+				GetStringSize(wide, tall, "Default");
+				DrawString(x + 5, y + (h / 2) - (tall / 2), "Default");
+			}
+			GetStringSize(wide, tall, "<");
+			DrawString(x + w - wide - 5, y + (h / 2) - (tall / 2), "<");
+		}
+		else if (!bOpen && IsInBounds(x, y, x + w, y + h)) {
+			DrawBox(x, y, w, h, color_primary);
+			if (texts.size() > 0) {
+				GetStringSize(wide, tall, texts.at(val).c_str());
+				DrawString(x + 5, y + (h / 2) - (tall / 2), texts.at(val).c_str());
+			}
+			else {
+				GetStringSize(wide, tall, "Default");
+				DrawString(x + 5, y + (h / 2) - (tall / 2), "Default");
+			}
+			GetStringSize(wide, tall, "<");
+			DrawString(x + w - wide - 5, y + (h / 2) - (tall / 2), "<");
+			if (Utils::GetKey(VK_LBUTTON)) {
+				bOpen = true;
+				bDropdown = true;
+			}
+		}
+		else if(bOpen) {
+			DrawBox(x, y, w, h, color_primary);
+			if (texts.size() > 0) {
+				GetStringSize(wide, tall, texts.at(val).c_str());
+				DrawString(x + 5, y + (h / 2) - (tall / 2), texts.at(val).c_str());
+			}
+			else {
+				GetStringSize(wide, tall, "Default");
+				DrawString(x + 5, y + (h / 2) - (tall / 2), "Default");
+			}
+			for (int i = 0; i < indexes.size() && i < texts.size(); i++) {
+				const char* cText = texts.at(i).c_str();
+				int cIndex = indexes.at(i);
+				if (_IsInBounds(x, y + (h * (i + 1)), x + w, y + (h * (i + 1)) + h)) {
+					DrawBox(x, y + (h * (i + 1)), w, h, color_dark);
+					if (Utils::GetKey(VK_LBUTTON)) {
+						bOpen = false;
+						bDropdown = false;
+						*pValue = cIndex;
+					}
+				}
+				else {
+					DrawBox(x, y + (h * (i + 1)), w, h, color_light);
+				}
+				GetStringSize(wide, tall, texts.at(i).c_str());
+				DrawString(x + 5, y + ((i + 1) * h) + (h / 2) - (tall / 2), texts.at(i).c_str());
+			}
+		}
+
+		if (bOpen && !_IsInBounds(x, y, x + w, y + h) && Utils::GetKey(VK_LBUTTON)) {
+			bOpen = false;
+			bDropdown = false;
+		}
+	}
+	void SetPos(int X, int Y) {
+		x = X;
+		y = Y;
+	}
+	void SetSize(int W, int H) {
+		w = W;
+		h = H;
+	}
+	void SetColor(int COLOR[4]) {
+		color[0] = COLOR[0];
+		color[1] = COLOR[1];
+		color[2] = COLOR[2];
+		color[3] = COLOR[3];
+	}
+	void SetValue(int* fValue) {
+		pValue = fValue;
+	}
+	void GetPos(int& X, int& Y) {
+		X = x;
+		Y = y;
+	}
+	void GetSize(int& W, int& H) {
+		W = w;
+		H = h;
+	}
+	int GetValue(int index) {
+		return indexes.at(*pValue);
+	}
+	void AddValue(const char* text, int index) {
+		indexes.push_back(index);
+		texts.push_back(std::string(text));
+	}
+	void AddValue(std::string text, int index) {
+		indexes.push_back(index);
+		texts.push_back(text);
+	}
+	void ClearValues() {
+		texts.clear();
+		indexes.clear();
+	}
+
+	/* POSITION */
+	int x;
+	int y;
+	/* SIZE */
+	int w;
+	int h;
+	/* COLOR */
+	int color[4];
+	/* VALUE */
+	int *pValue;
+	std::vector<std::string> texts;
+	std::vector<int> indexes;
+private:
+	bool bOpen = false;
+};
+
 GUIBox* backgroundBox;
 GUIBox* titleBarBox;
-GUIButton* exitButton;
 GUITab* legitTab;
 GUITab* rageTab;
 GUITab* visualsTab;
@@ -643,6 +810,8 @@ GUITab* miscTab;
 /*	LEGIT	*/
 
 /*	RAGE	*/
+// SilentAim
+GUICheckbox* silentAimCheckbox;
 
 /*	VISUALS	*/
 //	Chams
@@ -658,9 +827,38 @@ GUISlider* chamsEnemiesNormalBSlider;
 GUISlider* chamsHandChamsRSlider;
 GUISlider* chamsHandChamsGSlider;
 GUISlider* chamsHandChamsBSlider;
+// ESP
+GUICheckbox* espCheckbox;
+GUICheckbox* espHealthBarCheckbox;
+GUICheckbox* espOnlyEnemiesCheckbox;
+GUICheckbox* boneESPCheckbox;
+GUICheckbox* nameESPCheckbox;
+GUICheckbox* healthESPCheckbox;
+GUICheckbox* weaponSPCheckbox;
+GUISlider* espRSlider;
+GUISlider* espGSlider;
+GUISlider* espBSlider;
 
 /*	SKIN	*/
+// KnifeChanger
+GUICheckbox* knifeChangerEnabled;
+GUIDropdown* knifeModel;
+GUIDropdown* knifeSkin;
+GUISlider* knifeWear;
+GUICheckbox* knifeStattrakCheckbox;
+GUISlider* knifeStattrak;
+// SkinChanger
+GUICheckbox* skinChangerEnabled;
+GUIDropdown* weaponSelected;
+GUIDropdown* weaponSkin;
+GUISlider* weaponWear;
+GUICheckbox* weaponStattrakCheckbox;
+GUISlider* weaponStattrak;
 
 /*	MISC	*/
-
+GUIDropdown* configDropdown;
+GUICheckbox* nightmodeCheckbox;
+GUIButton* saveConfigButton;
+GUIButton* loadConfigButton;
+GUIButton* exitButton;
 #endif

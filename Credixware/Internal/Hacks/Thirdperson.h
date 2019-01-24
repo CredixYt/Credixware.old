@@ -7,7 +7,7 @@
 
 namespace Thirdperson {
 	void Update(CViewSetup* setup) {
-		if (Utils::GetKey(Settings::Misc::ThirdpersonToggleKey)) {
+		if (Utils::GetKey(Settings::Misc::ThirdpersonToggleKey) && Settings::Misc::bThirdpersonEnabled) {
 			Settings::Misc::bThirdperson = !Settings::Misc::bThirdperson;
 		}
 		if (g_pEngineClient->IsInGame()) {

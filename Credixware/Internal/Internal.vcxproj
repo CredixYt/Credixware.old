@@ -78,6 +78,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Hacks\AntiAim.h" />
     <ClInclude Include="Hacks\Bunnyhop.h" />
     <ClInclude Include="Hacks\Chams.h" />
     <ClInclude Include="Hacks\ESP.h" />

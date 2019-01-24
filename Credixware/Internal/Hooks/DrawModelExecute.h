@@ -13,39 +13,44 @@ void __fastcall hkDrawModelExecute(void* ecx, void* edx, void* thisptr, const Dr
 	if (!Chams::bFinished) {
 		Chams::Init();
 	}
-	if (pInfo.pModel) {
+
+	IClientEntity* LocalEntity = g_pClientEntityList->GetClientEntity(g_pEngineClient->GetLocalPlayer());
+
+	if (pInfo.pModel && LocalEntity) {
 		IClientEntity* Entity = g_pClientEntityList->GetClientEntity(pInfo.entity_index);
 		if (Entity) {
-			ClientClass* EntityClass = Entity->GetClientClass();
-			if (EntityClass) {
-				const char* entityType = EntityClass->GetName();
-				std::string EntityType = entityType;
-				if (EntityType == "CCSPlayer" && pInfo.entity_index != g_pEngineClient->GetLocalPlayer() && Settings::Visuals::bChams) {
-					//printf("%i	|	%i\n", pInfo.entity_index, g_pEngineClient->GetLocalPlayer());
-					if (Chams::enemyBehindWall && Chams::enemyIgnoreZ) {
-						g_pModelRender->ForcedMaterialOverride(Chams::enemyIgnoreZ);
-						oDrawModelExecute(ecx, thisptr, state, pInfo, pCustomBoneToWorld);
-						g_pModelRender->ForcedMaterialOverride(Chams::enemyBehindWall);
+			int LocalTeam = *reinterpret_cast<int*>((DWORD)LocalEntity->GetBaseEntity() + Offsets::m_iTeamNum);
+			int EntityTeam = *reinterpret_cast<int*>((DWORD)Entity->GetBaseEntity() + Offsets::m_iTeamNum);
+			if (Entity && (!Settings::Visuals::bChamsOnlyEnemies || EntityTeam != LocalTeam)) {
+				ClientClass* EntityClass = Entity->GetClientClass();
+				if (EntityClass) {
+					const char* entityType = EntityClass->GetName();
+					if (EntityClass->m_ClassID == CCSPLAYER && Entity->entindex() != g_pEngineClient->GetLocalPlayer() && Settings::Visuals::bChams) {
+						if (Chams::enemyBehindWall && Chams::enemyIgnoreZ) {
+							g_pModelRender->ForcedMaterialOverride(Chams::enemyIgnoreZ);
+							oDrawModelExecute(ecx, thisptr, state, pInfo, pCustomBoneToWorld);
+							g_pModelRender->ForcedMaterialOverride(Chams::enemyBehindWall);
+						}
 					}
-				}
-				else if (pInfo.entity_index == g_pEngineClient->GetLocalPlayer()) {
-					//printf("%i	|	%i\n", pInfo.entity_index, g_pEngineClient->GetLocalPlayer());
-					g_pModelRender->ForcedMaterialOverride(NULL);
-				}
-				if (Settings::Visuals::bChamsHandChams) {
-					if (EntityType == "CPredictedViewModel") {
+					if (Settings::Visuals::bChamsHandChams && EntityClass->m_ClassID == CPREDICTEDVIEWMODEL) {
 						if (Chams::handChams) {
 							g_pModelRender->ForcedMaterialOverride(Chams::handChams);
 						}
 					}
+					if (pInfo.entity_index == g_pEngineClient->GetLocalPlayer() && Settings::Misc::bThirdperson) {
+						g_pModelInfo->GetModelMaterialCount(pInfo.pModel);
+						// TODO: Make player see through (AlphaModulate)
+					}
 				}
-				if (pInfo.entity_index == g_pEngineClient->GetLocalPlayer() && Settings::Misc::bThirdperson) {
-					// TODO: Make player see through (AlphaModulate)
-				}
+			}
+			if (Entity->entindex() == g_pEngineClient->GetLocalPlayer()) {
+				g_pModelRender->ForcedMaterialOverride(Chams::handChams);
+				oDrawModelExecute(ecx, thisptr, state, pInfo, antiAimBones);
 			}
 		}
 	}
 	oDrawModelExecute(ecx, thisptr, state, pInfo, pCustomBoneToWorld);
+	g_pModelRender->ForcedMaterialOverride(NULL);
 }
 
 #endif

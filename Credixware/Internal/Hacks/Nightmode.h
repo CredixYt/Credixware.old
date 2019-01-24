@@ -7,22 +7,25 @@
 
 namespace Nightmode {
 	void Perform() {
+		ConVar* DrawSpecificStaticProp = g_pCvar->FindVar("r_DrawSpecificStaticProp");
+		DrawSpecificStaticProp->SetValue(0);
 		for (MaterialHandle_t i = g_pMaterialSystem->FirstMaterial(); i < g_pMaterialSystem->GetNumMaterials(); i = g_pMaterialSystem->NextMaterial(i)) {
 			IMaterial* mat = g_pMaterialSystem->GetMaterial(i);
 			if (mat) {
 				const char* groupName = mat->GetTextureGroupName();
-				std::string GroupName = groupName;
-
-				if ((GroupName.find("World") || GroupName.find("Model") || GroupName.find("StaticProp"))) {
+				if (strstr(groupName, "World")) {
 					mat->ColorModulate(0.25f, 0.25f, 0.5f);
+				}
+				else if (strstr(groupName, "StaticProp")) {
+					mat->ColorModulate(0.4f, 0.4f, 0.5f);
 				}
 			}
 		}
-		Chams::Init();
-		Menu::Init();
 	}
 
 	void Reset() {
+		//ConVar* DrawSpecificStaticProp = g_pCvar->FindVar("r_DrawSpecificStaticProp");
+		//DrawSpecificStaticProp->SetValue(1);
 		for (MaterialHandle_t i = g_pMaterialSystem->FirstMaterial(); i < g_pMaterialSystem->GetNumMaterials(); i = g_pMaterialSystem->NextMaterial(i)) {
 			IMaterial* mat = g_pMaterialSystem->GetMaterial(i);
 			if (mat) {
@@ -34,8 +37,6 @@ namespace Nightmode {
 				}
 			}
 		}
-		Chams::Init();
-		Menu::Init();
 	}
 }
 

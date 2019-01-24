@@ -39,6 +39,12 @@ bool __fastcall hkFireEventClientSide(void* ecx, void* edx, IGameEvent* pEvent) 
 		}
 		
 	}
+
+	if (_strcmpi(pEvent->GetName(), "game_newmap") == 0 && Settings::Misc::bNightmodeEnabled) {
+		Nightmode::Perform();
+	} else if (_strcmpi(pEvent->GetName(), "game_newmap") == 0 && !Settings::Misc::bNightmodeEnabled) {
+		Nightmode::Reset();
+	}
 	return oFireEventClientSide(ecx, pEvent);
 }
 
