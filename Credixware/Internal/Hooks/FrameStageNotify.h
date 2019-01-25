@@ -11,7 +11,7 @@ unsigned int* oFrameStageNotifyFunc;
 
 void __fastcall hkFrameStageNotify(void* ecx, void* edx, ClientFrameStage_t curStage) {
 	if (curStage == FRAME_NET_UPDATE_POSTDATAUPDATE_START) {
-		Skinchanger::Update();
+		SkinChanger::Update();
 	}
 	oFrameStageNotify(ecx, curStage);
 }

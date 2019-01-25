@@ -3,6 +3,7 @@
 #define HACKS_H
 
 #include "AntiAim.h"
+#include "Backtrack.h"
 #include "Bunnyhop.h"
 #include "Chams.h"
 #include "ESP.h"
@@ -17,14 +18,14 @@ namespace Hacks {
 	void Init() {
 		Menu::Init();
 		ESP::Init();
-		Skinchanger::Init();
+		SkinChanger::Init();
 		/* NOTE: Chams needs to be initalized last, because it will halt until we are in game */
 		Chams::Init();
 	}
 
 	void Reset() {
 		Nightmode::Reset();
-		Thirdperson::Reset();
+		//Thirdperson::Reset();
 		DeleteMaterials();
 	}
 }

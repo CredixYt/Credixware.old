@@ -43,6 +43,10 @@ int cursor_y = 0;
 int prev_cursor_x = 0;
 int prev_cursor_y = 0;
 
+void ValueChanged() {
+	bReload = true;
+}
+
 const wchar_t* GetWC(const char *c)
 {
 	const size_t cSize = strlen(c) + 1;
@@ -145,10 +149,6 @@ void UpdateCursorPosition() {
 	}
 }
 
-void ValueChanged() {
-	bReload = true;
-}
-
 class GUIBox {
 public:
 	GUIBox(int X, int Y, int W, int H) {
@@ -161,7 +161,7 @@ public:
 		color[2] = 0;
 		color[3] = 255;
 	}
-	GUIBox(int X, int Y, int W, int H, float R, float G, float B) {
+	GUIBox(int X, int Y, int W, int H, int R, int G, int B) {
 		x = X;
 		y = Y;
 		w = W;
@@ -230,7 +230,7 @@ public:
 		color[3] = 255;
 		text = TEXT;
 	}
-	GUIButton(int X, int Y, int W, int H, float R, float G, float B, const char* TEXT) {
+	GUIButton(int X, int Y, int W, int H, int R, int G, int B, const char* TEXT) {
 		x = X;
 		y = Y;
 		w = W;
@@ -266,6 +266,7 @@ public:
 		}
 		else {
 			DrawBox(x, y, w, h, color_light);
+			bPressed = false;
 		}
 		int wide;
 		int tall;
@@ -331,7 +332,7 @@ public:
 		color[3] = 255;
 		pValue = bValue;
 	}
-	GUICheckbox(int X, int Y, int W, int H, float R, float G, float B, bool *bValue) {
+	GUICheckbox(int X, int Y, int W, int H, int R, int G, int B, bool *bValue) {
 		x = X;
 		y = Y;
 		w = W;
@@ -420,7 +421,7 @@ public:
 		text = TEXT;
 		index = INDEX;
 	}
-	GUITab(int X, int Y, int W, int H, float R, float G, float B, int *iValue, const char* TEXT, int INDEX) {
+	GUITab(int X, int Y, int W, int H, int R, int G, int B, int *iValue, const char* TEXT, int INDEX) {
 		x = X;
 		y = Y;
 		w = W;
@@ -526,7 +527,7 @@ public:
 		min = MIN;
 		max = MAX;
 	}
-	GUISlider(int X, int Y, int W, int H, float R, float G, float B, float* fValue, int MIN, int MAX) {
+	GUISlider(int X, int Y, int W, int H, int R, int G, int B, float* fValue, int MIN, int MAX) {
 		x = X;
 		y = Y;
 		w = W;
@@ -552,6 +553,17 @@ public:
 		min = MIN;
 		max = MAX;
 	}
+	bool _IsInBounds(int x, int y, int x2, int y2) {
+		if (bOverrideDisabled) {
+			if (cursor_x > x && cursor_x < x2 && cursor_y > y && cursor_y < y2) {
+				return true;
+			}
+			return false;
+		}
+		else {
+			IsInBounds(x, y, x2, y2);
+		}
+	}
 	void Draw() {
 		if (bHoldingDown) {
 			int relative_x = cursor_x - x;
@@ -567,7 +579,7 @@ public:
 		if (*pValue < min) {
 			*pValue = min;
 		}
-		if (IsInBounds(x, y, x + w, y + h) && Utils::GetKeyDown(VK_LBUTTON)) {
+		if (_IsInBounds(x, y, x + w, y + h) && Utils::GetKeyDown(VK_LBUTTON)) {
 			bHoldingDown = true;
 		}
 		if (!GetAsyncKeyState(VK_LBUTTON)) {
@@ -630,6 +642,7 @@ public:
 	float *pValue;
 	int min;
 	int max;
+	bool bOverrideDisabled = false;
 private:
 	bool bHoldingDown = false;
 };
@@ -647,7 +660,7 @@ public:
 		color[3] = 255;
 		pValue = iValue;
 	}
-	GUIDropdown(int X, int Y, int W, int H, float R, float G, float B, int* iValue) {
+	GUIDropdown(int X, int Y, int W, int H, int R, int G, int B, int* iValue) {
 		x = X;
 		y = Y;
 		w = W;
@@ -799,6 +812,158 @@ private:
 	bool bOpen = false;
 };
 
+class GUIColor {
+public:
+	void Init() {
+		Button = new GUIButton(x, y, w, h, color, "Color <");
+		RedSlider = new GUISlider(x + 5, y + h + 5 + (0 * (h + 5)), 100, h, color, r, 0, 255);
+		GreenSlider = new GUISlider(x + 5, y + h + 5 + (1 * (h + 5)), 100, h, color, g, 0, 255);
+		BlueSlider = new GUISlider(x + 5, y + h + 5 + (2 * (h + 5)), 100, h, color, b, 0, 255);
+	}
+
+	GUIColor(int X, int Y, int W, int H, float* RED, float* GREEN, float* BLUE) {
+		x = X;
+		y = Y;
+		w = W;
+		h = H;
+		color[0] = 0;
+		color[1] = 0;
+		color[2] = 0;
+		color[3] = 255;
+		r = RED;
+		g = GREEN;
+		b = BLUE;
+		Init();
+	}
+	GUIColor(int X, int Y, int W, int H, int R, int G, int B, float* RED, float* GREEN, float* BLUE) {
+		x = X;
+		y = Y;
+		w = W;
+		h = H;
+		color[0] = R;
+		color[1] = G;
+		color[2] = B;
+		color[3] = 255;
+		r = RED;
+		g = GREEN;
+		b = BLUE;
+		Init();
+	}
+	GUIColor(int X, int Y, int W, int H, int COLOR[4], float* RED, float* GREEN, float* BLUE) {
+		x = X;
+		y = Y;
+		w = W;
+		h = H;
+		color[0] = COLOR[0];
+		color[1] = COLOR[1];
+		color[2] = COLOR[2];
+		color[3] = COLOR[3];
+		r = RED;
+		g = GREEN;
+		b = BLUE;
+		Init();
+	}
+	bool _IsInBounds(int x, int y, int x2, int y2) {
+		if (cursor_x > x && cursor_x < x2 && cursor_y > y && cursor_y < y2) {
+			return true;
+		}
+		return false;
+	}
+	void DrawButton() {
+		Button->Draw();
+	}
+	void Draw() {
+		if (Button->GetValue() && !bOpen) {
+			bOpen = true;
+			bDropdown = true;
+		}
+		if (bOpen) {
+			Button->SetText("Color");
+			int vertical, horizontal;
+			BlueSlider->GetPos(vertical, horizontal);
+			RedSlider->bOverrideDisabled = true;
+			GreenSlider->bOverrideDisabled = true;
+			BlueSlider->bOverrideDisabled = true;
+
+			int boxH = (horizontal + h) - (y + h + 5);
+			int boxW = boxH;
+
+			DrawBox(x, y + h, vertical + 100 + 10 - x + boxW, h + 10 + (2 * (h + 5)), color_dark);
+			DrawString(x + 15, y + h + 5 + (0 * (h + 5)), "Red", color_white);
+			DrawString(x + 15, y + h + 5 + (1 * (h + 5)), "Green", color_white);
+			DrawString(x + 15, y + h + 5 + (2 * (h + 5)), "Blue", color_white);
+			if (!_IsInBounds(x, y + h, vertical + 90 + boxW + h, horizontal + h + 5)) {
+				if (Utils::GetKey(VK_LBUTTON)) {
+					bOpen = false;
+					bDropdown = false;
+				}
+			}
+			float red = *r;
+			float green = *g;
+			float blue = *b;
+			int newColor[4] = { red, green , blue, 255.0f };
+			DrawBox(vertical + 100 + 5, y + h + 5, boxW, boxH, newColor);
+			RedSlider->Draw();
+			GreenSlider->Draw();
+			BlueSlider->Draw();
+		}
+		else {
+			Button->SetText("Color <");
+			RedSlider->bOverrideDisabled = false;
+			GreenSlider->bOverrideDisabled = false;
+			BlueSlider->bOverrideDisabled = false;
+		}
+	}
+	void SetPos(int X, int Y) {
+		x = X;
+		y = Y;
+		int twidth = 50;
+		int theight = 0;
+		GetStringSize(twidth, theight, "Green", font);
+		Button->SetPos(X, Y);
+		RedSlider->SetPos(x + twidth + 15, y + h + 5 + (0 * (h + 5)));
+		GreenSlider->SetPos(x + twidth + 15, y + h + 5 + (1 * (h + 5)));
+		BlueSlider->SetPos(x + twidth + 15, y + h + 5 + (2 * (h + 5)));
+	}
+	void SetSize(int W, int H) {
+		w = W;
+		h = H;
+	}
+	void SetColor(int COLOR[4]) {
+		color[0] = COLOR[0];
+		color[1] = COLOR[1];
+		color[2] = COLOR[2];
+		color[3] = COLOR[3];
+	}
+	void GetPos(int& X, int& Y) {
+		X = x;
+		Y = y;
+	}
+	void GetSize(int& W, int& H) {
+		W = w;
+		H = h;
+	}
+
+	/* POSITION */
+	int x;
+	int y;
+	/* SIZE */
+	int w;
+	int h;
+	/* COLOR */
+	int color[4];
+	/* ELEMENTS */
+	GUIButton* Button;
+	GUISlider* RedSlider;
+	GUISlider* GreenSlider;
+	GUISlider* BlueSlider;
+	bool bOpen = false;
+	/* VALUES */
+	float* r;
+	float* g;
+	float* b;
+};
+
 GUIBox* backgroundBox;
 GUIBox* titleBarBox;
 GUITab* legitTab;
@@ -818,15 +983,9 @@ GUICheckbox* silentAimCheckbox;
 GUICheckbox* chamsCheckbox;
 GUICheckbox* chamsOnlyEnemiesCheckbox;
 GUICheckbox* chamsHandChamsCheckbox;
-GUISlider* chamsEnemiesIgnoreZRSlider;
-GUISlider* chamsEnemiesIgnoreZGSlider;
-GUISlider* chamsEnemiesIgnoreZBSlider;
-GUISlider* chamsEnemiesNormalRSlider;
-GUISlider* chamsEnemiesNormalGSlider;
-GUISlider* chamsEnemiesNormalBSlider;
-GUISlider* chamsHandChamsRSlider;
-GUISlider* chamsHandChamsGSlider;
-GUISlider* chamsHandChamsBSlider;
+GUIColor* chamsEnemiesIgnoreZColor;
+GUIColor* chamsEnemiesNormalColor;
+GUIColor* chamsHandChamsColor;
 // ESP
 GUICheckbox* espCheckbox;
 GUICheckbox* espHealthBarCheckbox;
@@ -835,9 +994,7 @@ GUICheckbox* boneESPCheckbox;
 GUICheckbox* nameESPCheckbox;
 GUICheckbox* healthESPCheckbox;
 GUICheckbox* weaponSPCheckbox;
-GUISlider* espRSlider;
-GUISlider* espGSlider;
-GUISlider* espBSlider;
+GUIColor* espColor;
 
 /*	SKIN	*/
 // KnifeChanger

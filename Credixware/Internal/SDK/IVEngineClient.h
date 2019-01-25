@@ -45,10 +45,60 @@ class CAudioSource;
 class CSentence;
 class ISpatialQuery;
 class IMaterialSystem;
-class INetChannelInfo;
 class CPhysCollide;
 class IAchievementMgr;
 class CGamestatsData;
+
+class INetChannelInfo
+{
+public:
+
+	enum {
+		GENERIC = 0,
+		LOCALPLAYER,
+		OTHERPLAYERS,
+		ENTITIES,	
+		SOUNDS,		
+		EVENTS,		
+		USERMESSAGES,
+		ENTMESSAGES,
+		VOICE,		
+		STRINGTABLE,
+		MOVE,		
+		STRINGCMD,	
+		SIGNON,		
+		TOTAL,		
+	};
+	virtual const char  *GetName(void) const = 0;
+	virtual const char  *GetAddress(void) const = 0;
+	virtual float		GetTime(void) const = 0;
+	virtual float		GetTimeConnected(void) const = 0;
+	virtual int			GetBufferSize(void) const = 0;
+	virtual int			GetDataRate(void) const = 0;
+	virtual bool		IsLoopback(void) const = 0;
+	virtual bool		IsTimingOut(void) const = 0;
+	virtual bool		IsPlayback(void) const = 0;
+	float				GetLatency(int flow) {
+		typedef float(__thiscall* Fn)(void*, int);
+		return Utils::GetVFunc<Fn>(this, 9)(this, flow);
+	}
+	virtual float		GetAvgLatency(int flow) const = 0;
+	virtual float		GetAvgLoss(int flow) const = 0;
+	virtual float		GetAvgChoke(int flow) const = 0;
+	virtual float		GetAvgData(int flow) const = 0;
+	virtual float		GetAvgPackets(int flow) const = 0;
+	virtual int			GetTotalData(int flow) const = 0;
+	virtual int			GetSequenceNr(int flow) const = 0;
+	virtual bool		IsValidPacket(int flow, int frame_number) const = 0;
+	virtual float		GetPacketTime(int flow, int frame_number) const = 0;
+	virtual int			GetPacketBytes(int flow, int frame_number, int group) const = 0;
+	virtual bool		GetStreamProgress(int flow, int *received, int *total) const = 0; 
+	virtual float		GetTimeSinceLastReceived(void) const = 0;
+	virtual	float		GetCommandInterpolationAmount(int flow, int frame_number) const = 0;
+	virtual void		GetPacketResponseLatency(int flow, int frame_number, int *pnLatencyMsecs, int *pnChoke) const = 0;
+	virtual void		GetRemoteFramerate(float *pflFrameTime, float *pflFrameTimeStdDeviation) const = 0;
+	virtual float		GetTimeoutSeconds() const = 0;
+};
 
 class IVEngineClient013
 {
@@ -144,27 +194,30 @@ public:
 		typedef char const*(__thiscall* Fn)(void*);
 		return Utils::GetVFunc<Fn>(this, 62)(this);
 	}
-	virtual int	GetLevelVersion(void) = 0;
-	virtual struct IVoiceTweak_s *GetVoiceTweakAPI(void) = 0;
-	virtual void		EngineStats_BeginFrame(void) = 0;
-	virtual void		EngineStats_EndFrame(void) = 0;
-	virtual void		FireEvents() = 0;
-	virtual int			GetLeavesArea(int *pLeaves, int nLeaves) = 0;
-	virtual bool		DoesBoxTouchAreaFrustum(const Vector &mins, const Vector &maxs, int iArea) = 0;
-	virtual void		SetAudioState(const AudioState_t& state) = 0;
-	virtual int			SentenceGroupPick(int groupIndex, char *name, int nameBufLen) = 0;
-	virtual int			SentenceGroupPickSequential(int groupIndex, char *name, int nameBufLen, int sentenceIndex, int reset) = 0;
-	virtual int			SentenceIndexFromName(const char *pSentenceName) = 0;
-	virtual const char *SentenceNameFromIndex(int sentenceIndex) = 0;
-	virtual int			SentenceGroupIndexFromName(const char *pGroupName) = 0;
-	virtual const char *SentenceGroupNameFromIndex(int groupIndex) = 0;
-	virtual float		SentenceLength(int sentenceIndex) = 0;
-	virtual void		ComputeLighting(const Vector& pt, const Vector* pNormal, bool bClamp, Vector& color, Vector *pBoxColors = NULL) = 0;
-	virtual void		ActivateOccluder(int nOccluderIndex, bool bActive) = 0;
-	virtual bool		IsOccluded(const Vector &vecAbsMins, const Vector &vecAbsMaxs) = 0;
-	virtual void		*SaveAllocMemory(size_t num, size_t size) = 0;
-	virtual void		SaveFreeMemory(void *pSaveMem) = 0;
-	virtual INetChannelInfo	*GetNetChannelInfo(void) = 0;
+	virtual int	GetLevelVersion(void) = 0;	// 63
+	virtual struct IVoiceTweak_s *GetVoiceTweakAPI(void) = 0;	// 64
+	virtual void		EngineStats_BeginFrame(void) = 0;	// 65
+	virtual void		EngineStats_EndFrame(void) = 0;	// 66
+	virtual void		FireEvents() = 0;	// 67
+	virtual int			GetLeavesArea(int *pLeaves, int nLeaves) = 0;	// 68
+	virtual bool		DoesBoxTouchAreaFrustum(const Vector &mins, const Vector &maxs, int iArea) = 0;	// 69
+	virtual void		SetAudioState(const AudioState_t& state) = 0;	// 70
+	virtual int			SentenceGroupPick(int groupIndex, char *name, int nameBufLen) = 0;	// 71
+	virtual int			SentenceGroupPickSequential(int groupIndex, char *name, int nameBufLen, int sentenceIndex, int reset) = 0;	// 72
+	virtual int			SentenceIndexFromName(const char *pSentenceName) = 0;	// 73
+	virtual const char *SentenceNameFromIndex(int sentenceIndex) = 0;	// 74
+	virtual int			SentenceGroupIndexFromName(const char *pGroupName) = 0;	// 75
+	virtual const char *SentenceGroupNameFromIndex(int groupIndex) = 0;	// 76
+	virtual float		SentenceLength(int sentenceIndex) = 0;	// 77
+	virtual void		ComputeLighting(const Vector& pt, const Vector* pNormal, bool bClamp, Vector& color, Vector *pBoxColors = NULL) = 0;	// 78
+	virtual void		ActivateOccluder(int nOccluderIndex, bool bActive) = 0;	// 78
+	virtual bool		IsOccluded(const Vector &vecAbsMins, const Vector &vecAbsMaxs) = 0;	// 79
+	virtual void		*SaveAllocMemory(size_t num, size_t size) = 0;	// 80
+	virtual void		SaveFreeMemory(void *pSaveMem) = 0;	// 81
+	INetChannelInfo	*GetNetChannelInfo(void) {
+		typedef INetChannelInfo*(__thiscall* Fn)(void*);
+		return Utils::GetVFunc<Fn>(this, 78)(this);
+	}
 	virtual void		DebugDrawPhysCollide(const CPhysCollide *pCollide, IMaterial *pMaterial, matrix3x4_t& transform, const color32 &color) = 0;
 	virtual void		CheckPoint(const char *pName) = 0;
 	virtual void		DrawPortals() = 0;

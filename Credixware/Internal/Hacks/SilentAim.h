@@ -59,7 +59,6 @@ namespace SilentAim {
 				g_pEngineClient->GetViewAngles(ViewAngles);
 
 				float dist = sqrt(pow((ViewAngles.x - AngleX), 2) + pow((ViewAngles.y - AngleY), 2));
-				printf("%f	%f	|	%f\n", AngleX, AngleY, dist);
 
 				if (dist < closestDistance) {
 					closestDistance = dist;

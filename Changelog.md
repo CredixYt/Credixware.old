@@ -1,3 +1,9 @@
+## Changelog b0.2:
+- _[Internal]_ Improved performance
+- _[Internal]_ Interfaces: Added CGlobalVars
+- _[Internal]_ SDK: Added INetChannelInfo and CGlobalVars
+- _[Internal]_ Menu: Added Color Picker
+
 ## Changelog v1.8:
 - _[Internal]_ Added Configs (placeholder)
 - _[Internal]_ Fixed: Nightmode and Chams

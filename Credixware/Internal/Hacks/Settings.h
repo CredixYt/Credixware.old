@@ -91,37 +91,23 @@ namespace Settings {
 		bool bChamsOnlyEnemies = false;
 		bool bChamsHandChams = true;
 
-		/*               WARNING: RANT                  */
-		/*                                              */
-		/*    I just can't seem to understand why       */
-		/*    these motherf*ckers can't make it so      */
-		/*  that if you input a color code bigger than  */
-		/*  1.0f it divides by 255 and if it's less     */
-		/*  than 1.0f it doesn't. Because now I have    */
-		/*   to write this ugly ass code to divide      */
-		/*  my color codes by 255, so I can use the     */
-		/*  standard color codes everyone else uses!    */
-		/*              Thank you Valve!                */
-		/*                                              */
-		/*                  RANT END                    */
+		float enemyBehindWallR =	193.0f;
+		float enemyBehindWallG =	30.0f;
+		float enemyBehindWallB =	54.0f;
+		float enemyIgnoreZR =		0.0f;
+		float enemyIgnoreZG =		179.0f;
+		float enemyIgnoreZB =		235.0f;
 
-		float enemyBehindWallR =	193.0f / 255;
-		float enemyBehindWallG =	30.0f  / 255;
-		float enemyBehindWallB =	54.0f  / 255;
-		float enemyIgnoreZR =		0.0f   / 255;
-		float enemyIgnoreZG =		179.0f / 255;
-		float enemyIgnoreZB =		235.0f / 255;
+		float allyBehindWallR =		193.0f;
+		float allyBehindWallG =		30.0f;
+		float allyBehindWallB =		54.0f;
+		float allyIgnoreZR =		0.0f;
+		float allyIgnoreZG =		179.0f;
+		float allyIgnoreZB =		235.0f;
 
-		float allyBehindWallR =		193.0f / 255;
-		float allyBehindWallG =		30.0f  / 255;
-		float allyBehindWallB =		54.0f  / 255;
-		float allyIgnoreZR =		0.0f   / 255;
-		float allyIgnoreZG =		179.0f / 255;
-		float allyIgnoreZB =		235.0f / 255;
-
-		float handChamsR = 235.0f / 255;
-		float handChamsG = 254.0f / 255;
-		float handChamsB = 3.0f  / 255;
+		float handChamsR = 235.0f;
+		float handChamsG = 254.0f;
+		float handChamsB = 3.0f;
 
 		/*float handChamsR = 116.0f / 255;
 		float handChamsG = 111.0f / 255;
@@ -135,9 +121,9 @@ namespace Settings {
 		bool bHealthESP;
 		bool bWeaponESPCheckbox;
 		bool bHealtBar;
-		float espRSlider;
-		float espGSlider;
-		float espBSlider;
+		float espRSlider = 255.0f;
+		float espGSlider = 255.0f;
+		float espBSlider = 255.0f;
 	}
 
 	namespace SkinChanger {

@@ -8,7 +8,7 @@
 #include "../Hacks/Settings.h"
 #include "../Headers/MenuWrapper.h"
 
-const char* WATERMARK_TEXT = "Credixware | Beta v0.1";
+const char* WATERMARK_TEXT = "Credixware | Beta v0.2";
 const char* MENU_TITLE_TEXT = "Credixware";
 
 namespace Menu {
@@ -106,15 +106,9 @@ namespace Menu {
 		chamsCheckbox = new GUICheckbox(0, 0, 15, 15, color_primary, &Settings::Visuals::bChams);
 		chamsOnlyEnemiesCheckbox = new GUICheckbox(0, 0, 15, 15, color_primary, &Settings::Visuals::bChamsOnlyEnemies);
 		chamsHandChamsCheckbox = new GUICheckbox(0, 0, 15, 15, color_primary, &Settings::Visuals::bChamsHandChams);
-		chamsEnemiesIgnoreZRSlider = new GUISlider(0, 0, 100, 15, color_primary, &Settings::Visuals::enemyIgnoreZR, 0.0f, 1.0f);
-		chamsEnemiesIgnoreZGSlider = new GUISlider(0, 0, 100, 15, color_primary, &Settings::Visuals::enemyIgnoreZG, 0.0f, 1.0f);
-		chamsEnemiesIgnoreZBSlider = new GUISlider(0, 0, 100, 15, color_primary, &Settings::Visuals::enemyIgnoreZB, 0.0f, 1.0f);
-		chamsEnemiesNormalRSlider = new GUISlider(0, 0, 100, 15, color_primary, &Settings::Visuals::enemyBehindWallR, 0.0f, 1.0f);
-		chamsEnemiesNormalGSlider = new GUISlider(0, 0, 100, 15, color_primary, &Settings::Visuals::enemyBehindWallG, 0.0f, 1.0f);
-		chamsEnemiesNormalBSlider = new GUISlider(0, 0, 100, 15, color_primary, &Settings::Visuals::enemyBehindWallB, 0.0f, 1.0f);
-		chamsHandChamsRSlider = new GUISlider(0, 0, 100, 15, color_primary, &Settings::Visuals::handChamsR, 0.0f, 1.0f);
-		chamsHandChamsGSlider = new GUISlider(0, 0, 100, 15, color_primary, &Settings::Visuals::handChamsG, 0.0f, 1.0f);
-		chamsHandChamsBSlider = new GUISlider(0, 0, 100, 15, color_primary, &Settings::Visuals::handChamsB, 0.0f, 1.0f);
+		chamsEnemiesIgnoreZColor = new GUIColor(0, 0, 100, 15, color_primary, &Settings::Visuals::enemyIgnoreZR, &Settings::Visuals::enemyIgnoreZG, &Settings::Visuals::enemyIgnoreZB);
+		chamsEnemiesNormalColor = new GUIColor(0, 0, 100, 15, color_primary, &Settings::Visuals::enemyBehindWallR, &Settings::Visuals::enemyBehindWallG, &Settings::Visuals::enemyBehindWallB);
+		chamsHandChamsColor = new GUIColor(0, 0, 100, 15, color_primary, &Settings::Visuals::handChamsR, &Settings::Visuals::handChamsG, &Settings::Visuals::handChamsB);
 		// ESP
 		espCheckbox = new GUICheckbox(MENU_X + 275, 0, 15, 15, color_primary, &Settings::Visuals::bEspEnabled);
 		espOnlyEnemiesCheckbox = new GUICheckbox(MENU_X + 275, 0, 15, 15, color_primary, &Settings::Visuals::bESPOnlyEnemies);
@@ -122,9 +116,7 @@ namespace Menu {
 		nameESPCheckbox = new GUICheckbox(MENU_X + 275, 0, 15, 15, color_primary, &Settings::Visuals::bNameESP);
 		healthESPCheckbox = new GUICheckbox(MENU_X + 275, 0, 15, 15, color_primary, &Settings::Visuals::bHealthESP);
 		weaponSPCheckbox = new GUICheckbox(MENU_X + 275, 0, 15, 15, color_primary, &Settings::Visuals::bWeaponESPCheckbox);
-		espRSlider = new GUISlider(MENU_X + 275, 0, 100, 15, color_primary, &Settings::Visuals::espRSlider, 0, 1);
-		espGSlider = new GUISlider(MENU_X + 275, 0, 100, 15, color_primary, &Settings::Visuals::espGSlider, 0, 1);
-		espBSlider = new GUISlider(MENU_X + 275, 0, 100, 15, color_primary, &Settings::Visuals::espBSlider, 0, 1);
+		espColor = new GUIColor(MENU_X + 275, 0, 100, 15, color_primary, &Settings::Visuals::espRSlider, &Settings::Visuals::espGSlider, &Settings::Visuals::espBSlider);
 		espHealthBarCheckbox = new GUICheckbox(MENU_X + 275, 0, 15, 15, color_primary, &Settings::Visuals::bHealtBar);
 
 		/*	SKIN	*/
@@ -234,45 +226,21 @@ namespace Menu {
 				chamsOnlyEnemiesCheckbox->SetPos(MENU_X + 150, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 1));
 				chamsOnlyEnemiesCheckbox->Draw();
 
-				DrawString(MENU_X + 5, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 2), "Enemies IgnoreZ Red");
-				chamsEnemiesIgnoreZRSlider->SetPos(MENU_X + 150, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 2));
-				chamsEnemiesIgnoreZRSlider->Draw();
+				DrawString(MENU_X + 5, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 2), "Enemies IgnoreZ");
+				chamsEnemiesIgnoreZColor->SetPos(MENU_X + 150, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 2));
+				chamsEnemiesIgnoreZColor->DrawButton();
 
-				DrawString(MENU_X + 5, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 3), "Enemies IgnoreZ Green");
-				chamsEnemiesIgnoreZGSlider->SetPos(MENU_X + 150, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 3));
-				chamsEnemiesIgnoreZGSlider->Draw();
+				DrawString(MENU_X + 5, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 3), "Enemies Normal");
+				chamsEnemiesNormalColor->SetPos(MENU_X + 150, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 3));
+				chamsEnemiesNormalColor->DrawButton();
 
-				DrawString(MENU_X + 5, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 4), "Enemies IgnoreZ Blue");
-				chamsEnemiesIgnoreZBSlider->SetPos(MENU_X + 150, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 4));
-				chamsEnemiesIgnoreZBSlider->Draw();
-
-				DrawString(MENU_X + 5, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 5), "Enemies Normal Red");
-				chamsEnemiesNormalRSlider->SetPos(MENU_X + 150, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 5));
-				chamsEnemiesNormalRSlider->Draw();
-
-				DrawString(MENU_X + 5, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 6), "Enemies Normal Green");
-				chamsEnemiesNormalGSlider->SetPos(MENU_X + 150, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 6));
-				chamsEnemiesNormalGSlider->Draw();
-
-				DrawString(MENU_X + 5, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 7), "Enemies Normal Blue");
-				chamsEnemiesNormalBSlider->SetPos(MENU_X + 150, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 7));
-				chamsEnemiesNormalBSlider->Draw();
-
-				DrawString(MENU_X + 5, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 8), "Hand Chams");
-				chamsHandChamsCheckbox->SetPos(MENU_X + 150, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 8));
+				DrawString(MENU_X + 5, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 4), "Hand Chams");
+				chamsHandChamsCheckbox->SetPos(MENU_X + 150, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 4));
 				chamsHandChamsCheckbox->Draw();
 
-				DrawString(MENU_X + 5, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 9), "Hand Red");
-				chamsHandChamsRSlider->SetPos(MENU_X + 150, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 9));
-				chamsHandChamsRSlider->Draw();
-
-				DrawString(MENU_X + 5, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 10), "Hand Green");
-				chamsHandChamsGSlider->SetPos(MENU_X + 150, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 10));
-				chamsHandChamsGSlider->Draw();
-
-				DrawString(MENU_X + 5, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 11), "Hand Blue");
-				chamsHandChamsBSlider->SetPos(MENU_X + 150, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 11));
-				chamsHandChamsBSlider->Draw();
+				DrawString(MENU_X + 5, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 5), "Hand");
+				chamsHandChamsColor->SetPos(MENU_X + 150, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 5));
+				chamsHandChamsColor->DrawButton();
 
 				DrawString(MENU_X + 275, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 5, "ESP", fontBig, color_white);
 				GetStringSize(wide, tall, "ESP", fontBig);
@@ -304,17 +272,13 @@ namespace Menu {
 				espHealthBarCheckbox->Draw();
 
 				DrawString(MENU_X + 275, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 7), "ESP Red");
-				espRSlider->SetPos(MENU_X + 375, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 7));
-				espRSlider->Draw();
+				espColor->SetPos(MENU_X + 375, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 7));
+				espColor->DrawButton();
 
-				DrawString(MENU_X + 275, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 8), "ESP Green");
-				espGSlider->SetPos(MENU_X + 375, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 8));
-				espGSlider->Draw();
-
-				DrawString(MENU_X + 275, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 9), "ESP Blue");
-				espBSlider->SetPos(MENU_X + 375, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 9));
-				espBSlider->Draw();
-
+				chamsEnemiesIgnoreZColor->Draw();
+				chamsEnemiesNormalColor->Draw();
+				chamsHandChamsColor->Draw();
+				espColor->Draw();
 			}
 			else if (iCurrentPage == skinTab->index) {
 				/*	SKIN	*/

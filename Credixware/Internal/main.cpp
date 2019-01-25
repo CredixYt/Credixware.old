@@ -16,9 +16,6 @@ int main() {
 			Utils::CloseConsole();
 			FreeLibraryAndExitThread(MyModule, 0);
 		}
-		if (Utils::GetKey(VK_F12)) {
-			Nightmode::Perform();
-		}
 	}
 	return 0;
 }

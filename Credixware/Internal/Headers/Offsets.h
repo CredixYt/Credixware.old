@@ -14,6 +14,7 @@ namespace Offsets {
 	DWORD m_nFallbackSeed = 0x31BC;
 	DWORD m_nFallbackStatTrak = 0x31C4;
 	DWORD m_hMyWeapons = 0x2DF8;
+	DWORD m_hActiveWeapon = 0x2EF8;
 }
 
 #endif

@@ -235,12 +235,14 @@ void DrawBones(C_BaseEntity* BaseEntity, const char* string) {
 	}
 }
 
+int screenWidth, screenHeight;
 namespace ESP {
 	void Init() {
-		color[0] = Settings::Visuals::espRSlider * 255.0f;
-		color[1] = Settings::Visuals::espGSlider * 255.0f;
-		color[2] = Settings::Visuals::espBSlider * 255.0f;
-		color[3] = 255.0f;
+		color[0] = Settings::Visuals::espRSlider;
+		color[1] = Settings::Visuals::espGSlider;
+		color[2] = Settings::Visuals::espBSlider;
+		color[3] = 255;
+		g_pEngineClient->GetScreenSize(screenWidth, screenHeight);
 	}
 	void Draw() {
 		if (!Settings::Visuals::bEspEnabled) {
@@ -268,7 +270,7 @@ namespace ESP {
 				continue;
 
 			int EntityTeam = *reinterpret_cast<int*>((DWORD)Entity->GetBaseEntity() + Offsets::m_iTeamNum);
-			if (Settings::Visuals::bESPOnlyEnemies && LocalTeam != EntityTeam) {
+			if (Settings::Visuals::bESPOnlyEnemies && LocalTeam == EntityTeam) {
 
 			}
 			else {
@@ -306,6 +308,13 @@ namespace ESP {
 						player_info_t EntityInfo;
 						g_pEngineClient->GetPlayerInfo(Entity->entindex(), &EntityInfo);
 
+						if ((topx > screenWidth || topx <= 1) ||
+							(topy > screenWidth || topy <= 1) ||
+							(botx > screenWidth || botx <= 1) ||
+							(boty > screenWidth || boty <= 1)) {
+							continue;
+						}
+
 						DrawLine(topx, topScreen.y, topy, topScreen.y, color);
 						DrawLine(topx, bottomScreen.y, topy, bottomScreen.y, color);
 						DrawLine(topx, bottomScreen.y, topx, topScreen.y, color);
@@ -329,7 +338,6 @@ namespace ESP {
 							DrawBox(topy - 6, topScreen.y, 4, height + 2, color);
 							DrawBox(topy - 5, topScreen.y + 1 + (height - ((float)health * height) / 100.0f), 2, ((float)health * height) / 100.0f, health_color);
 						}
-
 						DrawBones(BaseEntity, g_pModelInfo->GetModelName(Entity->GetModel()));
 					}
 				}

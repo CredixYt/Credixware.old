@@ -18,8 +18,6 @@ bool __fastcall hkFireEventClientSide(void* ecx, void* edx, IGameEvent* pEvent) 
 		return oFireEventClientSide(ecx, pEvent);
 	}
 
-	//printf("%s\n", pEvent->GetName());
-
 	if (_strcmpi(pEvent->GetName(), "item_equip") == 0) {
 		int weaponType = pEvent->GetInt("weptype");
 		int userID = pEvent->GetInt("userid");

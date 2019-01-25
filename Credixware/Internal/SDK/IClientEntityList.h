@@ -11,7 +11,6 @@ class ClientClass;
 class IClientNetworkable;
 class CBaseHandle;
 class IClientUnknown;
-
 class IClientEntityList
 {
 public:
@@ -23,10 +22,11 @@ public:
 		typedef IClientEntity*(__thiscall* Fn)(void*, int);
 		return Utils::GetVFunc<Fn>(this, 3)(this, entnum);
 	}*/
-	IClientEntity*				GetClientEntityFromHandle(CBaseHandle hEnt) {
+	virtual IClientEntity*		GetClientEntityFromHandle(CBaseHandle hEnt);
+	/*IClientEntity*				GetClientEntityFromHandle(CBaseHandle hEnt) {
 		typedef IClientEntity*(__thiscall* Fn)(void*, CBaseHandle);
 		return Utils::GetVFunc<Fn>(this, 4)(this, hEnt);
-	}
+	}*/
 	virtual int					NumberOfEntities(bool bIncludeNonNetworkable) = 0;
 	int							GetHighestEntityIndex() {
 		typedef int(__thiscall* Fn)(void*);

@@ -5,12 +5,13 @@
 #include "../Headers/Interfaces.h"
 #include "../Hacks/Hacks.h"
 
-typedef void(__thiscall* CreateMove_t)(void*, float, CUserCmd*);
+typedef bool(__thiscall* CreateMove_t)(void*, float, CUserCmd*);
 CreateMove_t oCreateMove;
 unsigned int* oCreateMoveFunc;
 
 bool __fastcall hkCreateMove(void* ecx, void* edx, float sampleTime, CUserCmd* UserCmd) {
-	bool bReturnValue = AntiAim::Tick(UserCmd);;
+	//bool bReturnValue = AntiAim::Tick(UserCmd);;
+	bool bReturnValue = true;
 	oldViewAngles = UserCmd->viewangles;
 	Bunnyhop::Tick(UserCmd);
 	if (GetAsyncKeyState(VK_LBUTTON)) {

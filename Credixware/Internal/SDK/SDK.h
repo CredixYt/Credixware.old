@@ -7,6 +7,7 @@
 #include "C_BaseEntity.h"
 #include "C_BasePlayer.h"
 #include "C_BaseViewModel.h"
+#include "CGlobalVars.h"
 #include "CInput.h"
 #include "ClientClass.h"
 #include "Color.h"

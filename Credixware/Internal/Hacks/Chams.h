@@ -17,15 +17,15 @@ namespace Chams {
 	void Init() {
 		if (!g_pEngineClient->IsInGame() || !g_pEngineClient->IsConnected()) return;
 		enemyBehindWall = CreateMaterial(false, false, "VertexLitGeneric");
-		enemyBehindWall->ColorModulate(Settings::Visuals::enemyBehindWallR, Settings::Visuals::enemyBehindWallG, Settings::Visuals::enemyBehindWallB);
+		enemyBehindWall->ColorModulate(Settings::Visuals::enemyBehindWallR / 255.0f, Settings::Visuals::enemyBehindWallG / 255.0f, Settings::Visuals::enemyBehindWallB / 255.0f);
 		enemyIgnoreZ = CreateMaterial(true, false, "VertexLitGeneric");
-		enemyIgnoreZ->ColorModulate(Settings::Visuals::enemyIgnoreZR, Settings::Visuals::enemyIgnoreZG, Settings::Visuals::enemyIgnoreZB);
+		enemyIgnoreZ->ColorModulate(Settings::Visuals::enemyIgnoreZR / 255.0f, Settings::Visuals::enemyIgnoreZG / 255.0f, Settings::Visuals::enemyIgnoreZB / 255.0f);
 		allyBehindWall = CreateMaterial(false, false, "VertexLitGeneric");
-		allyBehindWall->ColorModulate(Settings::Visuals::allyBehindWallR, Settings::Visuals::allyBehindWallG, Settings::Visuals::allyBehindWallB);
+		allyBehindWall->ColorModulate(Settings::Visuals::allyBehindWallR / 255.0f, Settings::Visuals::allyBehindWallG / 255.0f, Settings::Visuals::allyBehindWallB / 255.0f);
 		allyIgnoreZ = CreateMaterial(true, false, "VertexLitGeneric");
-		allyIgnoreZ->ColorModulate(Settings::Visuals::allyIgnoreZR, Settings::Visuals::allyIgnoreZG, Settings::Visuals::allyIgnoreZB);
+		allyIgnoreZ->ColorModulate(Settings::Visuals::allyIgnoreZR / 255.0f, Settings::Visuals::allyIgnoreZG / 255.0f, Settings::Visuals::allyIgnoreZB / 255.0f);
 		handChams = CreateMaterial(false, false, "VertexLitGeneric");
-		handChams->ColorModulate(Settings::Visuals::handChamsR, Settings::Visuals::handChamsG, Settings::Visuals::handChamsB);
+		handChams->ColorModulate(Settings::Visuals::handChamsR/255.0f, Settings::Visuals::handChamsG / 255.0f, Settings::Visuals::handChamsB / 255.0f);
 		bFinished = true;
 	}
 }

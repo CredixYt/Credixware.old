@@ -79,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Hacks\AntiAim.h" />
+    <ClInclude Include="Hacks\Backtrack.h" />
     <ClInclude Include="Hacks\Bunnyhop.h" />
     <ClInclude Include="Hacks\Chams.h" />
     <ClInclude Include="Hacks\ESP.h" />
@@ -104,6 +105,7 @@
     <ClInclude Include="Hooks\OverrideView.h" />
     <ClInclude Include="Hooks\PaintTraverse.h" />
     <ClInclude Include="SDK\basetypes.h" />
+    <ClInclude Include="SDK\CGlobalVars.h" />
     <ClInclude Include="SDK\CInput.h" />
     <ClInclude Include="SDK\ClientClass.h" />
     <ClInclude Include="SDK\Color.h" />

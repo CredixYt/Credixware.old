@@ -17,15 +17,13 @@ namespace Nightmode {
 					mat->ColorModulate(0.25f, 0.25f, 0.5f);
 				}
 				else if (strstr(groupName, "StaticProp")) {
-					mat->ColorModulate(0.4f, 0.4f, 0.5f);
+					mat->ColorModulate(0.5f, 0.5f, 0.75f);
 				}
 			}
 		}
 	}
 
 	void Reset() {
-		//ConVar* DrawSpecificStaticProp = g_pCvar->FindVar("r_DrawSpecificStaticProp");
-		//DrawSpecificStaticProp->SetValue(1);
 		for (MaterialHandle_t i = g_pMaterialSystem->FirstMaterial(); i < g_pMaterialSystem->GetNumMaterials(); i = g_pMaterialSystem->NextMaterial(i)) {
 			IMaterial* mat = g_pMaterialSystem->GetMaterial(i);
 			if (mat) {

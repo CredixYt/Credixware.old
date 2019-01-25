@@ -17,6 +17,7 @@ IVModelRender* g_pModelRender;
 IVModelInfo* g_pModelInfo;
 IMaterialSystem* g_pMaterialSystem;
 ICvar* g_pCvar;
+CGlobalVars* g_pGlobalVars;
 void* g_pClient;
 void* g_pClientMode;
 void* g_pGameEventManager;
@@ -33,6 +34,7 @@ namespace Interfaces {
 		g_pGameEventManager = Utils::CaptureInterface<void>("engine.dll", "GAMEEVENTSMANAGER002");
 		g_pMaterialSystem = Utils::CaptureInterface<IMaterialSystem>("materialsystem.dll", "VMaterialSystem080");
 		g_pClient = Utils::CaptureInterface<void>("client_panorama.dll", "VClient018");
+		g_pGlobalVars = **reinterpret_cast<CGlobalVars***>((*reinterpret_cast<uintptr_t**>(g_pClient))[0] + 0x1B);
 		g_pClientMode = **(DWORD***)((*(uintptr_t**)g_pClient)[10] + 0x5);
 #ifndef NO_CINPUT_HOOK
 		g_pInput = *(CInput**)((*(uintptr_t**)g_pClient)[16] + 0x1);

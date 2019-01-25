@@ -112,12 +112,18 @@ public:
 	virtual void				AddFlags(int flags);
 	virtual	bool				IsCommand(void) const;
 	void						InstallChangeCallback(FnChangeCallback_t callback);
-	inline float				GetFloat(void) const;
+	float						GetFloat(void) {
+		typedef float(__thiscall* Fn)(void*);
+		return Utils::GetVFunc<Fn>(this, 13)(this);
+	}
 	inline int					GetInt(void) const;
 	inline bool					GetBool() const { return !!GetInt(); }
 	inline char const*			GetString(void) const;
 	virtual void				SetValue(const char *value);
-	virtual void				SetValue(float value);
+	void						SetValue(float value) {
+		typedef void(__thiscall* Fn)(void*, float);
+		return Utils::GetVFunc<Fn>(this, 15)(this, value);
+	}
 	void						SetValue(int value) {
 		typedef void(__thiscall* Fn)(void*, int);
 		return Utils::GetVFunc<Fn>(this, 16)(this, value);
