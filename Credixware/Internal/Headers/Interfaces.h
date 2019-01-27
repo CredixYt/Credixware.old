@@ -5,6 +5,7 @@
 #include "Common.h"
 #include "Utils.h"
 #include "../SDK/SDK.h"
+#include "Offsets.h"
 
 HMODULE MyModule;
 
@@ -18,6 +19,7 @@ IVModelInfo* g_pModelInfo;
 IMaterialSystem* g_pMaterialSystem;
 ICvar* g_pCvar;
 CGlobalVars* g_pGlobalVars;
+CGlowObjectManager* g_pGlowObjectManager;
 void* g_pClient;
 void* g_pClientMode;
 void* g_pGameEventManager;
@@ -36,6 +38,7 @@ namespace Interfaces {
 		g_pClient = Utils::CaptureInterface<void>("client_panorama.dll", "VClient018");
 		g_pGlobalVars = **reinterpret_cast<CGlobalVars***>((*reinterpret_cast<uintptr_t**>(g_pClient))[0] + 0x1B);
 		g_pClientMode = **(DWORD***)((*(uintptr_t**)g_pClient)[10] + 0x5);
+		g_pGlowObjectManager = (CGlowObjectManager*)((DWORD)GetModuleHandle("client_panorama.dll") + Offsets::dwGlowObjectManager);
 #ifndef NO_CINPUT_HOOK
 		g_pInput = *(CInput**)((*(uintptr_t**)g_pClient)[16] + 0x1);
 #else

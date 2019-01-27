@@ -6,10 +6,11 @@
 #include "Interface.h"
 #include "../Headers/Utils.h"
 
+#include "IClientThinkable.h"
+
 class IClientEntity;
 class ClientClass;
 class IClientNetworkable;
-class CBaseHandle;
 class IClientUnknown;
 class IClientEntityList
 {
@@ -22,7 +23,7 @@ public:
 		typedef IClientEntity*(__thiscall* Fn)(void*, int);
 		return Utils::GetVFunc<Fn>(this, 3)(this, entnum);
 	}*/
-	virtual IClientEntity*		GetClientEntityFromHandle(CBaseHandle hEnt);
+	virtual IClientEntity*		GetClientEntityFromHandle(CBaseHandle hEnt) = 0;
 	/*IClientEntity*				GetClientEntityFromHandle(CBaseHandle hEnt) {
 		typedef IClientEntity*(__thiscall* Fn)(void*, CBaseHandle);
 		return Utils::GetVFunc<Fn>(this, 4)(this, hEnt);

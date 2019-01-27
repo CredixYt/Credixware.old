@@ -8,6 +8,7 @@
 #include "Chams.h"
 #include "ESP.h"
 #include "Events.h"
+#include "Glow.h"
 #include "Menu.h"
 #include "Nightmode.h"
 #include "SilentAim.h"

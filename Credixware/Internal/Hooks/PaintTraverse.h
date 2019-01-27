@@ -10,6 +10,7 @@ PaintTraverse_t oPaintTraverse;
 unsigned int* oPaintTraverseFunc;
 
 void __fastcall hkPaintTraverse(void* ecx, void* edx, VPANEL vguiPanel, bool bForceRepaint, bool bAllowForce) {
+	Glow::Render();
 	const char* panelName = g_pPanel->GetName(vguiPanel);
 	if (!strcmp(panelName, "MatSystemTopPanel")) {
 		ESP::Draw();

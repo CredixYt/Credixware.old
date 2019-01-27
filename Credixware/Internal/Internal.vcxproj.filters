@@ -222,5 +222,14 @@
     <ClInclude Include="SDK\CGlobalVars.h">
       <Filter>SDK</Filter>
     </ClInclude>
+    <ClInclude Include="Hacks\Glow.h">
+      <Filter>Hacks</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\CGlowObjectManager.h">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Hooks\RenderGlowEffects.h">
+      <Filter>Hooks</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

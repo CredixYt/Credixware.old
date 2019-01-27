@@ -12,7 +12,7 @@ namespace Thirdperson {
 		}
 		if (g_pEngineClient->IsInGame()) {
 			if (g_pInput) {
-				if (Settings::Misc::bThirdperson) {
+				if (Settings::Misc::bThirdperson && Settings::Misc::bThirdpersonEnabled) {
 					g_pInput->m_fCameraInThirdPerson = true;
 					Vector vec = CalculateCameraOffset(Vector(oldViewAngles.x, oldViewAngles.y, oldViewAngles.z), Settings::Misc::ThirdpersonDistance);
 					g_pInput->m_vecCameraOffset.x = vec.x;

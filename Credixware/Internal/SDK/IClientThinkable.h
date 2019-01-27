@@ -24,13 +24,30 @@ class CBaseHandle
 {
 	friend class CBaseEntityList;
 public:
-	CBaseHandle();
-	CBaseHandle(const CBaseHandle &other);
-	CBaseHandle(unsigned long value);
-	CBaseHandle(int iEntry, int iSerialNumber);
-	void Init(int iEntry, int iSerialNumber);
-	void Term();
-	bool IsValid() const;
+	CBaseHandle() {
+
+	}
+	CBaseHandle(const CBaseHandle &other) {
+
+	}
+	CBaseHandle(unsigned long value) {
+
+	}
+	CBaseHandle(int iEntry, int iSerialNumber) {
+
+	}
+	void Init(int iEntry, int iSerialNumber) {
+		typedef void(__thiscall* Fn)(void*, int, int);
+		Utils::GetVFunc<Fn>(this, 0)(this, iEntry, iSerialNumber);
+	}
+	void Term() {
+		typedef void(__thiscall* Fn)(void*);
+		Utils::GetVFunc<Fn>(this, 1)(this);
+	}
+	bool IsValid() {
+		typedef bool(__thiscall* Fn)(void*);
+		Utils::GetVFunc<Fn>(this, 2)(this);
+	}
 	int GetEntryIndex() const;
 	int GetSerialNumber() const;
 	int ToInt() const;

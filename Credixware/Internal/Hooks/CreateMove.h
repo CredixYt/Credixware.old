@@ -14,7 +14,7 @@ bool __fastcall hkCreateMove(void* ecx, void* edx, float sampleTime, CUserCmd* U
 	bool bReturnValue = true;
 	oldViewAngles = UserCmd->viewangles;
 	Bunnyhop::Tick(UserCmd);
-	if (GetAsyncKeyState(VK_LBUTTON)) {
+	if (UserCmd->buttons & IN_ATTACK) {
 		SilentAim::Shoot();
 		if (Settings::Rage::bSilentAim) {
 			UserCmd->viewangles.x = silentAimViewAngles.x;

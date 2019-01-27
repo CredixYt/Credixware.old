@@ -27,18 +27,14 @@ bool __fastcall hkFireEventClientSide(void* ecx, void* edx, IGameEvent* pEvent) 
 		else {
 			bKnifeEquipped = false;
 		}
-	}
-
-	if (_strcmpi(pEvent->GetName(), "player_spawn") == 0) {
+	} else if (_strcmpi(pEvent->GetName(), "player_spawn") == 0) {
 		player_info_t localPlayer;
 
 		if (g_pEngineClient->GetPlayerInfo(g_pEngineClient->GetLocalPlayer(), &localPlayer)) {
 			iLocalID = localPlayer.user_id;
 		}
 		
-	}
-
-	if (_strcmpi(pEvent->GetName(), "game_newmap") == 0 && Settings::Misc::bNightmodeEnabled) {
+	} else if (_strcmpi(pEvent->GetName(), "game_newmap") == 0 && Settings::Misc::bNightmodeEnabled) {
 		Nightmode::Perform();
 	} else if (_strcmpi(pEvent->GetName(), "game_newmap") == 0 && !Settings::Misc::bNightmodeEnabled) {
 		Nightmode::Reset();

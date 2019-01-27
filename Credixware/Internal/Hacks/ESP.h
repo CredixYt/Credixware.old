@@ -284,8 +284,8 @@ namespace ESP {
 					if (!BaseEntity)
 						continue;
 
-					if (Entity->entindex() == g_pEngineClient->GetLocalPlayer())
-						continue;
+					/*if (Entity->entindex() == g_pEngineClient->GetLocalPlayer())
+						continue;*/
 
 					C_BaseEntity* EntityBase = (C_BaseEntity*)g_pClientEntityList->GetClientEntity(i);
 					int health = *reinterpret_cast<int*>((DWORD)Entity->GetBaseEntity() + Offsets::m_iHealth);
@@ -315,10 +315,26 @@ namespace ESP {
 							continue;
 						}
 
-						DrawLine(topx, topScreen.y, topy, topScreen.y, color);
-						DrawLine(topx, bottomScreen.y, topy, bottomScreen.y, color);
-						DrawLine(topx, bottomScreen.y, topx, topScreen.y, color);
-						DrawLine(topy, bottomScreen.y, topy, topScreen.y, color);
+						if (Settings::Visuals::espBoxType == ESPBOX_DEFAULT) {
+							DrawLine(topx, topScreen.y, topy, topScreen.y, color);
+							DrawLine(topx, bottomScreen.y, topy, bottomScreen.y, color);
+							DrawLine(topx, bottomScreen.y, topx, topScreen.y, color);
+							DrawLine(topy, bottomScreen.y, topy, topScreen.y, color);
+						} else if (Settings::Visuals::espBoxType == ESPBOX_CORNERED) {
+							DrawLine(topx, topScreen.y, topy, topScreen.y, color);
+							DrawLine(topx, bottomScreen.y, topy, bottomScreen.y, color);
+							DrawLine(topx, bottomScreen.y, topx, topScreen.y, color);
+							DrawLine(topy, bottomScreen.y, topy, topScreen.y, color);
+						} else if (Settings::Visuals::espBoxType == ESPBOX_LINES) {
+							DrawLine(topx, bottomScreen.y, topy, bottomScreen.y, color);
+							DrawLine(topy, bottomScreen.y, topy, topScreen.y, color);
+						}
+						else if (Settings::Visuals::espBoxType == ESPBOX_VERTICALLINE) {
+							DrawLine(topy, bottomScreen.y, topy, topScreen.y, color);
+						}
+						else if (Settings::Visuals::espBoxType == ESPBOX_HORIZONTALLINE) {
+							DrawLine(topx, bottomScreen.y, topy, bottomScreen.y, color);
+						}
 						if (Settings::Visuals::bNameESP) {
 							GetStringSize(w, h, EntityInfo.player_name);
 							DrawString(topScreen.x - (w / 2), topScreen.y - h, EntityInfo.player_name, color);

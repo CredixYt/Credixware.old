@@ -27,8 +27,10 @@ void __fastcall hkDrawModelExecute(void* ecx, void* edx, void* thisptr, const Dr
 					const char* entityType = EntityClass->GetName();
 					if (EntityClass->m_ClassID == CCSPLAYER && Entity->entindex() != g_pEngineClient->GetLocalPlayer() && Settings::Visuals::bChams) {
 						if (Chams::enemyBehindWall && Chams::enemyIgnoreZ) {
-							g_pModelRender->ForcedMaterialOverride(Chams::enemyIgnoreZ);
-							oDrawModelExecute(ecx, thisptr, state, pInfo, pCustomBoneToWorld);
+							if (Settings::Visuals::bChamsIngoreZ) {
+								g_pModelRender->ForcedMaterialOverride(Chams::enemyIgnoreZ);
+								oDrawModelExecute(ecx, thisptr, state, pInfo, pCustomBoneToWorld);
+							}
 							g_pModelRender->ForcedMaterialOverride(Chams::enemyBehindWall);
 						}
 					}

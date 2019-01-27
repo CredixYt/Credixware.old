@@ -1,3 +1,9 @@
+## Changelog b0.3:
+- _[Internal]_ ESP: Added box types
+- _[Internal]_ Hacks: Added Glow, added Grenade Helper (placeholder), updated Menu
+- _[Internal]_ Interfaces: Added CGlowObjectManager
+- _[Internal]_ SDK: Added CGlowObjectManager
+
 ## Changelog b0.2:
 - _[Internal]_ Improved performance
 - _[Internal]_ Interfaces: Added CGlobalVars

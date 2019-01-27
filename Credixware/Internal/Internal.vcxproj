@@ -84,6 +84,7 @@
     <ClInclude Include="Hacks\Chams.h" />
     <ClInclude Include="Hacks\ESP.h" />
     <ClInclude Include="Hacks\Events.h" />
+    <ClInclude Include="Hacks\Glow.h" />
     <ClInclude Include="Hacks\Hacks.h" />
     <ClInclude Include="Hacks\Menu.h" />
     <ClInclude Include="Hacks\Nightmode.h" />
@@ -104,8 +105,10 @@
     <ClInclude Include="Hooks\FrameStageNotify.h" />
     <ClInclude Include="Hooks\OverrideView.h" />
     <ClInclude Include="Hooks\PaintTraverse.h" />
+    <ClInclude Include="Hooks\RenderGlowEffects.h" />
     <ClInclude Include="SDK\basetypes.h" />
     <ClInclude Include="SDK\CGlobalVars.h" />
+    <ClInclude Include="SDK\CGlowObjectManager.h" />
     <ClInclude Include="SDK\CInput.h" />
     <ClInclude Include="SDK\ClientClass.h" />
     <ClInclude Include="SDK\Color.h" />

@@ -8,6 +8,15 @@ float nightmode1;
 float nightmode2;
 float nightmode3;
 
+enum ESPBoxType_t {
+	ESPBOX_NONE = 0,
+	ESPBOX_DEFAULT = 1,
+	ESPBOX_CORNERED = 2,
+	ESPBOX_VERTICALLINE = 3,
+	ESPBOX_HORIZONTALLINE = 4,
+	ESPBOX_LINES = 5
+};
+
 enum AntiAimType_t {
 	ANTIAIM_NONE = -1,
 	ANTIAIM_SLOW_SPIN = 0,
@@ -62,33 +71,18 @@ std::string KnifeModels[] = {
 };
 
 namespace Settings {
-	namespace Misc {
-		/* THIRDPERSON */
-		bool bThirdpersonEnabled = true;
-		bool bThirdperson = true;
-		float ThirdpersonDistance = 5.0f;
-		short ThirdpersonToggleKey = VK_MENU;
-
-		/* BUNNYHOP & AUTOSTRAFE */
-		bool bBunnyhop = false;
-		short BunnyhopKey = VK_SPACE;
-
-		/* CONFIG */
-		int SelectedConfig = 0;
-
-		/* NIGHTMODE */
-		bool bNightmodeEnabled = false;
-	}
 	namespace Rage {
+		/* ANTI AIM */
 		bool bAntiaim = false;
 		AntiAimType_t antiAimType = ANTIAIM_NONE;
+		/* SILENT AIM */
 		bool bSilentAim;
 	}
-
 	namespace Visuals{
-
+		/* CHAMS */
 		bool bChams = true;
 		bool bChamsOnlyEnemies = false;
+		bool bChamsIngoreZ = false;
 		bool bChamsHandChams = true;
 
 		float enemyBehindWallR =	193.0f;
@@ -113,8 +107,23 @@ namespace Settings {
 		float handChamsG = 111.0f / 255;
 		float handChamsB = 210.0f / 255;*/
 
-		// ESP
+		/* GLOW */
+		bool bGlowEnabled = false;
+		bool bGlowOnlyEnemies = false;
+		bool bGlowIgnoreZ = false;
+		float glowEnemiesIgnoreZR = 0.0f;
+		float glowEnemiesIgnoreZG = 0.0f;
+		float glowEnemiesIgnoreZB = 0.0f;
+		float glowEnemiesNormalR = 0.0f;
+		float glowEnemiesNormalG = 0.0f;
+		float glowEnemiesNormalB = 0.0f;
+		float glowAllyR = 0.0f;
+		float glowAllyG = 0.0f;
+		float glowAllyB = 0.0f;
+
+		/* ESP */
 		bool bEspEnabled;
+		int espBoxType;
 		bool bESPOnlyEnemies;
 		bool bBoneESP;
 		bool bNameESP;
@@ -124,8 +133,14 @@ namespace Settings {
 		float espRSlider = 255.0f;
 		float espGSlider = 255.0f;
 		float espBSlider = 255.0f;
-	}
 
+		/* GRENADE TRAJECTORY */
+		bool bGrenadeTrajectoryEnabled = false;
+		bool bGrenadeTrajectoryShowDamage = false;
+		float grenadeTrajectoryR = 255.0f;
+		float grenadeTrajectoryG = 255.0f;
+		float grenadeTrajectoryB = 255.0f;
+	}
 	namespace SkinChanger {
 		/* KNIFE CHANGER */
 		bool bKnifeChangerEnabled = false;
@@ -135,6 +150,11 @@ namespace Settings {
 		bool bKnifeStattrak = false;
 		int KnifeStattrak = 0;
 
+		/* GLOVE CHANGER */
+		bool bGloveChangerEnabled = true;
+		int Glove = 1;
+		int GloveSkin = 0;
+
 		/* SKIN CHANGER */
 		bool bSkinChangerEnabled = false;
 		int CurrentWeapon = 0;
@@ -142,6 +162,23 @@ namespace Settings {
 		float WeaponWear;
 		bool bWeaponStattrak;
 		int WeaponStattrak;
+	}
+	namespace Misc {
+		/* THIRDPERSON */
+		bool bThirdpersonEnabled = false;
+		bool bThirdperson = true;
+		float ThirdpersonDistance = 5.0f;
+		short ThirdpersonToggleKey = VK_MENU;
+
+		/* BUNNYHOP & AUTOSTRAFE */
+		bool bBunnyhop = false;
+		short BunnyhopKey = VK_SPACE;
+
+		/* CONFIG */
+		int SelectedConfig = 0;
+
+		/* NIGHTMODE */
+		bool bNightmodeEnabled = false;
 	}
 }
 

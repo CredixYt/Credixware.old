@@ -8,7 +8,7 @@
 #include "../Hacks/Settings.h"
 #include "../Headers/MenuWrapper.h"
 
-const char* WATERMARK_TEXT = "Credixware | Beta v0.2";
+const char* WATERMARK_TEXT = "Credixware | Beta v0.3";
 const char* MENU_TITLE_TEXT = "Credixware";
 
 namespace Menu {
@@ -105,12 +105,21 @@ namespace Menu {
 		//	Chams
 		chamsCheckbox = new GUICheckbox(0, 0, 15, 15, color_primary, &Settings::Visuals::bChams);
 		chamsOnlyEnemiesCheckbox = new GUICheckbox(0, 0, 15, 15, color_primary, &Settings::Visuals::bChamsOnlyEnemies);
+		chamsIgnoreZCheckbox = new GUICheckbox(0, 0, 15, 15, color_primary, &Settings::Visuals::bChamsIngoreZ);
 		chamsHandChamsCheckbox = new GUICheckbox(0, 0, 15, 15, color_primary, &Settings::Visuals::bChamsHandChams);
 		chamsEnemiesIgnoreZColor = new GUIColor(0, 0, 100, 15, color_primary, &Settings::Visuals::enemyIgnoreZR, &Settings::Visuals::enemyIgnoreZG, &Settings::Visuals::enemyIgnoreZB);
 		chamsEnemiesNormalColor = new GUIColor(0, 0, 100, 15, color_primary, &Settings::Visuals::enemyBehindWallR, &Settings::Visuals::enemyBehindWallG, &Settings::Visuals::enemyBehindWallB);
 		chamsHandChamsColor = new GUIColor(0, 0, 100, 15, color_primary, &Settings::Visuals::handChamsR, &Settings::Visuals::handChamsG, &Settings::Visuals::handChamsB);
+		// Glow
+		glowCheckbox = new GUICheckbox(0, 0, 15, 15, color_primary, &Settings::Visuals::bGlowEnabled);
+		glowOnlyEnemiesCheckbox = new GUICheckbox(0, 0, 15, 15, color_primary, &Settings::Visuals::bGlowOnlyEnemies);
+		glowIgnoreZCheckbox = new GUICheckbox(0, 0, 15, 15, color_primary, &Settings::Visuals::bGlowIgnoreZ);
+		glowEnemiesIgnoreZColor = new GUIColor(0, 0, 100, 15, color_primary, &Settings::Visuals::glowEnemiesIgnoreZR, &Settings::Visuals::glowEnemiesIgnoreZG, &Settings::Visuals::glowEnemiesIgnoreZB);
+		glowEnemiesNormalColor = new GUIColor(0, 0, 100, 15, color_primary, &Settings::Visuals::glowEnemiesNormalR, &Settings::Visuals::glowEnemiesNormalG, &Settings::Visuals::glowEnemiesNormalB);
+		glowAllyColor = new GUIColor(0, 0, 100, 15, color_primary, &Settings::Visuals::glowAllyR, &Settings::Visuals::glowAllyG, &Settings::Visuals::glowAllyB);
 		// ESP
 		espCheckbox = new GUICheckbox(MENU_X + 275, 0, 15, 15, color_primary, &Settings::Visuals::bEspEnabled);
+		espBoxType = new GUIDropdown(0, 0, 100, 15, color_primary, &Settings::Visuals::espBoxType);
 		espOnlyEnemiesCheckbox = new GUICheckbox(MENU_X + 275, 0, 15, 15, color_primary, &Settings::Visuals::bESPOnlyEnemies);
 		boneESPCheckbox = new GUICheckbox(MENU_X + 275, 0, 15, 15, color_primary, &Settings::Visuals::bBoneESP);
 		nameESPCheckbox = new GUICheckbox(MENU_X + 275, 0, 15, 15, color_primary, &Settings::Visuals::bNameESP);
@@ -118,6 +127,17 @@ namespace Menu {
 		weaponSPCheckbox = new GUICheckbox(MENU_X + 275, 0, 15, 15, color_primary, &Settings::Visuals::bWeaponESPCheckbox);
 		espColor = new GUIColor(MENU_X + 275, 0, 100, 15, color_primary, &Settings::Visuals::espRSlider, &Settings::Visuals::espGSlider, &Settings::Visuals::espBSlider);
 		espHealthBarCheckbox = new GUICheckbox(MENU_X + 275, 0, 15, 15, color_primary, &Settings::Visuals::bHealtBar);
+
+		espBoxType->AddValue("None", ESPBOX_NONE);
+		espBoxType->AddValue("Rectangle", ESPBOX_DEFAULT);
+		espBoxType->AddValue("Cornered", ESPBOX_CORNERED);
+		espBoxType->AddValue("Vertical", ESPBOX_VERTICALLINE);
+		espBoxType->AddValue("Horizontal", ESPBOX_HORIZONTALLINE);
+		espBoxType->AddValue("Lines", ESPBOX_LINES);
+		// Grenade Trajectory
+		grenadeTrajectory = new GUICheckbox(MENU_X + 275, 0, 15, 15, color_primary, &Settings::Visuals::bGrenadeTrajectoryEnabled);
+		grenadeTrajectoryShowDamage = new GUICheckbox(MENU_X + 275, 0, 15, 15, color_primary, &Settings::Visuals::bGrenadeTrajectoryShowDamage);
+		grenadeTrajectoryColor = new GUIColor(0, 0, 100, 15, color_primary, &Settings::Visuals::grenadeTrajectoryR, &Settings::Visuals::grenadeTrajectoryG, &Settings::Visuals::grenadeTrajectoryB);
 
 		/*	SKIN	*/
 		// KnifeChanger
@@ -158,6 +178,9 @@ namespace Menu {
 
 		/*	MISC	*/
 		nightmodeCheckbox = new GUICheckbox(0, 0, 15, 15, color_primary, &Settings::Misc::bNightmodeEnabled);
+		bunnyhopCheckbox = new GUICheckbox(0, 0, 15, 15, color_primary, &Settings::Misc::bBunnyhop);
+		thirdpersonCheckbox = new GUICheckbox(0, 0, 15, 15, color_primary, &Settings::Misc::bThirdpersonEnabled);
+		thirdpersonDistanceSlider = new GUISlider(0, 0, 100, 15, color_primary, &Settings::Misc::ThirdpersonDistance, 0, 10);
 		saveConfigButton = new GUIButton(MENU_X + (MENU_WIDTH / 2) - 52.5, MENU_Y + MENU_HEIGHT - 80, 100, 25, color_primary, "Save");
 		loadConfigButton = new GUIButton(MENU_X + (MENU_WIDTH / 2) + 52.5, MENU_Y + MENU_HEIGHT - 80, 100, 25, color_primary, "Load");
 		exitButton = new GUIButton(MENU_X + (MENU_WIDTH / 2) - 50, MENU_Y + MENU_HEIGHT - 50, 100, 25, color_primary, "Quit");
@@ -227,8 +250,8 @@ namespace Menu {
 				chamsOnlyEnemiesCheckbox->Draw();
 
 				DrawString(MENU_X + 5, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 2), "Enemies IgnoreZ");
-				chamsEnemiesIgnoreZColor->SetPos(MENU_X + 150, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 2));
-				chamsEnemiesIgnoreZColor->DrawButton();
+				chamsIgnoreZCheckbox->SetPos(MENU_X + 150, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 2));
+				chamsIgnoreZCheckbox->Draw();
 
 				DrawString(MENU_X + 5, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 3), "Enemies Normal");
 				chamsEnemiesNormalColor->SetPos(MENU_X + 150, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 3));
@@ -241,44 +264,93 @@ namespace Menu {
 				DrawString(MENU_X + 5, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 5), "Hand");
 				chamsHandChamsColor->SetPos(MENU_X + 150, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 5));
 				chamsHandChamsColor->DrawButton();
+				//	Glow
+				DrawString(MENU_X + 5, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 6), "Glow", fontBig, color_white);
+				GetStringSize(wide, tall, "Glow", fontBig);
+				glowCheckbox->SetPos(MENU_X + 150, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 6) + (tall / 2) - (15 / 2));
+				glowCheckbox->Draw();
 
+				DrawString(MENU_X + 5, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 7) + (tall / 2) - (15 / 2), "Only Enemies");
+				glowOnlyEnemiesCheckbox->SetPos(MENU_X + 150, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 7) + (tall / 2) - (15 / 2));
+				glowOnlyEnemiesCheckbox->Draw();
+
+				DrawString(MENU_X + 5, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 8) + (tall / 2) - (15 / 2), "Ignore Z");
+				glowIgnoreZCheckbox->SetPos(MENU_X + 150, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 8) + (tall / 2) - (15 / 2));
+				glowIgnoreZCheckbox->Draw();
+
+				DrawString(MENU_X + 5, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 9) + (tall / 2) - (15 / 2), "Enemies Ignore Z");
+				glowEnemiesIgnoreZColor->SetPos(MENU_X + 150, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 9) + (tall / 2) - (15 / 2));
+				glowEnemiesIgnoreZColor->DrawButton();
+
+				DrawString(MENU_X + 5, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 10) + (tall / 2) - (15 / 2), "Enemies Normal");
+				glowEnemiesNormalColor->SetPos(MENU_X + 150, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 10) + (tall / 2) - (15 / 2));
+				glowEnemiesNormalColor->DrawButton();
+
+				DrawString(MENU_X + 5, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 11) + (tall / 2) - (15 / 2), "Allies Normal");
+				glowAllyColor->SetPos(MENU_X + 150, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 11) + (tall / 2) - (15 / 2));
+				glowAllyColor->DrawButton();
+
+				//	ESP
 				DrawString(MENU_X + 275, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 5, "ESP", fontBig, color_white);
 				GetStringSize(wide, tall, "ESP", fontBig);
-				espCheckbox->SetPos(MENU_X + 375, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 5 + (tall / 2) - (15 / 2));
+				espCheckbox->SetPos(MENU_X + 385, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 5 + (tall / 2) - (15 / 2));
 				espCheckbox->Draw();
 
-				DrawString(MENU_X + 275, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 1), "Only Enemies");
-				espOnlyEnemiesCheckbox->SetPos(MENU_X + 375, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 1));
+				DrawString(MENU_X + 275, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 1), "Box Type");
+				espBoxType->SetPos(MENU_X + 385, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 1));
+
+				DrawString(MENU_X + 275, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 2), "Only Enemies");
+				espOnlyEnemiesCheckbox->SetPos(MENU_X + 385, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 2));
 				espOnlyEnemiesCheckbox->Draw();
 
-				DrawString(MENU_X + 275, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 2), "Bone ESP");
-				boneESPCheckbox->SetPos(MENU_X + 375, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 2));
+				DrawString(MENU_X + 275, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 3), "Bone ESP");
+				boneESPCheckbox->SetPos(MENU_X + 385, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 3));
 				boneESPCheckbox->Draw();
 
-				DrawString(MENU_X + 275, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 3), "Name ESP");
-				nameESPCheckbox->SetPos(MENU_X + 375, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 3));
+				DrawString(MENU_X + 275, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 4), "Name ESP");
+				nameESPCheckbox->SetPos(MENU_X + 385, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 4));
 				nameESPCheckbox->Draw();
 
-				DrawString(MENU_X + 275, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 4), "Health ESP");
-				healthESPCheckbox->SetPos(MENU_X + 375, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 4));
+				DrawString(MENU_X + 275, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 5), "Health ESP");
+				healthESPCheckbox->SetPos(MENU_X + 385, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 5));
 				healthESPCheckbox->Draw();
 
-				DrawString(MENU_X + 275, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 5), "Weapon ESP");
-				weaponSPCheckbox->SetPos(MENU_X + 375, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 5));
+				DrawString(MENU_X + 275, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 6), "Weapon ESP");
+				weaponSPCheckbox->SetPos(MENU_X + 385, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 6));
 				weaponSPCheckbox->Draw();
 
-				DrawString(MENU_X + 275, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 6), "Health Bar");
-				espHealthBarCheckbox->SetPos(MENU_X + 375, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 6));
+				DrawString(MENU_X + 275, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 7), "Health Bar");
+				espHealthBarCheckbox->SetPos(MENU_X + 385, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 7));
 				espHealthBarCheckbox->Draw();
 
-				DrawString(MENU_X + 275, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 7), "ESP Red");
-				espColor->SetPos(MENU_X + 375, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 7));
+				DrawString(MENU_X + 275, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 8), "ESP Color");
+				espColor->SetPos(MENU_X + 385, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 8));
 				espColor->DrawButton();
+
+				// Grenade Trajectory
+				DrawString(MENU_X + 275, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 9), "Grenade Helper", fontBig, color_white);
+				GetStringSize(wide, tall, "Grenade Helper", fontBig);
+				grenadeTrajectory->SetPos(MENU_X + 385, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 9) + (tall / 2) - (15 / 2));
+				grenadeTrajectory->Draw();
+
+				DrawString(MENU_X + 275, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 10) + (tall / 2) - (15 / 2), "Show Damage");
+				grenadeTrajectoryShowDamage->SetPos(MENU_X + 385, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 10) + (tall / 2) - (15 / 2));
+				grenadeTrajectoryShowDamage->Draw();
+
+				DrawString(MENU_X + 275, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 11) + (tall / 2) - (15 / 2), "Color");
+				grenadeTrajectoryColor->SetPos(MENU_X + 385, MENU_Y + MENU_TITLE_BAR_HEIGHT + visualsTab->h + 10 + (20 * 11) + (tall / 2) - (15 / 2));
+				grenadeTrajectoryColor->DrawButton();
+
+				espBoxType->Draw();
 
 				chamsEnemiesIgnoreZColor->Draw();
 				chamsEnemiesNormalColor->Draw();
 				chamsHandChamsColor->Draw();
+				glowEnemiesIgnoreZColor->Draw();
+				glowEnemiesNormalColor->Draw();
+				glowAllyColor->Draw();
 				espColor->Draw();
+				grenadeTrajectoryColor->Draw();
 			}
 			else if (iCurrentPage == skinTab->index) {
 				/*	SKIN	*/
@@ -343,9 +415,21 @@ namespace Menu {
 				exitButton->SetPos(MENU_X + (MENU_WIDTH / 2) - 50, MENU_Y + MENU_HEIGHT - 50);
 				exitButton->Draw();
 
-				DrawString(MENU_X + 5, MENU_Y + MENU_TITLE_BAR_HEIGHT + miscTab->h + 10 + (20 * 1), "Nightmode");
-				nightmodeCheckbox->SetPos(MENU_X + 150, MENU_Y + MENU_TITLE_BAR_HEIGHT + miscTab->h + 10 + (20 * 1));
+				DrawString(MENU_X + 5, MENU_Y + MENU_TITLE_BAR_HEIGHT + miscTab->h + (20 * 1), "Nightmode");
+				nightmodeCheckbox->SetPos(MENU_X + 150, MENU_Y + MENU_TITLE_BAR_HEIGHT + miscTab->h + (20 * 1));
 				nightmodeCheckbox->Draw();
+
+				DrawString(MENU_X + 5, MENU_Y + MENU_TITLE_BAR_HEIGHT + miscTab->h + (20 * 2), "Bunnyhop");
+				bunnyhopCheckbox->SetPos(MENU_X + 150, MENU_Y + MENU_TITLE_BAR_HEIGHT + miscTab->h + (20 * 2));
+				bunnyhopCheckbox->Draw();
+
+				DrawString(MENU_X + 5, MENU_Y + MENU_TITLE_BAR_HEIGHT + miscTab->h + (20 * 3), "Thirdperson");
+				thirdpersonCheckbox->SetPos(MENU_X + 150, MENU_Y + MENU_TITLE_BAR_HEIGHT + miscTab->h + (20 * 3));
+				thirdpersonCheckbox->Draw();
+
+				DrawString(MENU_X + 5, MENU_Y + MENU_TITLE_BAR_HEIGHT + miscTab->h + (20 * 4), "Thirdperson Offset");
+				thirdpersonDistanceSlider->SetPos(MENU_X + 150, MENU_Y + MENU_TITLE_BAR_HEIGHT + miscTab->h + (20 * 4));
+				thirdpersonDistanceSlider->Draw();
 
 				configDropdown->SetPos(MENU_X + (MENU_WIDTH / 2) - 100, MENU_Y + MENU_HEIGHT - 80);
 				configDropdown->Draw();

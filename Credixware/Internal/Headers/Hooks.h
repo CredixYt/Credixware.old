@@ -10,6 +10,7 @@
 #include "../Hooks/FrameStageNotify.h"
 #include "../Hooks/OverrideView.h"
 #include "../Hooks/PaintTraverse.h"
+#include "../Hooks/RenderGlowEffects.h"
 
 namespace Hooks {
 	template <class T>
@@ -44,6 +45,7 @@ namespace Hooks {
 		oDrawModelExecute = Hook<DrawModelExecute_t>(g_pModelRender, 21, &hkDrawModelExecute);
 		oFireEventClientSide = Hook<FireEventClientSide_t>(g_pGameEventManager, 9, &hkFireEventClientSide);
 		oFireEvent = Hook<FireEvent_t>(g_pGameEventManager, 8, &hkFireEvent);
+		//oRenderGlowEffects = Hook<RenderGlowEffects_t>(g_pGlowObjectManager, 9, &hkRenderGlowEffects);
 	}
 
 	void Reset() {
@@ -54,6 +56,7 @@ namespace Hooks {
 		Unhook(g_pModelRender, 21, oDrawModelExecute);
 		Unhook(g_pGameEventManager, 9, oFireEventClientSide);
 		Unhook(g_pGameEventManager, 8, oFireEvent);
+		//Unhook(g_pGlowObjectManager, 9, oRenderGlowEffects);
 	}
 }
 

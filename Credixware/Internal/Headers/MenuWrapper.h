@@ -261,7 +261,6 @@ public:
 			}
 			else {
 				bPressed = false;
-				ValueChanged();
 			}
 		}
 		else {
@@ -561,7 +560,7 @@ public:
 			return false;
 		}
 		else {
-			IsInBounds(x, y, x2, y2);
+			return IsInBounds(x, y, x2, y2);
 		}
 	}
 	void Draw() {
@@ -982,12 +981,22 @@ GUICheckbox* silentAimCheckbox;
 //	Chams
 GUICheckbox* chamsCheckbox;
 GUICheckbox* chamsOnlyEnemiesCheckbox;
+GUICheckbox* chamsIgnoreZCheckbox;
 GUICheckbox* chamsHandChamsCheckbox;
 GUIColor* chamsEnemiesIgnoreZColor;
 GUIColor* chamsEnemiesNormalColor;
 GUIColor* chamsHandChamsColor;
+// Glow
+GUICheckbox* glowCheckbox;
+GUICheckbox* glowOnlyEnemiesCheckbox;
+GUICheckbox* glowIgnoreZCheckbox;
+GUIColor* glowEnemiesIgnoreZColor;
+GUIColor* glowEnemiesNormalColor;
+GUIColor* glowAllyColor;
+
 // ESP
 GUICheckbox* espCheckbox;
+GUIDropdown* espBoxType;
 GUICheckbox* espHealthBarCheckbox;
 GUICheckbox* espOnlyEnemiesCheckbox;
 GUICheckbox* boneESPCheckbox;
@@ -995,6 +1004,11 @@ GUICheckbox* nameESPCheckbox;
 GUICheckbox* healthESPCheckbox;
 GUICheckbox* weaponSPCheckbox;
 GUIColor* espColor;
+
+// Grenade Helper
+GUICheckbox* grenadeTrajectory;
+GUICheckbox* grenadeTrajectoryShowDamage;
+GUIColor* grenadeTrajectoryColor;
 
 /*	SKIN	*/
 // KnifeChanger
@@ -1013,8 +1027,11 @@ GUICheckbox* weaponStattrakCheckbox;
 GUISlider* weaponStattrak;
 
 /*	MISC	*/
-GUIDropdown* configDropdown;
 GUICheckbox* nightmodeCheckbox;
+GUICheckbox* bunnyhopCheckbox;
+GUICheckbox* thirdpersonCheckbox;
+GUISlider* thirdpersonDistanceSlider;
+GUIDropdown* configDropdown;
 GUIButton* saveConfigButton;
 GUIButton* loadConfigButton;
 GUIButton* exitButton;
