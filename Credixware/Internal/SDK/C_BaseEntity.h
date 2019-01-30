@@ -4,9 +4,9 @@
 #define C_BASEENTITY_H
 
 #include "IClientEntity.h"
+#include "IEngineTrace.h"
 
 struct FireBulletsInfo_t;
-struct trace_t;
 class CTakeDamageInfo;
 class ITraceFilter;
 class CDmgAccumulator;

@@ -14,6 +14,8 @@ bool __fastcall hkCreateMove(void* ecx, void* edx, float sampleTime, CUserCmd* U
 	bool bReturnValue = true;
 	oldViewAngles = UserCmd->viewangles;
 	Bunnyhop::Tick(UserCmd);
+	//GrenadeHelper::Tick(UserCmd);
+	ClantagChanger::Set("Credixware");
 	if (UserCmd->buttons & IN_ATTACK) {
 		SilentAim::Shoot();
 		if (Settings::Rage::bSilentAim) {

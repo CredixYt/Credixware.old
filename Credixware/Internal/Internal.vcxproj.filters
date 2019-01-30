@@ -231,5 +231,17 @@
     <ClInclude Include="Hooks\RenderGlowEffects.h">
       <Filter>Hooks</Filter>
     </ClInclude>
+    <ClInclude Include="Hacks\GrenadeHelper.h">
+      <Filter>Hacks</Filter>
+    </ClInclude>
+    <ClInclude Include="Hacks\ClantagChanger.h">
+      <Filter>Hacks</Filter>
+    </ClInclude>
+    <ClInclude Include="Hacks\HitChance.h">
+      <Filter>Hacks</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\IEngineTrace.h">
+      <Filter>SDK</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

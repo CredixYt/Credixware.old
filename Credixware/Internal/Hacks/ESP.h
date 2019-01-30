@@ -14,7 +14,11 @@ static BYTE iBoneBody[] = { 5, 4, 3, 2, 1 };
 static BYTE iBoneArmL[] = { 9, 8, 7, 5 };
 static BYTE iBoneArmR[] = { 15, 14, 13, 5 };
 
-int color[4] = { 0, 0, 0, 0 };
+int enemiesNormalColor[4] = { 0, 0, 0, 0 };
+int enemiesIgnoreZColor[4] = { 0, 0, 0, 0 };
+int alliesNormalColor[4] = { 0, 0, 0, 0 };
+int alliesIgnoreZColor[4] = { 0, 0, 0, 0 };
+
 
 Vector2D GetBoneScreen(C_BaseEntity* BaseEntity, int index) {
 	matrix3x4_t bonesMatrix[128];
@@ -31,15 +35,16 @@ void DrawBoneLine(C_BaseEntity* BaseEntity,int i1, int i2) {
 		return;
 	}
 	else {
-		DrawLine(boneScreen.x, boneScreen.y, boneScreen2.x, boneScreen2.y, color);
+		DrawLine(boneScreen.x, boneScreen.y, boneScreen2.x, boneScreen2.y, enemiesIgnoreZColor);
 	}
 }
 
 int w, h;
 void DrawBones(C_BaseEntity* BaseEntity, const char* string) {
-	if (!Settings::Visuals::bBoneESP) {
-		return;
-	}
+	return;
+	//if (!Settings::Visuals::bBoneESP) {
+	//	return;
+	//}
 	std::string str = std::string(str);
 	if (!_strcmpi("models/player/custom_player/legacy/tm_leet_variantA.mdl", string)) {
 		DrawBoneLine(BaseEntity, 77, 75);
@@ -238,13 +243,29 @@ void DrawBones(C_BaseEntity* BaseEntity, const char* string) {
 int screenWidth, screenHeight;
 namespace ESP {
 	void Init() {
-		color[0] = Settings::Visuals::espRSlider;
-		color[1] = Settings::Visuals::espGSlider;
-		color[2] = Settings::Visuals::espBSlider;
-		color[3] = 255;
+		enemiesNormalColor[0] = Settings::Visuals::espEnemiesNormalR;
+		enemiesNormalColor[1] = Settings::Visuals::espEnemiesNormalG;
+		enemiesNormalColor[2] = Settings::Visuals::espEnemiesNormalB;
+		enemiesNormalColor[3] = 255;
+
+		enemiesIgnoreZColor[0] = Settings::Visuals::espEnemiesIgnoreZR;
+		enemiesIgnoreZColor[1] = Settings::Visuals::espEnemiesIgnoreZG;
+		enemiesIgnoreZColor[2] = Settings::Visuals::espEnemiesIgnoreZB;
+		enemiesIgnoreZColor[3] = 255;
+
+		alliesNormalColor[0] = Settings::Visuals::espAlliesNormalR;
+		alliesNormalColor[1] = Settings::Visuals::espAlliesNormalG;
+		alliesNormalColor[2] = Settings::Visuals::espAlliesNormalB;
+		alliesNormalColor[3] = 255;
+
+		alliesIgnoreZColor[0] = Settings::Visuals::espAlliesIgnoreZR;
+		alliesIgnoreZColor[1] = Settings::Visuals::espAlliesIgnoreZG;
+		alliesIgnoreZColor[2] = Settings::Visuals::espAlliesIgnoreZB;
+		alliesIgnoreZColor[3] = 255;
 		g_pEngineClient->GetScreenSize(screenWidth, screenHeight);
 	}
 	void Draw() {
+		// TODO: Add ray tracing for visiblity check
 		if (!Settings::Visuals::bEspEnabled) {
 			return;
 		}
@@ -269,95 +290,214 @@ namespace ESP {
 			if (!Entity)
 				continue;
 
-			int EntityTeam = *reinterpret_cast<int*>((DWORD)Entity->GetBaseEntity() + Offsets::m_iTeamNum);
-			if (Settings::Visuals::bESPOnlyEnemies && LocalTeam == EntityTeam) {
+			ClientClass* EntityClass = Entity->GetClientClass();
+			if (!EntityClass)
+				continue;
 
-			}
-			else {
-				ClientClass* EntityClass = Entity->GetClientClass();
-				if (!EntityClass)
+			if (EntityClass->m_ClassID != CCSPLAYER || Entity->entindex() == g_pEngineClient->GetLocalPlayer())
+				continue;
+
+			int EntityTeam = *reinterpret_cast<int*>((DWORD)Entity->GetBaseEntity() + Offsets::m_iTeamNum);
+			if ((Settings::Visuals::bESPEnemiesNormal || Settings::Visuals::bESPEnemiesIgnoreZ) && LocalTeam != EntityTeam) {
+				C_BaseEntity* BaseEntity = Entity->GetBaseEntity();
+				if (!BaseEntity)
 					continue;
 
-				const char* EntityType = EntityClass->GetName();
-				if (EntityClass->m_ClassID == CCSPLAYER && Entity->entindex() != g_pEngineClient->GetLocalPlayer()) {
-					C_BaseEntity* BaseEntity = Entity->GetBaseEntity();
-					if (!BaseEntity)
-						continue;
+				int health = *reinterpret_cast<int*>((DWORD)Entity->GetBaseEntity() + Offsets::m_iHealth);
+				if (health <= 0 || BaseEntity->IsDormant())
+					continue;
 
-					/*if (Entity->entindex() == g_pEngineClient->GetLocalPlayer())
-						continue;*/
+				const char* modelName = g_pModelInfo->GetModelName(Entity->GetModel());
 
-					C_BaseEntity* EntityBase = (C_BaseEntity*)g_pClientEntityList->GetClientEntity(i);
-					int health = *reinterpret_cast<int*>((DWORD)Entity->GetBaseEntity() + Offsets::m_iHealth);
+				Vector top = GetBone(BaseEntity, 8);
+				top.z += 10.0f;
+				Vector bottom = GetBone(BaseEntity, 1);
+				Vector2D topScreen = WorldToScreen(top);
+				Vector2D bottomScreen = WorldToScreen(bottom);
+				float height = topScreen.y - bottomScreen.y;
+				float width = height / 3;
+				int centery = topScreen.y + (height / 2);
+				int topx = bottomScreen.x - width;
+				int topy = bottomScreen.x += width;
+				int botx = centery - ((height - 2) * 1.3);
+				int boty = (centery + ((height / 2) * 1.2));
 
-					if (health > 0 && !EntityBase->IsDormant()) {
-						const char* modelName = g_pModelInfo->GetModelName(Entity->GetModel());
+				player_info_t EntityInfo;
+				g_pEngineClient->GetPlayerInfo(Entity->entindex(), &EntityInfo);
 
-						Vector top = GetBone(BaseEntity, 8);
-						Vector bottom = GetBone(BaseEntity, 1);
-						Vector2D topScreen = WorldToScreen(top);
-						Vector2D bottomScreen = WorldToScreen(bottom);
-						float height = topScreen.y - bottomScreen.y;
-						float width = height / 3;
-						int centery = topScreen.y + (height / 2);
-						int topx = bottomScreen.x - width;
-						int topy = bottomScreen.x += width;
-						int botx = centery - ((height - 2) * 1.3);
-						int boty = (centery + ((height / 2) * 1.2));
+				// TODO: Make optimization less aggresive
+				if ((topx > screenWidth || topx <= 1) ||
+					(topy > screenWidth || topy <= 1) ||
+					(botx > screenWidth || botx <= 1) ||
+					(boty > screenWidth || boty <= 1)) {
+					continue;
+				}
 
-						player_info_t EntityInfo;
-						g_pEngineClient->GetPlayerInfo(Entity->entindex(), &EntityInfo);
+				if (Settings::Visuals::espBoxType == ESPBOX_DEFAULT) {
+					DrawLine(topx, topScreen.y, topy, topScreen.y, enemiesIgnoreZColor);
+					DrawLine(topx, bottomScreen.y, topy, bottomScreen.y, enemiesIgnoreZColor);
+					DrawLine(topx, bottomScreen.y, topx, topScreen.y, enemiesIgnoreZColor);
+					DrawLine(topy, bottomScreen.y, topy, topScreen.y, enemiesIgnoreZColor);
+				}
+				else if (Settings::Visuals::espBoxType == ESPBOX_CORNERED) {
+					DrawLine(topy, topScreen.y, topy + 5, topScreen.y, enemiesIgnoreZColor);
+					DrawLine(topy, topScreen.y, topy, topScreen.y + 5, enemiesIgnoreZColor);
 
-						if ((topx > screenWidth || topx <= 1) ||
-							(topy > screenWidth || topy <= 1) ||
-							(botx > screenWidth || botx <= 1) ||
-							(boty > screenWidth || boty <= 1)) {
-							continue;
-						}
+					DrawLine(topx, topScreen.y, topx - 5, topScreen.y, enemiesIgnoreZColor);
+					DrawLine(topx, topScreen.y, topx, topScreen.y + 5, enemiesIgnoreZColor);
 
-						if (Settings::Visuals::espBoxType == ESPBOX_DEFAULT) {
-							DrawLine(topx, topScreen.y, topy, topScreen.y, color);
-							DrawLine(topx, bottomScreen.y, topy, bottomScreen.y, color);
-							DrawLine(topx, bottomScreen.y, topx, topScreen.y, color);
-							DrawLine(topy, bottomScreen.y, topy, topScreen.y, color);
-						} else if (Settings::Visuals::espBoxType == ESPBOX_CORNERED) {
-							DrawLine(topx, topScreen.y, topy, topScreen.y, color);
-							DrawLine(topx, bottomScreen.y, topy, bottomScreen.y, color);
-							DrawLine(topx, bottomScreen.y, topx, topScreen.y, color);
-							DrawLine(topy, bottomScreen.y, topy, topScreen.y, color);
-						} else if (Settings::Visuals::espBoxType == ESPBOX_LINES) {
-							DrawLine(topx, bottomScreen.y, topy, bottomScreen.y, color);
-							DrawLine(topy, bottomScreen.y, topy, topScreen.y, color);
-						}
-						else if (Settings::Visuals::espBoxType == ESPBOX_VERTICALLINE) {
-							DrawLine(topy, bottomScreen.y, topy, topScreen.y, color);
-						}
-						else if (Settings::Visuals::espBoxType == ESPBOX_HORIZONTALLINE) {
-							DrawLine(topx, bottomScreen.y, topy, bottomScreen.y, color);
-						}
-						if (Settings::Visuals::bNameESP) {
-							GetStringSize(w, h, EntityInfo.player_name);
-							DrawString(topScreen.x - (w / 2), topScreen.y - h, EntityInfo.player_name, color);
-						}
-						char healthbuf[52] = { 0 };
-						sprintf(healthbuf, "%i HP", health);
-						if (Settings::Visuals::bHealthESP) {
-							GetStringSize(w, h, healthbuf);
-							DrawString(topScreen.x - (w / 2), bottomScreen.y + 5, healthbuf, color);
-						}
+					DrawLine(topy, bottomScreen.y, topy + 5, bottomScreen.y, enemiesIgnoreZColor);
+					DrawLine(topy, bottomScreen.y, topy, bottomScreen.y - 5, enemiesIgnoreZColor);
 
-						if (Settings::Visuals::bHealtBar) {
-							float height = (float)bottomScreen.y - (float)topScreen.y - 1.0f;
-							int r = (float)(100 - health) * 2.55f;
-							int g = (float)(health) * 2.55f;
-							int health_color[4] = { (int)r, (int)g, 0, 255 };
-							DrawBox(topy - 6, topScreen.y, 4, height + 2, color);
-							DrawBox(topy - 5, topScreen.y + 1 + (height - ((float)health * height) / 100.0f), 2, ((float)health * height) / 100.0f, health_color);
-						}
-						DrawBones(BaseEntity, g_pModelInfo->GetModelName(Entity->GetModel()));
-					}
+					DrawLine(topx, bottomScreen.y, topx - 5, bottomScreen.y, enemiesIgnoreZColor);
+					DrawLine(topx, bottomScreen.y, topx, bottomScreen.y - 5, enemiesIgnoreZColor);
+				}
+				else if (Settings::Visuals::espBoxType == ESPBOX_LINES) {
+					DrawLine(topx, bottomScreen.y, topy, bottomScreen.y, enemiesIgnoreZColor);
+					DrawLine(topy, bottomScreen.y, topy, topScreen.y, enemiesIgnoreZColor);
+				}
+				else if (Settings::Visuals::espBoxType == ESPBOX_VERTICALLINE) {
+					DrawLine(topy, bottomScreen.y, topy, topScreen.y, enemiesIgnoreZColor);
+				}
+				else if (Settings::Visuals::espBoxType == ESPBOX_HORIZONTALLINE) {
+					DrawLine(topx, bottomScreen.y, topy, bottomScreen.y, enemiesIgnoreZColor);
+				}
+
+				if (Settings::Visuals::bESPName) {
+					GetStringSize(w, h, EntityInfo.player_name);
+					DrawString(topScreen.x - (w / 2), topScreen.y - h, EntityInfo.player_name, enemiesIgnoreZColor);
+				}
+
+				char healthbuf[52] = { 0 };
+				sprintf(healthbuf, "%i HP", health);
+				char healthbuf2[52] = { 0 };
+				sprintf(healthbuf2, "%i", health);
+				if (Settings::Visuals::bESPHealth) {
+					GetStringSize(w, h, healthbuf);
+					DrawString(topScreen.x - (w / 2), bottomScreen.y + 5, healthbuf, enemiesIgnoreZColor);
+				}
+
+				if (Settings::Visuals::espHealtBar == HEALTHBAR_BAR) {
+					float height = (float)bottomScreen.y - (float)topScreen.y - 1.0f;
+					int r = (float)(100 - health) * 2.55f;
+					int g = (float)(health) * 2.55f;
+					int health_color[4] = { (int)r, (int)g, 0, 255 };
+					DrawBox(topy - 6, topScreen.y, 4, height + 2, enemiesIgnoreZColor);
+					DrawBox(topy - 5, topScreen.y + 1 + (height - ((float)health * height) / 100.0f), 2, ((float)health * height) / 100.0f, health_color);
+				} else if (Settings::Visuals::espHealtBar == HEALTHBAR_TEXT) {
+					float height = (float)bottomScreen.y - (float)topScreen.y - 1.0f;
+					int r = (float)(100 - health) * 2.55f;
+					int g = (float)(health) * 2.55f;
+					int health_color[4] = { (int)r, (int)g, 0, 255 };
+					DrawBox(topy - 6, topScreen.y, 4, height + 2, enemiesIgnoreZColor);
+					DrawBox(topy - 5, topScreen.y + 1 + (height - ((float)health * height) / 100.0f), 2, ((float)health * height) / 100.0f, health_color);
+					GetStringSize(w, h, healthbuf2, fontSmall);
+					DrawString(topy - (w / 2) - 3, topScreen.y + 1 + (height - ((float)health * height) / 100.0f) - (h/2), healthbuf2, fontSmall, enemiesIgnoreZColor);
+				}
+
+				if (Settings::Visuals::bESPBone) {
+					DrawBones(BaseEntity, g_pModelInfo->GetModelName(Entity->GetModel()));
 				}
 			}
+			else if ((Settings::Visuals::bESPAlliesNormal || Settings::Visuals::bESPAlliesIgnoreZ) && LocalTeam == EntityTeam) {
+				C_BaseEntity* BaseEntity = Entity->GetBaseEntity();
+				if (!BaseEntity)
+					continue;
+
+				int health = *reinterpret_cast<int*>((DWORD)Entity->GetBaseEntity() + Offsets::m_iHealth);
+				if (health <= 0 || BaseEntity->IsDormant())
+					continue;
+
+				const char* modelName = g_pModelInfo->GetModelName(Entity->GetModel());
+
+				Vector top = GetBone(BaseEntity, 8);
+				top.z += 10.0f;
+				Vector bottom = GetBone(BaseEntity, 1);
+				Vector2D topScreen = WorldToScreen(top);
+				Vector2D bottomScreen = WorldToScreen(bottom);
+				float height = topScreen.y - bottomScreen.y;
+				float width = height / 3;
+				int centery = topScreen.y + (height / 2);
+				int topx = bottomScreen.x - width;
+				int topy = bottomScreen.x += width;
+				int botx = centery - ((height - 2) * 1.3);
+				int boty = (centery + ((height / 2) * 1.2));
+
+				player_info_t EntityInfo;
+				g_pEngineClient->GetPlayerInfo(Entity->entindex(), &EntityInfo);
+
+				// TODO: Make optimization less aggresive
+				if ((topx > screenWidth || topx <= 1) ||
+					(topy > screenWidth || topy <= 1) ||
+					(botx > screenWidth || botx <= 1) ||
+					(boty > screenWidth || boty <= 1)) {
+					continue;
+				}
+
+				if (Settings::Visuals::espBoxType == ESPBOX_DEFAULT) {
+					DrawLine(topx, topScreen.y, topy, topScreen.y, alliesIgnoreZColor);
+					DrawLine(topx, bottomScreen.y, topy, bottomScreen.y, alliesIgnoreZColor);
+					DrawLine(topx, bottomScreen.y, topx, topScreen.y, alliesIgnoreZColor);
+					DrawLine(topy, bottomScreen.y, topy, topScreen.y, alliesIgnoreZColor);
+				}
+				else if (Settings::Visuals::espBoxType == ESPBOX_CORNERED) {
+					DrawLine(topx, topScreen.y, topy, topScreen.y, alliesIgnoreZColor);
+					DrawLine(topx, bottomScreen.y, topy, bottomScreen.y, alliesIgnoreZColor);
+					DrawLine(topx, bottomScreen.y, topx, topScreen.y, alliesIgnoreZColor);
+					DrawLine(topy, bottomScreen.y, topy, topScreen.y, alliesIgnoreZColor);
+				}
+				else if (Settings::Visuals::espBoxType == ESPBOX_LINES) {
+					DrawLine(topx, bottomScreen.y, topy, bottomScreen.y, alliesIgnoreZColor);
+					DrawLine(topy, bottomScreen.y, topy, topScreen.y, alliesIgnoreZColor);
+				}
+				else if (Settings::Visuals::espBoxType == ESPBOX_VERTICALLINE) {
+					DrawLine(topy, bottomScreen.y, topy, topScreen.y, alliesIgnoreZColor);
+				}
+				else if (Settings::Visuals::espBoxType == ESPBOX_HORIZONTALLINE) {
+					DrawLine(topx, bottomScreen.y, topy, bottomScreen.y, alliesIgnoreZColor);
+				}
+
+				if (Settings::Visuals::bESPName) {
+					GetStringSize(w, h, EntityInfo.player_name);
+					DrawString(topScreen.x - (w / 2), topScreen.y - h, EntityInfo.player_name, alliesIgnoreZColor);
+				}
+
+				char healthbuf[52] = { 0 };
+				sprintf(healthbuf, "%i HP", health);
+				char healthbuf2[52] = { 0 };
+				sprintf(healthbuf2, "%i", health);
+				if (Settings::Visuals::bESPHealth) {
+					GetStringSize(w, h, healthbuf);
+					DrawString(topScreen.x - (w / 2), bottomScreen.y + 5, healthbuf, alliesIgnoreZColor);
+				}
+
+				if (Settings::Visuals::espHealtBar == HEALTHBAR_BAR) {
+					float height = (float)bottomScreen.y - (float)topScreen.y - 1.0f;
+					int r = (float)(100 - health) * 2.55f;
+					int g = (float)(health) * 2.55f;
+					int health_color[4] = { (int)r, (int)g, 0, 255 };
+					DrawBox(topy - 6, topScreen.y, 4, height + 2, alliesIgnoreZColor);
+					DrawBox(topy - 5, topScreen.y + 1 + (height - ((float)health * height) / 100.0f), 2, ((float)health * height) / 100.0f, health_color);
+				}
+				else if (Settings::Visuals::espHealtBar == HEALTHBAR_TEXT) {
+					float height = (float)bottomScreen.y - (float)topScreen.y - 1.0f;
+					int r = (float)(100 - health) * 2.55f;
+					int g = (float)(health) * 2.55f;
+					int health_color[4] = { (int)r, (int)g, 0, 255 };
+					DrawBox(topy - 6, topScreen.y, 4, height + 2, alliesIgnoreZColor);
+					DrawBox(topy - 5, topScreen.y + 1 + (height - ((float)health * height) / 100.0f), 2, ((float)health * height) / 100.0f, health_color);
+					GetStringSize(w, h, healthbuf2, fontSmall);
+					DrawString(topy - (w / 2), topScreen.y + 1 + (height - ((float)health * height) / 100.0f) - (height / 2), healthbuf2, fontSmall, alliesIgnoreZColor);
+				}
+
+				if (Settings::Visuals::bESPBone) {
+					DrawBones(BaseEntity, g_pModelInfo->GetModelName(Entity->GetModel()));
+				}
+			}
+
+
+
+			C_BaseEntity* EntityBase = (C_BaseEntity*)g_pClientEntityList->GetClientEntity(i);
 		}
 	}
 };

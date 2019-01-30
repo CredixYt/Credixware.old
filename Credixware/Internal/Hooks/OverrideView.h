@@ -11,6 +11,7 @@ unsigned int* oOverrideViewFunc;
 
 void __fastcall hkOverrideView(void* ecx, void* edx, CViewSetup* setup) {
 	Thirdperson::Update(setup);
+	GrenadeHelper::View();
 	setup->fovViewmodel = 100.0f;
 	//setup->fov = 110.0f;
 	oOverrideView(ecx, setup);

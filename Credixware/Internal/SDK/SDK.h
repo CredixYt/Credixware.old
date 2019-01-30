@@ -22,6 +22,7 @@
 #include "IClientPanel.h"
 #include "IClientRenderable.h"
 #include "IClientThinkable.h"
+#include "IEngineTrace.h"
 #include "IGameEvent.h"
 #include "IHTML.h"
 #include "IImage.h"

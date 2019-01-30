@@ -193,4 +193,26 @@ Vector CalculateCameraOffset(Vector viewangle, int multiplier = 1) {
 	return Vector(x, y, z);
 }
 
+class VectorAligned : public Vector
+{
+public:
+	inline VectorAligned(void) {};
+	inline VectorAligned(vec_t X, vec_t Y, vec_t Z)
+	{
+		Init(X, Y, Z);
+	}
+public:
+	explicit VectorAligned(const Vector &vOther)
+	{
+		Init(vOther.x, vOther.y, vOther.z);
+	}
+
+	VectorAligned& operator=(const Vector &vOther)
+	{
+		Init(vOther.x, vOther.y, vOther.z);
+		return *this;
+	}
+	float w;
+} ALIGN16_POST;
+
 #endif

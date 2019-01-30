@@ -6,9 +6,12 @@
 #include "Backtrack.h"
 #include "Bunnyhop.h"
 #include "Chams.h"
+#include "ClantagChanger.h"
 #include "ESP.h"
 #include "Events.h"
 #include "Glow.h"
+#include "GrenadeHelper.h"
+#include "HitChance.h"
 #include "Menu.h"
 #include "Nightmode.h"
 #include "SilentAim.h"
@@ -20,6 +23,7 @@ namespace Hacks {
 		Menu::Init();
 		ESP::Init();
 		SkinChanger::Init();
+		ClantagChanger::Init();
 		/* NOTE: Chams needs to be initalized last, because it will halt until we are in game */
 		Chams::Init();
 	}

@@ -55,15 +55,29 @@ namespace Glow {
 
 			int EntityTeam = *(int*)(Entity + Offsets::m_iTeamNum);
 			if (Settings::Visuals::bGlowOnlyEnemies) {
+				int GlowIndex = *reinterpret_cast<int*>((DWORD)Entity + Offsets::m_iGlowIndex);
 				if (EntityTeam != LocalTeam) {
-					
+					*(float*)(GlowObjectManager + ((GlowIndex * 0x38) + 0x4)) = Settings::Visuals::glowEnemiesIgnoreZR / 255.0f;
+					*(float*)(GlowObjectManager + ((GlowIndex * 0x38) + 0x8)) = Settings::Visuals::glowEnemiesIgnoreZG / 255.0f;
+					*(float*)(GlowObjectManager + ((GlowIndex * 0x38) + 0xC)) = Settings::Visuals::glowEnemiesIgnoreZB / 255.0f;
+					*(float*)(GlowObjectManager + ((GlowIndex * 0x38) + 0x10)) = 1.0f;
+					*(float*)(GlowObjectManager + ((GlowIndex * 0x38) + 0x1C)) = 0.75f;
+					*(bool*)(GlowObjectManager + ((GlowIndex * 0x38) + 0x24)) = false;
+					*(bool*)(GlowObjectManager + ((GlowIndex * 0x38) + 0x25)) = true;
 				}
 			}
 			else {
 				int GlowIndex = *reinterpret_cast<int*>((DWORD)Entity + Offsets::m_iGlowIndex);
-				*(float*)(GlowObjectManager + ((GlowIndex * 0x38) + 0x4)) = Settings::Visuals::glowEnemiesIgnoreZR / 255.0f;
-				*(float*)(GlowObjectManager + ((GlowIndex * 0x38) + 0x8)) = Settings::Visuals::glowEnemiesIgnoreZG / 255.0f;
-				*(float*)(GlowObjectManager + ((GlowIndex * 0x38) + 0xC)) = Settings::Visuals::glowEnemiesIgnoreZB / 255.0f;
+				if (EntityTeam == LocalTeam) {
+					*(float*)(GlowObjectManager + ((GlowIndex * 0x38) + 0x4)) = Settings::Visuals::glowAllyR / 255.0f;
+					*(float*)(GlowObjectManager + ((GlowIndex * 0x38) + 0x8)) = Settings::Visuals::glowAllyG / 255.0f;
+					*(float*)(GlowObjectManager + ((GlowIndex * 0x38) + 0xC)) = Settings::Visuals::glowAllyB / 255.0f;
+				}
+				else {
+					*(float*)(GlowObjectManager + ((GlowIndex * 0x38) + 0x4)) = Settings::Visuals::glowEnemiesIgnoreZR / 255.0f;
+					*(float*)(GlowObjectManager + ((GlowIndex * 0x38) + 0x8)) = Settings::Visuals::glowEnemiesIgnoreZG / 255.0f;
+					*(float*)(GlowObjectManager + ((GlowIndex * 0x38) + 0xC)) = Settings::Visuals::glowEnemiesIgnoreZB / 255.0f;
+				}
 				*(float*)(GlowObjectManager + ((GlowIndex * 0x38) + 0x10)) = 1.0f;
 				*(float*)(GlowObjectManager + ((GlowIndex * 0x38) + 0x1C)) = 0.75f;
 				*(bool*)(GlowObjectManager + ((GlowIndex * 0x38) + 0x24)) = false;

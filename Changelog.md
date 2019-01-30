@@ -1,3 +1,12 @@
+## Changelog b0.4:
+- Added x86 binaries, however it's still recommended to build the solution for yourself
+- Updated README.md
+- _[Internal]_ Fixed: KnifeChanger, Chams and ESP
+- _[Internal]_ Hacks: Added ClantagChange
+- _[Internal]_ Menu: Changed Visuals to allow for more customization
+- _[Internal]_ SDK: Added ItemDefinitionIndexes, PaintKits and EntityQualities
+- _[Internal]_ Utils: Added PatternScanning
+
 ## Changelog b0.3:
 - _[Internal]_ ESP: Added box types
 - _[Internal]_ Hacks: Added Glow, added Grenade Helper (placeholder), updated Menu

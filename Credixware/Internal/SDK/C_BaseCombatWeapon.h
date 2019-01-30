@@ -7,6 +7,7 @@
 #include "CInput.h"
 #include "IClientRenderable.h"
 #include "IClientNetworkable.h"
+#include "IEngineTrace.h"
 
 class C_BaseViewModel;
 class CBaseCombatCharacter;
@@ -21,7 +22,6 @@ struct WeaponSound_t;
 struct acttable_t;
 struct poseparamtable_t;
 struct constraint_breakableparams_t;
-struct trace_t;
 
 class EHANDLE {
 

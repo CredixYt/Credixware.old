@@ -13,8 +13,8 @@ const char* FONT_FAMILY_NAME = "Tahoma";
 
 int MENU_X = 15;
 int MENU_Y = 15;
-int MENU_WIDTH = 500;
-int MENU_HEIGHT = 325;
+int MENU_WIDTH = 525;
+int MENU_HEIGHT = 375;
 int MENU_TITLE_BAR_HEIGHT = 20;
 
 int SCREEN_WIDTH = 0;
@@ -256,6 +256,7 @@ public:
 		if (IsInBounds(x, y, x + w, y + h)) {
 			DrawBox(x, y, w, h, color);
 			if (Utils::GetKey(VK_LBUTTON)) {
+				printf("Preseed!\n");
 				bPressed = true;
 				ValueChanged();
 			}
@@ -739,6 +740,7 @@ public:
 						bOpen = false;
 						bDropdown = false;
 						*pValue = cIndex;
+						ValueChanged();
 					}
 				}
 				else {
@@ -980,12 +982,20 @@ GUICheckbox* silentAimCheckbox;
 /*	VISUALS	*/
 //	Chams
 GUICheckbox* chamsCheckbox;
-GUICheckbox* chamsOnlyEnemiesCheckbox;
-GUICheckbox* chamsIgnoreZCheckbox;
-GUICheckbox* chamsHandChamsCheckbox;
-GUIColor* chamsEnemiesIgnoreZColor;
+GUIDropdown* chamsMaterialDropdown;
+GUICheckbox* chamsEnemiesNormalCheckbox;
 GUIColor* chamsEnemiesNormalColor;
+GUICheckbox* chamsEnemiesIgnoreZCheckbox;
+GUIColor* chamsEnemiesIgnoreZColor;
+GUICheckbox* chamsAlliesNormalCheckbox;
+GUIColor* chamsAlliesNormalColor;
+GUICheckbox* chamsAlliesIgnoreZCheckbox;
+GUIColor* chamsAlliesIgnoreZColor;
+GUICheckbox* chamsHandChamsCheckbox;
 GUIColor* chamsHandChamsColor;
+GUICheckbox* chamsWeaponChamsCheckbox;
+GUIColor* chamsWeaponChamsColor;
+
 // Glow
 GUICheckbox* glowCheckbox;
 GUICheckbox* glowOnlyEnemiesCheckbox;
@@ -996,14 +1006,20 @@ GUIColor* glowAllyColor;
 
 // ESP
 GUICheckbox* espCheckbox;
-GUIDropdown* espBoxType;
-GUICheckbox* espHealthBarCheckbox;
-GUICheckbox* espOnlyEnemiesCheckbox;
-GUICheckbox* boneESPCheckbox;
-GUICheckbox* nameESPCheckbox;
-GUICheckbox* healthESPCheckbox;
-GUICheckbox* weaponSPCheckbox;
-GUIColor* espColor;
+GUIDropdown* espBoxDropdown;
+GUICheckbox* espEnemiesNormalCheckbox;
+GUIColor* espEnemiesNormalColor;
+GUICheckbox* espEnemiesIgnoreZCheckbox;
+GUIColor* espEnemiesIgnoreZColor;
+GUICheckbox* espAlliesNormalCheckbox;
+GUIColor* espAlliesNormalColor;
+GUICheckbox* espAlliesIgnoreZCheckbox;
+GUIColor* espAlliesIgnoreZColor;
+GUICheckbox* espBoneCheckbox;
+GUICheckbox* espNameCheckbox;
+GUICheckbox* espHealthCheckbox;
+GUICheckbox* espWeaponCheckbox;
+GUIDropdown* espHealthbarDropdown;
 
 // Grenade Helper
 GUICheckbox* grenadeTrajectory;
@@ -1030,6 +1046,7 @@ GUISlider* weaponStattrak;
 GUICheckbox* nightmodeCheckbox;
 GUICheckbox* bunnyhopCheckbox;
 GUICheckbox* thirdpersonCheckbox;
+GUICheckbox* clantagChangerEnabled;
 GUISlider* thirdpersonDistanceSlider;
 GUIDropdown* configDropdown;
 GUIButton* saveConfigButton;

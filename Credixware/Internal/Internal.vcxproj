@@ -82,10 +82,13 @@
     <ClInclude Include="Hacks\Backtrack.h" />
     <ClInclude Include="Hacks\Bunnyhop.h" />
     <ClInclude Include="Hacks\Chams.h" />
+    <ClInclude Include="Hacks\ClantagChanger.h" />
     <ClInclude Include="Hacks\ESP.h" />
     <ClInclude Include="Hacks\Events.h" />
     <ClInclude Include="Hacks\Glow.h" />
+    <ClInclude Include="Hacks\GrenadeHelper.h" />
     <ClInclude Include="Hacks\Hacks.h" />
+    <ClInclude Include="Hacks\HitChance.h" />
     <ClInclude Include="Hacks\Menu.h" />
     <ClInclude Include="Hacks\Nightmode.h" />
     <ClInclude Include="Hacks\Settings.h" />
@@ -126,6 +129,7 @@
     <ClInclude Include="SDK\IClientPanel.h" />
     <ClInclude Include="SDK\IClientRenderable.h" />
     <ClInclude Include="SDK\IClientThinkable.h" />
+    <ClInclude Include="SDK\IEngineTrace.h" />
     <ClInclude Include="SDK\IGameEvent.h" />
     <ClInclude Include="SDK\IHTML.h" />
     <ClInclude Include="SDK\IImage.h" />

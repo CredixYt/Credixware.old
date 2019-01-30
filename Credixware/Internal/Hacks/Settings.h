@@ -50,6 +50,26 @@ enum KnifeType_t {
 	KNIFE_GYPSY_JACKKNIFE
 };
 
+int KnifeDefinitions_t[] {
+	41,
+	59,
+	42,
+	500,
+	505,
+	506,
+	507,
+	508,
+	509,
+	510,
+	511,
+	515,
+	516,
+	523,
+	519,
+	522,
+	520
+};
+
 std::string KnifeModels[] = {
 	"models/weapons/v_knife_default.mdl",
 	"models/weapons/v_knife_default_t.mdl",
@@ -70,6 +90,19 @@ std::string KnifeModels[] = {
 	"models/weapons/v_knife_gypsy_jackknife.mdl"
 };
 
+enum ChamMaterials_t {
+	MATERIAL_NONE = 0,
+	MATERIAL_LIT = 1,
+	MATERIAL_UNLIT = 2,
+	MATERIAL_METALIC = 3
+};
+
+enum ESPHealthBarType_t {
+	HEALTHBAR_NONE = 0,
+	HEALTHBAR_BAR = 1,
+	HEALTHBAR_TEXT = 2
+};
+
 namespace Settings {
 	namespace Rage {
 		/* ANTI AIM */
@@ -80,32 +113,37 @@ namespace Settings {
 	}
 	namespace Visuals{
 		/* CHAMS */
-		bool bChams = true;
-		bool bChamsOnlyEnemies = false;
-		bool bChamsIngoreZ = false;
-		bool bChamsHandChams = true;
+		bool bChamsEnabled = true;
+		int chamsMaterial = MATERIAL_NONE;
+		bool bChamsEnemiesNormal = false;
+		bool bChamsEnemiesIgnoreZ = false;
+		bool bChamsAlliesNormal = false;
+		bool bChamsAlliesIgnoreZ = false;
+		bool bChamsHandChamsEnabled = false;
+		bool bChamsWeaponChamsEnabled = false;
 
-		float enemyBehindWallR =	193.0f;
-		float enemyBehindWallG =	30.0f;
-		float enemyBehindWallB =	54.0f;
-		float enemyIgnoreZR =		0.0f;
-		float enemyIgnoreZG =		179.0f;
-		float enemyIgnoreZB =		235.0f;
 
-		float allyBehindWallR =		193.0f;
-		float allyBehindWallG =		30.0f;
-		float allyBehindWallB =		54.0f;
-		float allyIgnoreZR =		0.0f;
-		float allyIgnoreZG =		179.0f;
-		float allyIgnoreZB =		235.0f;
+		float chamsEnemiesNormalR = 193.0f;
+		float chamsEnemiesNormalG = 30.0f;
+		float chamsEnemiesNormalB = 54.0f;
+		float chamsEnemiesIgnoreZR = 0.0f;
+		float chamsEnemiesIgnoreZG = 179.0f;
+		float chamsEnemiesIgnoreZB = 235.0f;
 
-		float handChamsR = 235.0f;
-		float handChamsG = 254.0f;
-		float handChamsB = 3.0f;
+		float chamsAlliesNormalR = 46.0f;
+		float chamsAlliesNormalG = 204.0f;
+		float chamsAlliesNormalB = 113.0f;
+		float chamsAlliesIgnoreZR = 16.0f;
+		float chamsAlliesIgnoreZG = 109.0f;
+		float chamsAlliesIgnoreZB = 90.0f;
 
-		/*float handChamsR = 116.0f / 255;
-		float handChamsG = 111.0f / 255;
-		float handChamsB = 210.0f / 255;*/
+		float chamsHandChamsR = 235.0f;
+		float chamsHandChamsG = 254.0f;
+		float chamsHandChamsB = 3.0f;
+
+		float chamsWeaponChamsR = 235.0f;
+		float chamsWeaponChamsG = 254.0f;
+		float chamsWeaponChamsB = 3.0f;
 
 		/* GLOW */
 		bool bGlowEnabled = false;
@@ -122,17 +160,29 @@ namespace Settings {
 		float glowAllyB = 0.0f;
 
 		/* ESP */
-		bool bEspEnabled;
-		int espBoxType;
-		bool bESPOnlyEnemies;
-		bool bBoneESP;
-		bool bNameESP;
-		bool bHealthESP;
-		bool bWeaponESPCheckbox;
-		bool bHealtBar;
-		float espRSlider = 255.0f;
-		float espGSlider = 255.0f;
-		float espBSlider = 255.0f;
+		bool bEspEnabled = false;
+		int espBoxType = ESPBOX_NONE;
+		bool bESPEnemiesNormal = false;
+		float espEnemiesNormalR = 255.0f;
+		float espEnemiesNormalG = 255.0f;
+		float espEnemiesNormalB = 255.0f;
+		bool bESPEnemiesIgnoreZ = false;
+		float espEnemiesIgnoreZR = 193.0f;
+		float espEnemiesIgnoreZG = 30.0f;
+		float espEnemiesIgnoreZB = 54.0f;
+		bool bESPAlliesNormal = false;
+		float espAlliesNormalR = 193.0f;
+		float espAlliesNormalG = 30.0f;
+		float espAlliesNormalB = 54.0f;
+		bool bESPAlliesIgnoreZ = false;
+		float espAlliesIgnoreZR = 193.0f;
+		float espAlliesIgnoreZG = 30.0f;
+		float espAlliesIgnoreZB = 54.0f;
+		bool bESPBone = false;
+		bool bESPName = false;
+		bool bESPHealth = false;
+		int espHealtBar = HEALTHBAR_NONE;
+		bool bESPWeapon = false;
 
 		/* GRENADE TRAJECTORY */
 		bool bGrenadeTrajectoryEnabled = false;
@@ -179,6 +229,9 @@ namespace Settings {
 
 		/* NIGHTMODE */
 		bool bNightmodeEnabled = false;
+
+		/* CLAN TAG CHANGER */
+		bool bClanTagChangerEnabled = false;
 	}
 }
 
