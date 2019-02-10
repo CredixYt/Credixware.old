@@ -32,30 +32,38 @@ namespace Chams {
 		} else if (Settings::Visuals::chamsMaterial == MATERIAL_LIT) {
 			chamType = "VertexLitGeneric";
 			bFlat = false;
+			bMetalic = false;
 		} else if (Settings::Visuals::chamsMaterial == MATERIAL_UNLIT) {
 			chamType = "UnlitGeneric";
 			bFlat = true;
+			bMetalic = false;
 		} else if (Settings::Visuals::chamsMaterial == MATERIAL_METALIC) {
 			chamType = "VertexLitGeneric";
-			bFlat = false;
+			bFlat = true;
 			bMetalic = true;
 		}
-		enemiesNormal = CreateCustomMaterial("credixware_enemiesNormal", false, bFlat, bMetalic, chamType);
+		//enemiesNormal = CreateCustomMaterial("credixware_enemiesNormal", false, bFlat, bMetalic, chamType);
+		enemiesNormal = CreateMaterial(false, bFlat, bMetalic, chamType);
 		enemiesNormal->ColorModulate(Settings::Visuals::chamsEnemiesNormalR / 255.0f, Settings::Visuals::chamsEnemiesNormalG / 255.0f, Settings::Visuals::chamsEnemiesNormalB / 255.0f);
 
-		enemiesIgnoreZ = CreateCustomMaterial("credixware_enemiesIgnoreZ", true, bFlat, bMetalic, chamType);
+		//enemiesIgnoreZ = CreateCustomMaterial("credixware_enemiesIgnoreZ", true, bFlat, bMetalic, chamType);
+		enemiesIgnoreZ = CreateMaterial(true, bFlat, bMetalic, chamType);
 		enemiesIgnoreZ->ColorModulate(Settings::Visuals::chamsEnemiesIgnoreZR / 255.0f, Settings::Visuals::chamsEnemiesIgnoreZG / 255.0f, Settings::Visuals::chamsEnemiesIgnoreZB / 255.0f);
 
-		alliesNormal = CreateCustomMaterial("credixware_alliesNormal", false, bFlat, bMetalic, chamType);
+		//alliesNormal = CreateCustomMaterial("credixware_alliesNormal", false, bFlat, bMetalic, chamType);
+		alliesNormal = CreateMaterial(false, bFlat, bMetalic, chamType);
 		alliesNormal->ColorModulate(Settings::Visuals::chamsAlliesNormalR / 255.0f, Settings::Visuals::chamsAlliesNormalG / 255.0f, Settings::Visuals::chamsAlliesNormalB / 255.0f);
 
-		alliesIgnoreZ = CreateCustomMaterial("credixware_alliesIgnoreZ", true, bFlat, bMetalic, chamType);
+		//alliesIgnoreZ = CreateCustomMaterial("credixware_alliesIgnoreZ", true, bFlat, bMetalic, chamType);
+		alliesIgnoreZ = CreateMaterial(true, bFlat, bMetalic, chamType);
 		alliesIgnoreZ->ColorModulate(Settings::Visuals::chamsAlliesIgnoreZR / 255.0f, Settings::Visuals::chamsAlliesIgnoreZG / 255.0f, Settings::Visuals::chamsAlliesIgnoreZB / 255.0f);
 
-		handChams = CreateCustomMaterial("credixware_handChams", false, bFlat, bMetalic, chamType);
+		//handChams = CreateCustomMaterial("credixware_handChams", false, bFlat, bMetalic, chamType);
+		handChams = CreateMaterial(false, bFlat, bMetalic, chamType);
 		handChams->ColorModulate(Settings::Visuals::chamsHandChamsR / 255.0f, Settings::Visuals::chamsHandChamsG / 255.0f, Settings::Visuals::chamsHandChamsB / 255.0f);
 
-		weaponChams = CreateCustomMaterial("credixware_weaponChams", false, bFlat, bMetalic, chamType);
+		//weaponChams = CreateCustomMaterial("credixware_weaponChams", false, bFlat, bMetalic, chamType);
+		weaponChams = CreateMaterial(false, bFlat, bMetalic, chamType);
 		weaponChams->ColorModulate(Settings::Visuals::chamsWeaponChamsR / 255.0f, Settings::Visuals::chamsWeaponChamsG / 255.0f, Settings::Visuals::chamsWeaponChamsB / 255.0f);
 
 		bFinished = true;

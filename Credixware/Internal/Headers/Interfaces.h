@@ -25,6 +25,7 @@ IVModelInfo*		g_pModelInfo;
 IVModelRender*		g_pModelRender;
 void*				g_pClient;
 void*				g_pClientMode;
+void*				g_pClientState;
 void*				g_pGameEventManager;
 
 namespace Interfaces {
@@ -41,6 +42,7 @@ namespace Interfaces {
 		g_pGameEventManager		= Utils::CaptureInterface<void>("engine.dll", "GAMEEVENTSMANAGER002");
 		g_pClient				= Utils::CaptureInterface<void>("client_panorama.dll", "VClient018");
 		g_pClientMode			= **(DWORD***)((*(uintptr_t**)g_pClient)[10] + 0x5);
+		g_pClientState			= (void*)((DWORD)GetModuleHandle("engine.dll") + Offsets::dwClientState);
 		g_pGlobalVars			= **reinterpret_cast<CGlobalVars***>((*reinterpret_cast<uintptr_t**>(g_pClient))[0] + 0x1B);
 		g_pInput				= *(CInput**)((*(uintptr_t**)g_pClient)[16] + 0x1);
 		g_pGlowObjectManager	= (CGlowObjectManager*)((DWORD)GetModuleHandle("client_panorama.dll") + Offsets::dwGlowObjectManager);
@@ -76,7 +78,7 @@ Vector2D WorldToScreen(Vector point3D) {
 
 int matCount = 0;
 std::vector<const char*> createdMaterials;
-IMaterial* CreateMaterial(bool bIgnorez, bool bFlat, const char* pType) {
+IMaterial* CreateMaterial(bool bIgnorez, bool bFlat, bool bMetalic, const char* pType) {
 	char matName[128] = { 0 };
 	sprintf(matName, "credixware_custom_%i", matCount);
 	matCount++;
@@ -84,25 +86,32 @@ IMaterial* CreateMaterial(bool bIgnorez, bool bFlat, const char* pType) {
 	char fileName[128] = { 0 };
 	sprintf(fileName, "csgo\\materials\\%s.vmt", materialName);
 	std::stringstream contentStream;
-	contentStream << "\"" << pType << "\"\n";						// "VertexLitGeneric" or "UnlitGeneric"
-	contentStream << "{\n";											// {
-	contentStream << "\"$basetexture\" \"vgui/white_additive\"\n";	//	"$basetexture"      "vgui/white_additive"
-	if (bIgnorez)													//
-		contentStream << "\"$ignorez\"      \"1\"\n";				//	"$ignorez"			"1"		
-	else															//	 ^ OR ¢
-		contentStream << "\"$ignorez\"      \"0\"\n";				//	"$ignorez"			"0"		
-	contentStream << "\"$envmap\"       \"\"\n";					//	"$envmap"			""		
-	contentStream << "\"$nofog\"        \"1\"\n";					//	"$nofog"			"1"	
-	contentStream << "\"$model\"        \"1\"\n";					//	"$model"			"1"
-	contentStream << "\"$nocull\"       \"0\"\n";					//	"$nocull"			"0"
-	contentStream << "\"$selfillum\"    \"1\"\n";					//	"$selfillum"		"1"
-	contentStream << "\"$halflambert\"  \"1\"\n";					//	"$halflambert"		"1"
-	contentStream << "\"$znearer\"      \"0\"\n";					//	"$znearer"			"0"
-	if (bFlat)														//
-		contentStream << "\"$flat\"         \"1\"\n";				//	"$flat"				"1"
-	else															//	^ OR ¢
-		contentStream << "\"$flat\"         \"0\"\n";				//	"$flat"				"0"
-	contentStream << "}\n";											// }
+	contentStream << "\"" << pType << "\"\n";
+	contentStream << "{\n";
+	contentStream << "\"$basetexture\" \"vgui/white_additive\"\n";
+	if (bIgnorez)
+		contentStream << "\"$ignorez\"      \"1\"\n";
+	else
+		contentStream << "\"$ignorez\"      \"0\"\n";
+	if (bMetalic) {
+		contentStream << "\"$envmap\"       \"env_cubemap\"\n";
+		contentStream << "\"$normalmapalphaenvmapmask\"       \"1\"\n";
+		contentStream << "\"$envmapcontrast\"       \"1\"\n";
+	}
+	else {
+		contentStream << "\"$envmap\"       \"\"\n";
+	}
+	contentStream << "\"$nofog\"        \"1\"\n";
+	contentStream << "\"$model\"        \"1\"\n";
+	contentStream << "\"$nocull\"       \"0\"\n";
+	contentStream << "\"$selfillum\"    \"1\"\n";
+	contentStream << "\"$halflambert\"  \"1\"\n";
+	contentStream << "\"$znearer\"      \"0\"\n";
+	if (bFlat)
+		contentStream << "\"$flat\"         \"1\"\n";
+	else
+		contentStream << "\"$flat\"         \"0\"\n";
+	contentStream << "}\n";
 	std::ofstream(fileName) << contentStream.str();
 	IMaterial* createdMaterial = g_pMaterialSystem->FindMaterial(materialName, "Model textures");
 	if (createdMaterial) {
@@ -114,6 +123,7 @@ IMaterial* CreateMaterial(bool bIgnorez, bool bFlat, const char* pType) {
 IMaterial* CreateCustomMaterial(const char* szFileName, bool bIgnorez, bool bFlat, bool bMetalic, const char* pType) {
 	char fileName[255] = { 0 };
 	sprintf(fileName, "csgo\\materials\\%s.vmt", szFileName);
+	remove(fileName);
 	std::stringstream contentStream;
 	contentStream << "\"" << pType << "\"\n";						// "VertexLitGeneric" or "UnlitGeneric"
 	contentStream << "{\n";											// {
@@ -135,7 +145,7 @@ IMaterial* CreateCustomMaterial(const char* szFileName, bool bIgnorez, bool bFla
 	else {															//	^ OR ¢
 		contentStream << "\"$flat\"         \"0\"\n";				//	"$flat"				"0"
 	}																//
-	if (bMetalic) {													//
+	if (bMetalic == true) {											//
 		contentStream << "\"$surfaceprop\"  \"metal\"\n";			//	"$surfaceprop"		"metal"
 	}																//
 	contentStream << "}\n";											// }

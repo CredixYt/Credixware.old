@@ -793,8 +793,18 @@ public:
 		texts.push_back(text);
 	}
 	void ClearValues() {
+		/* PARANOIA BEGIN */
+		while (!texts.empty()) {
+			texts.pop_back();
+		}
 		texts.clear();
+		texts.shrink_to_fit();
+		while (!indexes.empty()) {
+			indexes.pop_back();
+		}
 		indexes.clear();
+		indexes.shrink_to_fit();
+		/* PARANOIA END */
 	}
 
 	/* POSITION */

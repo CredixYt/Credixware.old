@@ -1,3 +1,6 @@
+## Changelog b0.5:
+- _[Internal]_ Fixed: Added Skins to SkinChanger
+
 ## Changelog b0.4:
 - Added x86 binaries, however it's still recommended to build the solution for yourself
 - Updated README.md

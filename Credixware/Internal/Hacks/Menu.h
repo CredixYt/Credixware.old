@@ -4,17 +4,182 @@
 
 #include "../Hacks/Chams.h"
 #include "../Hacks/Nightmode.h"
+#include "../Hacks/SkinChanger.h"
 #include "../Headers/Interfaces.h"
 #include "../Hacks/Settings.h"
 #include "../Headers/MenuWrapper.h"
 
-const char* WATERMARK_TEXT = "Credixware | Beta v0.4";
+#include <map>
+#include <float.h>
+#include <string.h>
+
+const char* WATERMARK_TEXT = "Credixware | Beta v0.5";
 const char* MENU_TITLE_TEXT = "Credixware";
+
+std::map<std::string, void*> varPointers;
+
+bool stob(std::string s) {
+	return s != "0";
+}
 
 namespace Menu {
 	int iCurrentPage = 0;
 	bool bNightmodeBefore = Settings::Misc::bNightmodeEnabled;
 	bool bOpen = false;
+	void ParseVar(std::string name) {
+		std::string varName;
+		std::string varType;
+		std::string varValue;
+		std::string typeFloat = "float";
+		std::string typeInt = "int";
+		std::string typeBool = "bool";
+		int stage = 0;
+		for (int i = 0; i < name.size(); i++) {
+			const char c = name.at(i);
+			char c2;
+			if (i > 0) {
+				c2 = name.at(i - 1);
+			}
+			else {
+				c2 = c;
+			}
+			if (stage == 0 && c2 == ' ') {
+				stage = 1;
+			} else if (stage == 1 && c == ' ') {
+				stage = 2;
+			} else if (stage == 2 && c == '=') {
+				stage = 3;
+			} else if (stage == 3 && c2 == ' ') {
+				stage = 4;
+			} else if (stage == 4 && c == ';') {
+				stage = 5;
+			}
+			if (stage == 0) {
+				varType.push_back(c);
+			} else if (stage == 1) {
+				varName.push_back(c);
+			} else if (stage == 4) {
+				varValue.push_back(c);
+			}
+		}
+		if (varType.compare(0, typeFloat.length(), typeFloat) == 0) {
+			float fValue = std::stof(varValue);
+			float* pValue = (float*)varPointers.at(varName.c_str());
+			*pValue = fValue;
+		} else if (varType.compare(0, typeInt.length(), typeInt) == 0) {
+			int iValue = std::stoi(varValue);
+			int* pValue = (int*)varPointers.at(varName.c_str());
+			*pValue = iValue;
+		} else if (varType.compare(0, typeBool.length(), typeBool) == 0) {
+			bool bValue = stob(varValue);
+			bool* pValue = (bool*)varPointers.at(varName);
+			*pValue = bValue;
+		}
+	}
+	void ParseArray(std::string name) {
+		/*std::string varName;
+		std::string varType;
+		std::string varValue;
+		std::string varIndex;
+		std::string typeFloat = "float";
+		std::string typeInt = "int";
+		std::string typeBool = "bool";
+		int stage = 0;
+		for (int i = 0; i < name.size(); i++) {
+			const char c = name.at(i);
+			char c2;
+			char c3;
+			if (i > 0) {
+				c2 = name.at(i - 1);
+			}
+			else {
+				c2 = c;
+			}
+			if (i + 1 < name.size()) {
+				c3 = name.at(i + 1);
+			}
+			else {
+				c3 = c;
+			}
+			if (stage == 0 && c == ' ') {
+				stage = 1;
+			}
+			else if (stage == 1 && c == '[') {
+				stage = 2;
+			}
+			else if (stage == 2 && c == ']') {
+				stage = 3;
+			}
+			else if (stage == 3 && c == ' ') {
+				stage = 4;
+			}
+			else if (stage == 4 && c == '=') {
+				stage = 5;
+			}
+			else if (stage == 5 && c2 == ' ') {
+				stage = 6;
+			}
+			else if (stage == 6 && c == ';') {
+				stage = 7;
+			}
+			if (stage == 0) {
+				varType.push_back(c);
+			}
+			else if (stage == 1) {
+				varName.push_back(c);
+			}
+			else if (stage == 2) {
+				varIndex.push_back(c);
+			}
+			else if (stage == 6) {
+				varValue.push_back(c);
+			}
+		}
+		varIndex.erase(0, 1);
+		printf("%s,%s,%s,%s\n", varType.c_str(), varName.c_str(), varIndex.c_str(), varValue.c_str());
+		int index = std::stoi(varIndex);
+		if (varType.compare(0, typeFloat.length(), typeFloat) == 0) {
+			float fValue = std::stof(varValue);
+			float* pValue = (float*)varPointers.at(varName.c_str());
+			//*(pValue[index]) = fValue;
+		}
+		else if (varType.compare(0, typeInt.length(), typeInt) == 0) {
+			int iValue = std::stoi(varValue);
+			int* pValue = (int*)varPointers.at(varName.c_str());
+			for (int i = 0; i < 5; i++) {
+				printf("%i\n", *(pValue + i));
+			}
+			//*(pValue[index]) = iValue;
+		}
+		else if (varType.compare(0, typeBool.length(), typeBool) == 0) {
+			bool bValue = stob(varValue);
+			bool* pValue = (bool*)varPointers.at(varName);
+			//*(pValue[index]) = bValue;
+		}*/
+	}
+	void ParseLine(std::string str) {
+		std::string singleLineComment("//");
+		std::string multiLineComment("/*");
+		std::string sectionIndicator("[");
+		std::string arrayOpen("[");
+		std::string arrayClose("]");
+		bool bParseLine = true;
+		if (str.compare(0, singleLineComment.length(), singleLineComment) == 0) {
+			bParseLine = false;
+		} else if (str.compare(0, multiLineComment.length(), multiLineComment) == 0) {
+			bParseLine = false;
+		} else if (str.compare(0, sectionIndicator.length(), sectionIndicator) == 0) {
+			bParseLine = false;
+		}
+		if (bParseLine) {
+			if (str.find(arrayOpen) != std::string::npos && str.find(arrayClose) != std::string::npos) {
+				ParseArray(str);
+			}
+			else {
+				ParseVar(str);
+			}
+		}
+	}
 	void CreateConfig(int id) {
 		_wmkdir(L"csgo\\cfg\\Credixware");
 		if (id == 0) {
@@ -73,12 +238,32 @@ namespace Menu {
 		}
 	}
 	void LoadConfig(int id) {
+		const char* fileName = "";
 		if (id == 0) {
-
+			fileName = "csgo\\cfg\\Credixware\\Default.cfg";
+		} else if (id == 1) {
+			fileName = "csgo\\cfg\\Credixware\\Legit.cfg";
+		} else if (id == 2) {
+			fileName = "csgo\\cfg\\Credixware\\HvH.cfg";
+		} else if (id == 3) {
+			fileName = "csgo\\cfg\\Credixware\\Custom_1.cfg";
+		} else if (id == 4) {
+			fileName = "csgo\\cfg\\Credixware\\Custom_2.cfg";
+		}
+		std::stringstream contentStream;
+		std::ifstream DefaultConfig(fileName);
+		for (std::string line; getline(DefaultConfig, line);) {
+			ParseLine(line);
 		}
 	}
 	void Init() {
-		/* INIT FONT */
+		/* INIT VARIABLES */
+		/*varPointers.insert(std::pair<std::string, void*>("bEspEnabled", &Settings::Visuals::bEspEnabled));
+		varPointers.insert(std::pair<std::string, void*>("bESPEnemiesNormal", &Settings::Visuals::bESPEnemiesNormal));
+		varPointers.insert(std::pair<std::string, void*>("espBoxType", &Settings::Visuals::espBoxType));
+		varPointers.insert(std::pair<std::string, void*>("espBoxType", &Settings::Visuals::espBoxType));*/
+
+		/* INIT FONTS */
 		font = g_pSurface->_CreateFont();
 		g_pSurface->SetFontGlyphSet(font, FONT_FAMILY_NAME, FONT_SIZE, FONT_WEIGHT, 0, 0, FONT_FLAGS);
 		fontSmall = g_pSurface->_CreateFont();
@@ -146,7 +331,7 @@ namespace Menu {
 		espNameCheckbox = new GUICheckbox(0, 0, 15, 15, color_primary, &Settings::Visuals::bESPName);
 		espHealthCheckbox = new GUICheckbox(0, 0, 15, 15, color_primary, &Settings::Visuals::bESPHealth);
 		espHealthbarDropdown = new GUIDropdown(0, 0, 100, 15, color_primary, &Settings::Visuals::espHealtBar);
-		espWeaponCheckbox = new GUICheckbox(0, 0, 15, 15, color_primary, &Settings::Visuals::bChamsWeaponChamsEnabled);
+		espWeaponCheckbox = new GUICheckbox(0, 0, 15, 15, color_primary, &Settings::Visuals::bESPWeapon);
 
 		espBoxDropdown->AddValue("None", ESPBOX_NONE);
 		espBoxDropdown->AddValue("Rectangle", ESPBOX_DEFAULT);
@@ -199,6 +384,11 @@ namespace Menu {
 		weaponWear = new GUISlider(0, 0, 100, 15, color_primary, &Settings::SkinChanger::WeaponWear, 0, 1);
 		weaponStattrakCheckbox = new GUICheckbox(0, 0, 15, 15, color_primary, &Settings::SkinChanger::bWeaponStattrak);
 		//weaponStattrak = new GUISlider(0, 0, 100, 15, color_primary, &Settings::SkinChanger::weapon);
+
+		for (int i = 0; i < 35; i++) {
+			weaponSelected->AddValue(WeaponNames[i], i);
+		}
+
 		// TODO: Add input field
 
 		/*	MISC	*/
@@ -453,6 +643,10 @@ namespace Menu {
 				DrawString(MENU_X + 250, MENU_Y + MENU_TITLE_BAR_HEIGHT + skinTab->h + 10 + (20 * 1), "Weapon");
 				weaponSelected->SetPos(MENU_X + 350, MENU_Y + MENU_TITLE_BAR_HEIGHT + skinTab->h + 10 + (20 * 1));
 				//weaponSelected->Draw();
+				
+				Settings::SkinChanger::WeaponWears[WeaponDefinitions[Settings::SkinChanger::CurrentWeapon]] = Settings::SkinChanger::WeaponWear;
+				Settings::SkinChanger::bWeaponStattraks[WeaponDefinitions[Settings::SkinChanger::CurrentWeapon]] = Settings::SkinChanger::bWeaponStattrak;
+				//Settings::SkinChanger::WeaponStattraks[WeaponDefinitions[Settings::SkinChanger::CurrentWeapon]] = Settings::SkinChanger::WeaponStattrak;
 
 				DrawString(MENU_X + 250, MENU_Y + MENU_TITLE_BAR_HEIGHT + skinTab->h + 10 + (20 * 2), "Skin");
 				weaponSkin->SetPos(MENU_X + 350, MENU_Y + MENU_TITLE_BAR_HEIGHT + skinTab->h + 10 + (20 * 2));
@@ -473,10 +667,10 @@ namespace Menu {
 			}
 			else if (iCurrentPage == miscTab->index) {
 
-				saveConfigButton->SetPos(MENU_X + (MENU_WIDTH / 2) - 52.5, MENU_Y + MENU_HEIGHT - 80);
+				saveConfigButton->SetPos(MENU_X + (MENU_WIDTH / 2) - 155 + 105, MENU_Y + MENU_HEIGHT - 80);
 				saveConfigButton->Draw();
 
-				loadConfigButton->SetPos(MENU_X + (MENU_WIDTH / 2) + 52.5, MENU_Y + MENU_HEIGHT - 80);
+				loadConfigButton->SetPos(MENU_X + (MENU_WIDTH / 2) - 155 + 210, MENU_Y + MENU_HEIGHT - 80);
 				loadConfigButton->Draw();
 
 				exitButton->SetPos(MENU_X + (MENU_WIDTH / 2) - 50, MENU_Y + MENU_HEIGHT - 50);
@@ -502,7 +696,7 @@ namespace Menu {
 				clantagChangerEnabled->SetPos(MENU_X + 150, MENU_Y + MENU_TITLE_BAR_HEIGHT + miscTab->h + (20 * 5));
 				clantagChangerEnabled->Draw();
 
-				configDropdown->SetPos(MENU_X + (MENU_WIDTH / 2) - 100, MENU_Y + MENU_HEIGHT - 80);
+				configDropdown->SetPos(MENU_X + (MENU_WIDTH / 2) - 155, MENU_Y + MENU_HEIGHT - 80);
 				configDropdown->Draw();
 			}
 
@@ -517,18 +711,38 @@ namespace Menu {
 
 		if (bReload) {
 			bReload = false;
-			ESP::Init();
-			Chams::Init();
-			if (bNightmodeBefore != Settings::Misc::bNightmodeEnabled) {
-				if (Settings::Misc::bNightmodeEnabled) {
-					Nightmode::Perform();
-					Chams::Init();
-					Menu::Init();
+			if (iCurrentPage == visualsTab->index) {
+				ESP::Init();
+				Chams::Init();
+			}
+			else if(iCurrentPage == miscTab->index) {
+				if (bNightmodeBefore != Settings::Misc::bNightmodeEnabled) {
+					if (Settings::Misc::bNightmodeEnabled) {
+						Nightmode::Perform();
+						Chams::Init();
+						Menu::Init();
+					}
+					else {
+						Nightmode::Reset();
+						Chams::Init();
+						Menu::Init();
+					}
 				}
-				else {
-					Nightmode::Reset();
-					Chams::Init();
-					Menu::Init();
+			}
+			else if (iCurrentPage == skinTab->index) {
+				if (Settings::SkinChanger::CurrentWeapon > 0 && Settings::SkinChanger::WeaponSkin > 0) {
+					SkinChanger::UpdateSkin();
+					SkinChanger::ForceFullUpdate();
+				}
+				if (Settings::SkinChanger::CurrentWeapon > 0) {
+					SkinChanger::SetCurrentWeaponSkinList();
+				}
+				if (Settings::SkinChanger::Knife > 0) {
+					SkinChanger::SetCurrentKnifeSkinList();
+				}
+				if (Settings::SkinChanger::Knife > 0 && Settings::SkinChanger::KnifeSkin > 0) {
+					SkinChanger::UpdateSkin();
+					SkinChanger::ForceFullUpdate();
 				}
 			}
 			bNightmodeBefore = Settings::Misc::bNightmodeEnabled;
