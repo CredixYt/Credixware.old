@@ -21,7 +21,7 @@ namespace Offsets {
 	DWORD m_iCompetitiveRanking = 0x1A84;
 	DWORD m_iCompetitiveWins = 0x1B88;
 	DWORD dwClientState = 0x58BCFC;
-	DWORD dwGlowObjectManager = 0x5219F30;
+	DWORD dwGlowObjectManager = 0x5219F40;
 	DWORD dwPlayerResource = 0x30FD71C;
 }
 

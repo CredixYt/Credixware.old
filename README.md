@@ -1,12 +1,21 @@
-# Credixware
+# Project Discontinued
+This project ("Credixware") has been discontinued in favor of a newer and better rewrite, which is **currently private**. The rewrite (including source code and a tutorial) **will be released**. **For updates see my [YouTube](https://www.youtube.com/channel/UC6zTcjWv8Aix-cOHiaIXFCw) or [Website](https://credixyt.com/)**. Thank you for your understanding!
 
-Credixware is a cheat designed for CSGO. It includes an external and internal CSGO cheat (Injector coming soon™).
+# FAQ
+**Q: Why did you discontinue the project?**
+A: Because I want to rewrite the core of the cheat without making the same errors (or at least fewer of them) I made here. I also want to make a tutorial series covering the making of Credixware from the ground-up.
 
-## Current status: **UNDETECTED**
+**Q: I am interested in the tutorial series. When and where will you publish it?**
+A: It will be published on my [YouTube](https://www.youtube.com/channel/UC6zTcjWv8Aix-cOHiaIXFCw) and [Website](https://credixyt.com/) hopefully in the next month (March).
 
-![Credixware Menu](https://i.imgur.com/tNxNpqk.jpg)
+**Q: I still want to use the cheat. How can I fix it?**
+A: First you need to fix the [offsets](https://github.com/CredixYt/Credixware/blob/master/Credixware/Internal/Headers/Offsets.h). You can use offset dumpers or calculate them yourself, my recommendation is [Hazedumper](https://github.com/frk1/hazedumper) by frk1 and RectiioN. Then you need to fix the function indexes, these can be found in the [SDK files](https://github.com/CredixYt/Credixware/tree/master/Credixware/Internal/SDK) and in [Hooks.h](https://github.com/CredixYt/Credixware/blob/master/Credixware/Internal/Headers/Hooks.h). You can find up-to-date indexes on [UnKnoWnCheaTs](https://www.unknowncheats.me/forum/counterstrike-global-offensive/), [MPGH](https://www.mpgh.net/forum/forumdisplay.php?f=526) or by simply Googling things. Lastly, you need to update the structures/classes found in the [SDK files](https://github.com/CredixYt/Credixware/tree/master/Credixware/Internal/SDK). You can also find these on [UnKnoWnCheaTs](https://www.unknowncheats.me/forum/counterstrike-global-offensive/), [MPGH](https://www.mpgh.net/forum/forumdisplay.php?f=526) or Google.
 
-## Changelog b0.5:
-- _[Internal]_ Fixed: Added Skins to SkinChanger
+**Q: I can't fix it, can you help?**
+A: As much as I would like to help, I don't really have time to. If you have experience with game hacking you can ask for help on [UnKnoWnCheaTs](https://www.unknowncheats.me/forum/counterstrike-global-offensive/), [MPGH](https://www.mpgh.net/forum/forumdisplay.php?f=526) or any game hacking related site. If you want to get into game hacking I would recommend starting with externals, not internals as externals are easier and faster to write/learn. If you don't want to code I would recommend choosing an up-to-date game hack and not an old source/base.
 
-_(For a complete list see [Changelog.md](https://github.com/CredixYt/Credixware/blob/master/Changelog.md))_
+# Contact
+Website: [credixyt.com](https://credixyt.com)
+Email: [credixyt@gmail.com](mailto:credixyt@gmail.com)
+YouTube: [Credix](https://credixyt.com)
+Discord: Credix#0001

@@ -1,3 +1,6 @@
+## 2/17/2019:
+- Project discontinued
+
 ## Changelog b0.5:
 - _[Internal]_ Fixed: Added Skins to SkinChanger
 
