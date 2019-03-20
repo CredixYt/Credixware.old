@@ -43,6 +43,7 @@ namespace Interfaces {
 		g_pClient				= Utils::CaptureInterface<void>("client_panorama.dll", "VClient018");
 		g_pClientMode			= **(DWORD***)((*(uintptr_t**)g_pClient)[10] + 0x5);
 		g_pClientState			= (void*)((DWORD)GetModuleHandle("engine.dll") + Offsets::dwClientState);
+		printf("g_pClientState: %i\n", g_pClientState);
 		g_pGlobalVars			= **reinterpret_cast<CGlobalVars***>((*reinterpret_cast<uintptr_t**>(g_pClient))[0] + 0x1B);
 		g_pInput				= *(CInput**)((*(uintptr_t**)g_pClient)[16] + 0x1);
 		g_pGlowObjectManager	= (CGlowObjectManager*)((DWORD)GetModuleHandle("client_panorama.dll") + Offsets::dwGlowObjectManager);

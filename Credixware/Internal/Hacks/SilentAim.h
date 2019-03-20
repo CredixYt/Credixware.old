@@ -38,6 +38,8 @@ namespace SilentAim {
 				if (!EntityClass)
 					continue;
 
+				printf("%s\n", EntityClass->GetName());
+
 				if (_strcmpi(EntityClass->GetName(), "CCSPlayer") != 0 || Entity->entindex() == g_pEngineClient->GetLocalPlayer())
 					continue;
 
